@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->date('date_attendance');
 
-            $table->foreignId('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->unsignedBigInteger('client_id')->notNullValue();
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+
+
+
+            //$table->foreignId('client_id')->references('id')->on('clients')->onDelete('cascade');
 
             $table->timestamps();
         });

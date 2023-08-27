@@ -10,6 +10,15 @@ class Client extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'document',
+        'name',
+        'surname',
+        'birth_date',
+        'height',
+        'weight',
+    ];
+
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class);
