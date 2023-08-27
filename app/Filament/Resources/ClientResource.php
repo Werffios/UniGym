@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages;
+use App\Filament\Resources\ClientResource\Widgets;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
 use Filament\Forms;
@@ -156,6 +157,13 @@ class ClientResource extends Resource
             //        'active' => 'danger',
             //        'desactive' => 'success',
             //    })
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            Widgets\AttendanceOverview::class,
+        ];
     }
 
     public static function getPages(): array

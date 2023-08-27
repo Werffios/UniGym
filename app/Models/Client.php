@@ -19,6 +19,7 @@ class Client extends Model
         'weight',
     ];
 
+
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class);

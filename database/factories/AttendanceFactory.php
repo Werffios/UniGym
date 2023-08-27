@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class AttendanceFactory extends Factory
     {
         return [
             'date_attendance' => $this->faker->dateTimeBetween('-2 months', 'now'),
-            'client_id' => $this->faker->numberBetween(1, 80),
+            'client_id' => $this->faker->numberBetween(1, Client::all()->count()),
         ];
     }
 }

@@ -16,4 +16,11 @@ class ManageClients extends ManageRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            ClientResource\Widgets\AttendanceOverview::class,
+        ];
+    }
 }
