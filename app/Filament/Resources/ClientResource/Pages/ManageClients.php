@@ -23,4 +23,5 @@ class ManageClients extends ManageRecords
             ClientResource\Widgets\AttendanceOverview::class,
         ];
     }
+
 }

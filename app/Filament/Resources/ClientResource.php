@@ -81,6 +81,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('document')->label('Número de documento')
                     ->searchable()
+                    ->color('success')
                     ->copyable()
                     ->copyMessage('Copiado al portapapeles.')
                     ->copyMessageDuration(1500),
@@ -128,7 +129,6 @@ class ClientResource extends Resource
                 ->label('Documento')
                 ->badge()
                 ->color('success')
-                ->size('lg')
                 ->copyable()
                 ->copyMessage('Copiado al portapapeles.')
                 ->copyMessageDuration(1500),
@@ -148,10 +148,6 @@ class ClientResource extends Resource
                 ->label('Peso'),
 
         ]);
-
-
-
-
 
             //->color(fn (string $state): string => match ($state) {
             //        'active' => 'danger',

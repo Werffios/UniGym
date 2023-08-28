@@ -25,5 +25,9 @@ class AttendanceOverview extends BaseWidget
 
         ];
     }
+    /**
+     * @var view-string
+     */
+    //protected static string $view = 'filament-panels::widgets.account-widget';
     protected static ?string $pollingInterval = '20s';  // Tiempo de actualización de los datos
 }
