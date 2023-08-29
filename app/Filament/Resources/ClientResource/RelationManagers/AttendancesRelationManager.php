@@ -35,7 +35,7 @@ class AttendancesRelationManager extends RelationManager
                     ->dateTime('d/M/Y')
                     ->sortable(),
 
-            ])
+            ])->defaultSort('id', 'desc')
             ->filters([
 
             ])

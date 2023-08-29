@@ -27,11 +27,18 @@ class ClientResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?string $navigationLabel = 'Clientes';
+
+    protected static ?string $navigationGroup = 'Asistencia';
+
+
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('document')->label('Documento del usuario')
+                    ->unique(Client::class, 'document')
                     ->numeric()
                     ->required()
                     ->minLength(2)
@@ -134,18 +141,25 @@ class ClientResource extends Resource
                 ->copyMessageDuration(1500),
             Infolists\Components\TextEntry::make('birth_date')
                 ->label('Fecha de nacimiento')
+                ->icon('heroicon-o-calendar')
                 ->date('j/M/Y'),
             Infolists\Components\TextEntry::make('name')
-                ->label('Nombre'),
+                ->label('Nombre')
+                ->icon('heroicon-o-user'),
             Infolists\Components\TextEntry::make('surname')
-                ->label('Apellido'),
+                ->label('Apellido')
+                ->icon('heroicon-o-user'),
             Infolists\Components\TextEntry::make('birth_date')
                 ->label('Edad')
+                ->icon('heroicon-o-cake')
                 ->since(),
+
             Infolists\Components\TextEntry::make('height')
-                ->label('Altura'),
+                ->label('Altura')
+                ->icon('heroicon-o-arrows-up-down'),
             Infolists\Components\TextEntry::make('weight')
-                ->label('Peso'),
+                ->label('Peso')
+                ->icon('heroicon-o-scale'),
 
         ]);
 

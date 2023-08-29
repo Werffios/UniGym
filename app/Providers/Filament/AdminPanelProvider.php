@@ -24,11 +24,23 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->sidebarCollapsibleOnDesktop(true)
             ->id('admin')
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => '#94B43B',
+                'primary' => [
+                    900 => '77, 87, 32',
+                    800 => '94, 104, 40',
+                    700 => '110, 121, 47',
+                    600 => '126, 138, 55',
+                    500 => '148, 180, 59',
+                    400 => '144, 155, 63',
+                    300 => '151, 190, 87',
+                    200 => '190, 206, 82',
+                    100 => '159, 205, 143',
+                     50 => '163, 215, 171',
+                ],
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
