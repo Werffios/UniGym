@@ -78,7 +78,7 @@ class ClientResource extends Resource
                     ->minLength(2)
                     ->maxLength(4)
                     ->placeholder('Ingrese el peso del cliente en KG')
-                    ->helperText('Ejemplo: 70KG'),
+                    ->helperText('Ejemplo: 70'),
             ]);
     }
 
