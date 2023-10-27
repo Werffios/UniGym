@@ -1,9 +1,9 @@
 <?php
 ?>
 <div x-init="setSvgFill" x-init="setSvgFill">
-
-    <svg viewBox="0 0 750 425" preserveAspectRatio="xMidYMid meet"
-        {{ $attributes->merge(['width'=>"140px"]) }} alt="SVG Logo Universidad Nacional de Colombia">
+    <svg x-data="{ theme: 'light' }" x-bind:class="{ 'fill-white': theme === 'dark', 'fill-black': theme === 'light' }" xmlns="http://www.w3.org/2000/svg" fill="currentColor"  stroke="currentColor"
+    viewBox="0 0 750 425" preserveAspectRatio="xMidYMid meet"
+        {{ $attributes->merge(['width'=>"180px"]) }} alt="SVG Logo Universidad Nacional de Colombia">
         <g>
             <path class="st1" d="M327.1,152.6h4.8v16.6c0,5.1,2.6,7,7.3,7c3,0,5.1-1.8,5.1-5.7v-17.9h4.6v16.9c0,6.7-3.9,10.4-11.4,10.4
                     c-6.5,0-10.4-3.1-10.4-9.2V152.6z M378.7,180l-14.3-20.5v20H360v-26.8h4.8l13.6,19.9v-19.9h4.3v26.5L378.7,180z M399.3,179.4
@@ -459,17 +459,4 @@
                     c0.3,0.8,0.3,1.8,0.3,2.6c0,2.8-1,4.1-2.3,4.6c-1.5-5.4-2.3-11.8-2.3-16.7C146.4,107.2,146.4,105.9,146.7,104.9z"/>
         </g>
     </svg>
-    <script>
-        function setSvgFill() {
-            var svg = document.getElementById('my-svg2');
-            if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-                svg.style.fill = "white";
-            } else {
-                svg.style.fill = "black";
-            }
-        }
-
-        setSvgFill(); // para establecer el valor de fill al cargar la página
-        window.matchMedia("(prefers-color-scheme: dark)").addListener(setSvgFill);
-    </script>
 </div>
