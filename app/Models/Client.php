@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\TypeClientController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Client extends Model
@@ -14,14 +16,32 @@ class Client extends Model
         'document',
         'name',
         'surname',
-        'birth_date',
         'height',
         'weight',
+        'birth_date',
+        'gender',
+        'active',
+        'type_client_id',
+        'type_document_id',
+
     ];
 
-
+    // Relación uno a muchos con la tabla attendances
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class);
     }
+    // Relación uno a muchos con la tabla type_clients
+    public function typeClient(): BelongsTo
+    {
+        return $this->belongsTo(type_client::class);
+    }
+    // Relación uno a muchos con la tabla type_documents
+    public function typeDocument(): BelongsTo
+    {
+        return $this->belongsTo(type_document::class);
+    }
+
+
+
 }

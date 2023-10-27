@@ -6,20 +6,21 @@ use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\Widgets;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
-use Filament\Forms;
+use App\Models\type_study;
+use App\Models\type_client;
+use App\Models\type_document;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Infolists\Infolist;
-use Filament\Infolists;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Forms\Components\Select;
 
 class ClientResource extends Resource
 {
@@ -37,7 +38,7 @@ class ClientResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('document')->label('Documento del usuario')
+                TextInput::make('document')->label('Documento del cliente')
                     ->unique(Client::class, 'document')
                     ->numeric()
                     ->required()
@@ -46,39 +47,64 @@ class ClientResource extends Resource
                     ->placeholder('Ingrese el documento del cliente')
                     ->helperText('Escribe el documento del cliente.')
                     ->hint('El documento debe ser único.'),
-                TextInput::make('name')->label('Nombre del usuario')
+                Select::make('type_document_id')->label('Tipo de documento')
+                    ->placeholder('Seleccione el tipo de documento')
+                    ->options(
+                        type_document::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->searchable()
+                    ->helperText('Seleccione el tipo de documento.'),
+                TextInput::make('name')->label('Nombre del cliente')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el nombre del cliente')
-                    ->helperText('Escribe el nombre del cliente.')
-                    ->hint('El nombre debe ser único.'),
-                TextInput::make('surname')->label('Apellido del usuario')
+                    ->helperText('Escribe el nombre del cliente.'),
+                TextInput::make('surname')->label('Apellido del cliente')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el apellido del cliente')
-                    ->helperText('Escribe el apellido del cliente.')
-                    ->hint('El apellido debe ser único.'),
-                DatePicker::make('birth_date')->label('Fecha de nacimiento del usuario')
-                    ->required()
-                    ->placeholder('Ingrese la fecha de nacimiento del cliente')
-                    ->helperText('Escribe la fecha de nacimiento del cliente.')
-                    ->hint('La fecha de nacimiento debe ser única.'),
-                TextInput::make('height')->label('Altura del usuario')
+                    ->helperText('Escribe el apellido del cliente.'),
+                TextInput::make('height')->label('Altura del cliente')
                     ->numeric()
                     ->required()
                     ->minLength(2)
                     ->maxLength(3)
                     ->placeholder('Ingrese la altura del cliente en CM')
                     ->helperText('Ejemplo: 170'),
-                TextInput::make('weight')->label('Peso del usuario')
+                TextInput::make('weight')->label('Peso del cliente')
                     ->numeric()
                     ->required()
                     ->minLength(2)
                     ->maxLength(4)
                     ->placeholder('Ingrese el peso del cliente en KG')
                     ->helperText('Ejemplo: 70'),
+
+                Select::make('gender')->label('Género del cliente')
+                    ->options([
+                        'Masculino' => 'Masculino',
+                        'Femenino' => 'Femenino',
+                    ])
+                    ->required()
+                    ->placeholder('No ha seleccionado el género del cliente')
+                    ->helperText('Seleccione el género del cliente.'),
+                Select::make('type_client_id')->label('Tipo de cliente')
+                    ->placeholder('Seleccione el tipo de cliente')
+                    ->options(
+                        type_client::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->searchable()
+                    ->helperText('Seleccione el tipo de cliente.'),
+
+
+                DatePicker::make('birth_date')->label('Fecha de nacimiento del cliente')
+                    ->required()
+                    ->placeholder('Ingrese la fecha de nacimiento del cliente')
+                    ->helperText('Escribe la fecha de nacimiento del cliente.'),
+
             ]);
     }
 
@@ -91,7 +117,11 @@ class ClientResource extends Resource
                     ->color('success')
                     ->copyable()
                     ->copyMessage('Copiado al portapapeles.')
-                    ->copyMessageDuration(1500),
+                    ->copyMessageDuration(1500)
+                    ->icon('heroicon-o-identification'),
+                IconColumn::make('active')->label('Estado')
+                    ->sortable()
+                    ->boolean(),
                 TextColumn::make('name')->label('Nombre')
                     ->searchable(),
                 TextColumn::make('surname')->label('Apellido')
@@ -105,10 +135,15 @@ class ClientResource extends Resource
 
             ])->defaultSort('id', 'desc')
             ->filters([
-                //
+                //SelectFilter::make('department_id')
+                //                    ->label('Departamento')
+                //                    ->options(
+                //                        Department::all()->pluck('name', 'id')
+                //                    )
+                //                    ->searchable()
+                //                    ->default(null),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -132,41 +167,56 @@ class ClientResource extends Resource
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist -> schema([
-            Infolists\Components\TextEntry::make('document')
+            TextEntry::make('document')
                 ->label('Documento')
                 ->badge()
                 ->color('success')
                 ->copyable()
                 ->copyMessage('Copiado al portapapeles.')
-                ->copyMessageDuration(1500),
-            Infolists\Components\TextEntry::make('birth_date')
-                ->label('Fecha de nacimiento')
-                ->icon('heroicon-o-calendar')
-                ->date('j/M/Y'),
-            Infolists\Components\TextEntry::make('name')
+                ->copyMessageDuration(1500)
+                ->icon('heroicon-o-identification'),
+
+            IconEntry::make('active')
+                ->label('Estado')
+                ->boolean(),
+
+            TextEntry::make('name')
                 ->label('Nombre')
                 ->icon('heroicon-o-user'),
-            Infolists\Components\TextEntry::make('surname')
+            TextEntry::make('surname')
                 ->label('Apellido')
                 ->icon('heroicon-o-user'),
-            Infolists\Components\TextEntry::make('birth_date')
+            TextEntry::make('birth_date')
                 ->label('Edad')
                 ->icon('heroicon-o-cake')
                 ->since(),
+            TextEntry::make('gender')
+                ->label('Género')
+                ->icon('heroicon-o-user-group'),
 
-            Infolists\Components\TextEntry::make('height')
+            TextEntry::make('height')
                 ->label('Altura')
                 ->icon('heroicon-o-arrows-up-down'),
-            Infolists\Components\TextEntry::make('weight')
+            TextEntry::make('weight')
                 ->label('Peso')
                 ->icon('heroicon-o-scale'),
 
+
+            TextEntry::make('birth_date')
+                ->label('Fecha de nacimiento')
+                ->icon('heroicon-o-calendar')
+                ->date('j/M/Y'),
+
+
+            TextEntry::make('typeClient.name')
+                ->icon('heroicon-o-user-group'),
+
+            TextEntry::make('typeDocument.name')
+                ->icon('heroicon-o-identification'),
+
+
         ]);
 
-            //->color(fn (string $state): string => match ($state) {
-            //        'active' => 'danger',
-            //        'desactive' => 'success',
-            //    })
     }
 
     public static function getWidgets(): array

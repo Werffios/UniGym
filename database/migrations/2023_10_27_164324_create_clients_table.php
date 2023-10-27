@@ -13,15 +13,22 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->string('document')->unique();
             $table->string('name');
             $table->string('surname');
-            $table->string('document')->unique();
             $table->integer('height');
             $table->integer('weight');
+            $table->enum('gender', ['Masculino', 'Femenino']);
             $table->date('birth_date');
+            $table->boolean('active')->default(true);
 
-            // $table->foreignId(Gender::class)->nullable()->constrained()->onDelete('set null');
-            // $table->foreignId(Status::class)->nullable()->constrained()->onDelete('set null');
+            // Añade las columnas de llave foránea
+            $table->unsignedBigInteger('type_client_id');
+            $table->unsignedBigInteger('type_document_id');
+
+            // Crea las restricciones de llave foránea
+            $table->foreign('type_client_id')->references('id')->on('type_clients')->onDelete('cascade');
+            $table->foreign('type_document_id')->references('id')->on('type_documents')->onDelete('cascade');
 
             $table->timestamps();
         });
