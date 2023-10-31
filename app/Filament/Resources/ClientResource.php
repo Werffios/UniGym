@@ -6,7 +6,6 @@ use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\Widgets;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
-use App\Models\type_study;
 use App\Models\type_client;
 use App\Models\type_document;
 use Filament\Forms\Components\DatePicker;
@@ -21,6 +20,8 @@ use Filament\Tables\Table;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 
 class ClientResource extends Resource
 {
@@ -43,7 +44,7 @@ class ClientResource extends Resource
                     ->numeric()
                     ->required()
                     ->minLength(2)
-                    ->maxLength(10)
+                    ->maxLength(12)
                     ->placeholder('Ingrese el documento del cliente')
                     ->helperText('Escribe el documento del cliente.')
                     ->hint('El documento debe ser único.'),
@@ -108,6 +109,9 @@ class ClientResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -120,7 +124,6 @@ class ClientResource extends Resource
                     ->copyMessageDuration(1500)
                     ->icon('heroicon-o-identification'),
                 IconColumn::make('active')->label('Estado')
-                    ->sortable()
                     ->boolean(),
                 TextColumn::make('name')->label('Nombre')
                     ->searchable(),
@@ -134,18 +137,11 @@ class ClientResource extends Resource
                     ->counts('attendances'),
 
             ])->defaultSort('id', 'desc')
-            ->filters([
-                //SelectFilter::make('department_id')
-                //                    ->label('Departamento')
-                //                    ->options(
-                //                        Department::all()->pluck('name', 'id')
-                //                    )
-                //                    ->searchable()
-                //                    ->default(null),
-            ])
+
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->icon('heroicon-o-trash')
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -154,6 +150,29 @@ class ClientResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
+            ])
+            ->filters([
+                SelectFilter::make('type_client_id')
+                    ->label('Tipo de cliente')
+                    ->multiple()
+                    ->options(
+                        type_client::all()->pluck('name', 'id')
+                    )
+                    ->searchable()
+                    ->default(null),
+                SelectFilter::make('type_document_id')
+                    ->label('Tipo de documento')
+                    ->multiple()
+                    ->options(
+                        type_document::all()->pluck('name', 'id')
+                    )
+                    ->searchable()
+                    ->default(null),
+                TernaryFilter::make('active')
+                    ->label('Suscripción')
+                    ->placeholder('Todos los clientes')
+                    ->trueLabel('Clientes con suscripción activa')
+                    ->falseLabel('Clientes con suscripción inactiva'),
             ]);
     }
 
