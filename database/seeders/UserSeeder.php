@@ -19,6 +19,12 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('GymUnalCAPF'),
         ]);
+        User::class::create([
+            'name' => 'SuperAdmin',
+            'email' => 'lpulgarp@unal.edu.co',
+            'email_verified_at' => now(),
+            'password' => bcrypt('12345678'),
+        ]);
         User::factory(99)->create();
     }
 }
