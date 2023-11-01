@@ -185,7 +185,9 @@ class ClientResource extends Resource
 
     public static function infolist(Infolist $infolist): Infolist
     {
-        return $infolist -> schema([
+        return $infolist
+            -> schema([
+                
             TextEntry::make('document')
                 ->label('Documento')
                 ->badge()

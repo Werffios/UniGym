@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Client;
-use App\Models\type_degree;
+use App\Models\degree;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
