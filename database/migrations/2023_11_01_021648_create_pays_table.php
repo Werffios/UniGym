@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->float('amount')->nullable();
 
             // Añade las columnas de llave foránea
             $table->unsignedBigInteger('client_id');

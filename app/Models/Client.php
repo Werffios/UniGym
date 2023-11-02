@@ -41,7 +41,10 @@ class Client extends Model
     {
         return $this->belongsTo(type_document::class);
     }
-
+    public function pay(): HasMany
+    {
+        return $this->hasMany(Pay::class);
+    }
 
 
 }

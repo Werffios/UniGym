@@ -21,8 +21,6 @@ class AttendanceOverview extends BaseWidget
                 ->color('primary')
                 ->chart([0, 23, 56, 78, 123, 345, Attendance::all()->count()])
                 ->icon('heroicon-o-clipboard-document-check'),
-
-
         ];
     }
     /**

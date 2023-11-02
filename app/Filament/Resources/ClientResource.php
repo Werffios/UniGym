@@ -31,7 +31,7 @@ class ClientResource extends Resource
 
     protected static ?string $navigationLabel = 'Clientes';
 
-    protected static ?string $navigationGroup = 'Asistencia';
+    protected static ?string $navigationGroup = 'Asistencia y Test';
 
 
 
@@ -116,23 +116,29 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('document')->label('Número de documento')
+                TextColumn::make('document')
+                    ->label('Número de documento')
                     ->searchable()
                     ->color('success')
                     ->copyable()
                     ->copyMessage('Copiado al portapapeles.')
                     ->copyMessageDuration(1500)
                     ->icon('heroicon-o-identification'),
-                IconColumn::make('active')->label('Estado')
+                IconColumn::make('active')
+                    ->label('Estado')
                     ->boolean(),
-                TextColumn::make('name')->label('Nombre')
+                TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
-                TextColumn::make('surname')->label('Apellido')
+                TextColumn::make('surname')
+                    ->label('Apellido')
                     ->searchable(),
-                TextColumn::make('birth_date')->label('Fecha de nacimiento')
+                TextColumn::make('birth_date')
+                    ->label('Fecha de nacimiento')
                     ->searchable()
                     ->date('j/M/Y'),
-                TextColumn::make('attendances_count')->label('Asistencias')
+                TextColumn::make('attendances_count')
+                    ->label('Asistencias')
                     ->sortable()
                     ->counts('attendances'),
 
@@ -187,7 +193,7 @@ class ClientResource extends Resource
     {
         return $infolist
             -> schema([
-                
+
             TextEntry::make('document')
                 ->label('Documento')
                 ->badge()

@@ -21,6 +21,7 @@ class PayFactory extends Factory
             'start_date' => $this->faker->dateTimeBetween('-1 years', 'now'),
             'end_date' => $this->faker->dateTimeBetween('now', '+1 years'),
             'client_id' => $this->faker->unique()->numberBetween(1, Client::all()->count()),
-        ];
+            'amount' => $this->faker->randomElement([0, 10000, 20000, 50000, 70000]),
+            ];
     }
 }
