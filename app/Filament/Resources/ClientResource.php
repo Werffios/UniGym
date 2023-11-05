@@ -25,25 +25,20 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Actions\ActionGroup;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Filament\Tables\Columns\Summarizers\Sum;
 
 class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
-
-    protected static ?string $navigationLabel = 'Clientes';
-
     protected static ?string $navigationGroup = 'Asistencia y Test';
-
-
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationLabel = 'Clientes';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('document')->label('Documento del cliente')
-                    ->unique(Client::class, 'document')
                     ->numeric()
                     ->minLength(2)
                     ->maxLength(12)
@@ -134,7 +129,8 @@ class ClientResource extends Resource
                     ->searchable(),
                 TextColumn::make('surname')
                     ->label('Apellido')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('birth_date')
                     ->label('Fecha de nacimiento')
                     ->searchable()
@@ -142,7 +138,12 @@ class ClientResource extends Resource
                 TextColumn::make('attendances_count')
                     ->label('Asistencias')
                     ->sortable()
-                    ->counts('attendances'),
+                    ->counts('attendances')
+                    ->summarize([
+                        Sum::make()
+                            ->label('Total')
+
+                    ]),
 
             ])->defaultSort('id', 'desc')
 

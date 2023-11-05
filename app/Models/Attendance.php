@@ -10,7 +10,7 @@ class Attendance extends Model
 {
     use HasFactory;
 
-    public function client() : BelongsTo
+    public function clients() : BelongsTo
     {
         return $this->belongsTo(Client::class);
     }

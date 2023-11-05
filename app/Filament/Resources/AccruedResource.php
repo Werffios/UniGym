@@ -5,15 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AccruedResource\Pages;
 use App\Filament\Resources\AccruedResource\RelationManagers;
 use App\Models\type_client;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
-
+use Filament\Tables\Columns\Summarizers\Count as CountSummarizer;
+use PHPUnit\Framework\Constraint\Count;
 
 class AccruedResource extends Resource
 {
@@ -45,10 +43,12 @@ class AccruedResource extends Resource
                     ->sortable(),
                 TextColumn::make('months')
                     ->searchable(),
-                TextColumn::make('attendances')
+                TextColumn::make('clients.attendances_count')
                     ->label('Asistencias')
-                    ->sortable()
-                    ->counts('clients'),
+                    ->summarize([
+                        CountSummarizer::make()
+                        ->label('Total')
+                    ]),
                 TextColumn::make('subtotal')
                     ->sortable(),
             ])
