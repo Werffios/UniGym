@@ -220,10 +220,9 @@ class ClientResource extends Resource
                 ->icon('heroicon-o-cake')
                 ->since(),
 
-            TextEntry::make('degree')
+            TextEntry::make('degree.name')
                 ->label('Grado')
-                ->icon('heroicon-o-cake')
-                ->since(),
+                ->icon('heroicon-o-cake'),
 
             TextEntry::make('gender')
                 ->label('Género')
