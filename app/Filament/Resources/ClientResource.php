@@ -42,7 +42,6 @@ class ClientResource extends Resource
                 TextInput::make('document')->label('Documento del cliente')
                     ->unique(Client::class, 'document')
                     ->numeric()
-                    ->required()
                     ->minLength(2)
                     ->maxLength(12)
                     ->placeholder('Ingrese el documento del cliente')
@@ -145,6 +144,9 @@ class ClientResource extends Resource
             ])->defaultSort('id', 'desc')
 
             ->actions([
+                Tables\Actions\EditAction::make()
+                    ->icon('heroicon-o-pencil')
+                    ->iconButton(),
                 Tables\Actions\DeleteAction::make()
                     ->icon('heroicon-o-trash')
                     ->iconButton(),

@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             TypeDegreeSeeder::class,
             DegreeSeeder::class,
             ClientSeeder::class,
-            TypeStudySeeder::class,
             AttendanceSeeder::class,
 
             UserSeeder::class,

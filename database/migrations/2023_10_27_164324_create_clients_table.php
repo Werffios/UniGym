@@ -25,10 +25,12 @@ return new class extends Migration
             // Añade las columnas de llave foránea
             $table->unsignedBigInteger('type_client_id');
             $table->unsignedBigInteger('type_document_id');
+            $table->unsignedBigInteger('type_degree_id');
 
             // Crea las restricciones de llave foránea
             $table->foreign('type_client_id')->references('id')->on('type_clients')->onDelete('cascade');
             $table->foreign('type_document_id')->references('id')->on('type_documents')->onDelete('cascade');
+            $table->foreign('type_degree_id')->references('id')->on('type_degrees')->onDelete('restrict');
 
             $table->timestamps();
         });

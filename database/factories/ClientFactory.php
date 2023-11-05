@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\type_client;
 use App\Models\type_document;
 use App\Models\type_study;
-use App\Models\type_status;
+use App\Models\type_degree;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -34,6 +34,7 @@ class ClientFactory extends Factory
 
             'type_client_id' => $this->faker->numberBetween(1, type_client::all()->count()),
             'type_document_id' => $this->faker->numberBetween(1, type_document::all()->count()),
+            'type_degree_id' => $this->faker->numberBetween(1, type_degree::all()->count()),
 
         ];
     }
