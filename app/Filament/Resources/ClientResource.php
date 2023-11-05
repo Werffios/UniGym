@@ -23,7 +23,7 @@ use Filament\Infolists\Components\IconEntry;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-
+use Filament\Tables\Actions\ActionGroup;
 class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
@@ -145,12 +145,16 @@ class ClientResource extends Resource
             ])->defaultSort('id', 'desc')
 
             ->actions([
-                Tables\Actions\EditAction::make()
-                    ->icon('heroicon-o-pencil')
-                    ->iconButton(),
-                Tables\Actions\DeleteAction::make()
-                    ->icon('heroicon-o-trash')
-                    ->iconButton(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                        ->icon('heroicon-o-pencil')
+                        ->color('warning')
+                        ->label('Editar cliente'),
+                    Tables\Actions\DeleteAction::make()
+                        ->icon('heroicon-o-trash')
+                        ->label('Eliminar cliente'),
+                ])
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -190,6 +194,7 @@ class ClientResource extends Resource
                     ->placeholder('Todos los clientes')
                     ->trueLabel('Clientes con suscripción activa')
                     ->falseLabel('Clientes con suscripción inactiva'),
+
             ]);
     }
 

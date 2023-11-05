@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\Filter;
 
 class SuscriptionResource extends Resource
 {
@@ -58,7 +60,27 @@ class SuscriptionResource extends Resource
 
             ])
             ->filters([
-                //
+                Filter::make('start_date')
+                    ->label('Filtrar fechas')
+                    ->form([
+                        DatePicker::make('date_from')
+                            ->label('Fecha de inicio'),
+                        DatePicker::make('date_to')
+                            ->label('Fecha de fin'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when(
+                                $data['date_from'] ?? null,
+                                fn (Builder $query, $date) => $query->where('start_date', '>=', $date),
+                            )
+                            ->when(
+                                $data['date_to'] ?? null,
+                                fn (Builder $query, $date) => $query->where('start_date', '<=', $date),
+                            );
+
+                    }),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
