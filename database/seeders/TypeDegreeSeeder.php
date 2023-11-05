@@ -18,7 +18,13 @@ class TypeDegreeSeeder extends Seeder
             'name' => 'Pregrado',
         ]);
         type_degree::class::create([
-            'name' => 'Posgrado',
+            'name' => 'Especialización',
+        ]);
+        type_degree::class::create([
+            'name' => 'Maestría',
+        ]);
+        type_degree::class::create([
+            'name' => 'Doctorado',
         ]);
     }
 }
