@@ -34,7 +34,7 @@ class ClientFactory extends Factory
 
             'type_client_id' => $this->faker->numberBetween(1, type_client::all()->count()),
             'type_document_id' => $this->faker->numberBetween(1, type_document::all()->count()),
-            'type_degree_id' => $this->faker->numberBetween(1, type_degree::all()->count()),
+            'degree_id' => $this->faker->numberBetween(1, type_degree::all()->count()),
 
         ];
     }

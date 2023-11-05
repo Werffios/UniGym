@@ -219,6 +219,12 @@ class ClientResource extends Resource
                 ->label('Edad')
                 ->icon('heroicon-o-cake')
                 ->since(),
+
+            TextEntry::make('degree')
+                ->label('Grado')
+                ->icon('heroicon-o-cake')
+                ->since(),
+
             TextEntry::make('gender')
                 ->label('Género')
                 ->icon('heroicon-o-user-group'),

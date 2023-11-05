@@ -45,6 +45,12 @@ class Client extends Model
     {
         return $this->hasMany(Pay::class);
     }
+    // Relación uno a muchos con la tabla degrees
+
+    public function degree(): BelongsTo
+    {
+        return $this->belongsTo(degree::class);
+    }
 
 
 }

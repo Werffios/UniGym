@@ -22,6 +22,8 @@ class type_degree extends Model
         return $this->hasMany(degree::class);
     }
 
+    // Relación uno a muchos con la tabla clients
+
 
 
 }

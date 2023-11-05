@@ -21,10 +21,9 @@ class degree extends Model
     {
         return $this->belongsTo(type_degree::class);
     }
-
-    // Relación uno a muchos con la tabla type_study
-    public function typeStudy(): HasMany
+    // Relación uno a muchos con la tabla clients
+    public function client(): HasMany
     {
-        return $this->hasMany(type_study::class);
+        return $this->hasMany(Client::class);
     }
 }
