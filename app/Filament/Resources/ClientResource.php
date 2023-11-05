@@ -8,6 +8,7 @@ use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
 use App\Models\type_client;
 use App\Models\type_document;
+use App\Models\degree;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -176,6 +177,14 @@ class ClientResource extends Resource
                     )
                     ->searchable()
                     ->default(null),
+                SelectFilter::make('degree_id')
+                    ->label('Grado')
+                    ->multiple()
+                    ->options(
+                        degree::all()->pluck('name', 'id')
+                    )
+                    ->searchable()
+                    ->default(null),
                 TernaryFilter::make('active')
                     ->label('Suscripción')
                     ->placeholder('Todos los clientes')
@@ -222,7 +231,7 @@ class ClientResource extends Resource
 
             TextEntry::make('degree.name')
                 ->label('Grado')
-                ->icon('heroicon-o-cake'),
+                ->icon('heroicon-o-academic-cap'),
 
             TextEntry::make('gender')
                 ->label('Género')
