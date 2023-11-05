@@ -24,6 +24,8 @@ use Filament\Forms\Components\Select;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Actions\ActionGroup;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+
 class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
@@ -147,18 +149,22 @@ class ClientResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                        ->icon('heroicon-o-pencil')
-                        ->color('warning')
+                        ->icon('heroicon-o-wrench')
+                        ->color('primary')
                         ->label('Editar cliente'),
                     Tables\Actions\DeleteAction::make()
                         ->icon('heroicon-o-trash')
                         ->label('Eliminar cliente'),
-                ])
+                ])->icon('heroicon-o-chevron-double-down')
 
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->label('Exportar')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('primary'),
                 ]),
             ])
             ->emptyStateActions([
