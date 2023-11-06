@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\FeeResource\Pages;
-use App\Filament\Resources\FeeResource\RelationManagers;
-use App\Models\type_client;
+use App\Filament\Resources\FacultyResource\Pages;
+use App\Filament\Resources\FacultyResource\RelationManagers;
+use App\Models\Faculty;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,14 +13,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
-class FeeResource extends Resource
+use Filament\Forms\Components\TextInput;
+
+class FacultyResource extends Resource
 {
-    protected static ?string $model = type_client::class;
+    protected static ?string $model = Faculty::class;
 
+    protected static ?string $modelLabel = 'facultad';
 
-    protected static ?string $modelLabel = 'tarifa';
-
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static ?string $pluralModelLabel = 'facultades';
+    protected static ?string $navigationLabel = 'Facultades';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     protected static ?string $navigationGroup = 'Mantenimiento';
 
@@ -28,7 +31,14 @@ class FeeResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')->label('Nombre de la facultad')
+                    ->required()
+                    ->unique(Faculty::class, 'name')
+                    ->minLength(2)
+                    ->maxLength(255)
+                    ->placeholder('Ingrese el nombre de la facultad')
+                    ->helperText('Escribe el nombre de la facultad.')
+                    ->hint('El nombre debe ser único.'),
             ]);
     }
 
@@ -36,9 +46,8 @@ class FeeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->searchable(),
-                TextColumn::make('fee')->searchable()->sortable(),
-                TextColumn::make('months')->searchable()->sortable(),
+                TextColumn::make('name')
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -66,9 +75,9 @@ class FeeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFees::route('/'),
-            'create' => Pages\CreateFee::route('/create'),
-            'edit' => Pages\EditFee::route('/{record}/edit'),
+            'index' => Pages\ListFaculties::route('/'),
+            'create' => Pages\CreateFaculty::route('/create'),
+            'edit' => Pages\EditFaculty::route('/{record}/edit'),
         ];
     }
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('weight');
             $table->enum('gender', ['Masculino', 'Femenino']);
             $table->date('birth_date');
-            $table->boolean('active')->default(true);
+            $table->boolean('active')->default(false);
 
             // Añade las columnas de llave foránea
             $table->unsignedBigInteger('type_client_id');

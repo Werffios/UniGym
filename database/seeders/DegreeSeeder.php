@@ -14,6 +14,12 @@ class DegreeSeeder extends Seeder
      */
     public function run(): void
     {
+        // Particular
+        degree::class::create([
+            'name' => 'Particular',
+            'type_degree_id' => 5,
+            'faculty_id' => 4,
+        ]);
         // Pregrados
         degree::class::create([
             'name' => 'Administración de sistemas informáticos',

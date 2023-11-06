@@ -6,10 +6,12 @@ use App\Filament\Resources\DegreeResource\Pages;
 use App\Filament\Resources\DegreeResource\RelationManagers;
 use App\Models\Degree;
 use App\Models\type_degree;
+use App\Models\Faculty;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -21,6 +23,7 @@ class DegreeResource extends Resource
 {
     protected static ?string $model = Degree::class;
 
+    protected static ?string $modelLabel = 'grado';
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     protected static ?string $navigationGroup = 'Mantenimiento';
@@ -45,6 +48,14 @@ class DegreeResource extends Resource
                     ->required()
                     ->searchable()
                     ->helperText('Seleccione el tipo de grado.'),
+                Select::make('faculty_id')->label('Facultad')
+                    ->placeholder('Seleccione la facultad')
+                    ->options(
+                        \App\Models\Faculty::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->searchable()
+                    ->helperText('Seleccione la facultad.'),
             ]);
     }
 
@@ -56,7 +67,14 @@ class DegreeResource extends Resource
                 TextColumn::make('typeDegree.name')->label('Tipo de grado')->searchable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('type_degree_id')->label('Tipo de grado')
+                    ->options(
+                        type_degree::all()->pluck('name', 'id')
+                    ),
+                SelectFilter::make('faculty_id')->label('Facultad')
+                    ->options(
+                        Faculty::all()->pluck('name', 'id')
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

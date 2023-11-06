@@ -23,5 +23,9 @@ class FacultySeeder extends Seeder
             'name' => 'Ingeniería y arquitectura',
         ]);
 
+        Faculty::class::create([
+            'name' => 'Particular',
+        ]);
+
     }
 }

@@ -34,6 +34,11 @@ class TypeClientSeeder extends Seeder
             'fee' => 250000,
             'months' => 1,
         ]);
+        type_client::class::create([
+            'name' => 'Particular',
+            'fee' => 300000,
+            'months' => 1,
+        ]);
 
     }
 }

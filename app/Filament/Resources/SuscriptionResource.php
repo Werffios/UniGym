@@ -20,6 +20,7 @@ class SuscriptionResource extends Resource
 {
     protected static ?string $model = Pay::class;
 
+    protected static ?string $modelLabel = 'suscripción';
     protected static ?string $navigationIcon = 'heroicon-o-wallet';
 
     protected static ?string $navigationLabel = 'Suscripciones';

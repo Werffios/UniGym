@@ -34,6 +34,7 @@ use Filament\Tables\Actions\{ActionGroup, Action as TableAction};
 class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
+    protected static ?string $modelLabel = 'cliente';
     protected static ?string $navigationGroup = 'Asistencia y Test';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationLabel = 'Clientes';
@@ -44,11 +45,13 @@ class ClientResource extends Resource
             ->schema([
                 TextInput::make('document')->label('Documento del cliente')
                     ->numeric()
+                    ->required()
                     ->minLength(2)
                     ->maxLength(12)
                     ->placeholder('Ingrese el documento del cliente')
                     ->helperText('Escribe el documento del cliente.')
                     ->hint('El documento debe ser único.'),
+
                 Select::make('type_document_id')->label('Tipo de documento')
                     ->placeholder('Seleccione el tipo de documento')
                     ->options(
@@ -57,18 +60,21 @@ class ClientResource extends Resource
                     ->required()
                     ->searchable()
                     ->helperText('Seleccione el tipo de documento.'),
+
                 TextInput::make('name')->label('Nombre del cliente')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el nombre del cliente')
                     ->helperText('Escribe el nombre del cliente.'),
+
                 TextInput::make('surname')->label('Apellido del cliente')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el apellido del cliente')
                     ->helperText('Escribe el apellido del cliente.'),
+
                 TextInput::make('height')->label('Altura del cliente')
                     ->numeric()
                     ->required()
@@ -76,6 +82,7 @@ class ClientResource extends Resource
                     ->maxLength(3)
                     ->placeholder('Ingrese la altura del cliente en CM')
                     ->helperText('Ejemplo: 170'),
+
                 TextInput::make('weight')->label('Peso del cliente')
                     ->numeric()
                     ->required()
@@ -92,6 +99,7 @@ class ClientResource extends Resource
                     ->required()
                     ->placeholder('No ha seleccionado el género del cliente')
                     ->helperText('Seleccione el género del cliente.'),
+
                 Select::make('type_client_id')->label('Tipo de cliente')
                     ->placeholder('Seleccione el tipo de cliente')
                     ->options(
@@ -100,7 +108,6 @@ class ClientResource extends Resource
                     ->required()
                     ->searchable()
                     ->helperText('Seleccione el tipo de cliente.'),
-
 
                 DatePicker::make('birth_date')->label('Fecha de nacimiento del cliente')
                     ->required()
@@ -115,8 +122,6 @@ class ClientResource extends Resource
                     ->required()
                     ->searchable()
                     ->helperText('Seleccione el grado del cliente.'),
-
-
             ]);
     }
 

@@ -53,5 +53,8 @@ class Client extends Model
         return $this->belongsTo(degree::class);
     }
 
-
+    public function typeClien(): BelongsTo
+    {
+        return $this->belongsTo(TypeClientController::class);
+    }
 }

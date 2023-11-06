@@ -26,5 +26,8 @@ class TypeDegreeSeeder extends Seeder
         type_degree::class::create([
             'name' => 'Doctorado',
         ]);
+        type_degree::class::create([
+            'name' => 'Particular',
+        ]);
     }
 }

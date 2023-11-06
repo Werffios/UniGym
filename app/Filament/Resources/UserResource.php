@@ -19,6 +19,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?string $modelLabel = 'usuario';
     protected static ?string $navigationIcon = 'heroicon-o-key';
 
     protected static ?string $navigationGroup = 'Mantenimiento';
@@ -43,20 +44,14 @@ class UserResource extends Resource
                     ->helperText('Escribe el correo electrónico del usuario.')
                     ->hint('El correo electrónico debe ser único.'),
                 TextInput::make('password')->label('Contraseña')
+                    ->password()
                     ->required()
+                    ->visibleOn('create')
                     ->minLength(8)
                     ->maxLength(255)
                     ->placeholder('Ingrese la contraseña del usuario')
                     ->helperText('Escribe la contraseña del usuario.')
                     ->hint('La contraseña debe tener al menos 8 caracteres.'),
-                TextInput::make('password_verified')->label('Verificar Contraseña')
-                    ->required()
-                    ->minLength(8)
-                    ->maxLength(255)
-                    ->placeholder('Ingrese la contraseña del usuario')
-                    ->helperText('Escribe la contraseña del usuario.')
-                    ->hint('Las contraseñas deben coincidir.'),
-
 
             ]);
     }
