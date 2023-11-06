@@ -233,9 +233,11 @@ class ClientResource extends Resource
             TextEntry::make('name')
                 ->label('Nombre')
                 ->icon('heroicon-o-user'),
+
             TextEntry::make('surname')
                 ->label('Apellido')
                 ->icon('heroicon-o-user'),
+
             TextEntry::make('birth_date')
                 ->label('Edad')
                 ->icon('heroicon-o-cake')
@@ -250,18 +252,17 @@ class ClientResource extends Resource
                 ->icon('heroicon-o-user-group'),
 
             TextEntry::make('height')
-                ->label('Altura')
+                ->label('Altura (cm)')
                 ->icon('heroicon-o-arrows-up-down'),
-            TextEntry::make('weight')
-                ->label('Peso')
-                ->icon('heroicon-o-scale'),
 
+            TextEntry::make('weight')
+                ->label('Peso (kg)')
+                ->icon('heroicon-o-scale'),
 
             TextEntry::make('birth_date')
                 ->label('Fecha de nacimiento')
                 ->icon('heroicon-o-calendar')
                 ->date('j/M/Y'),
-
 
             TextEntry::make('typeClient.name')
                 ->icon('heroicon-o-user-group'),
