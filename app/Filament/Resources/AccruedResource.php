@@ -14,6 +14,8 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Grouping\Group;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class AccruedResource extends Resource
 {
@@ -40,9 +42,12 @@ class AccruedResource extends Resource
     {
         return $table
             ->groups([
-                'client.typeClient.name',
-                'client.degree.name',
-                'client.degree.faculty.name',
+                Group::make('client.typeClient.name')
+                    ->label('Tipo de cliente'),
+                Group::make('client.degree.name')
+                    ->label('Grado'),
+                Group::make('client.degree.faculty.name')
+                    ->label('Facultad'),
             ])
             ->defaultGroup('client.typeClient.name')
             ->columns([
@@ -92,6 +97,10 @@ class AccruedResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->label('Exportar a Excel')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('primary'),
                 ]),
             ])
             ->emptyStateActions([
