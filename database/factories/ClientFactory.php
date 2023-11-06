@@ -35,6 +35,7 @@ class ClientFactory extends Factory
             'type_document_id' => $this->faker->numberBetween(1, type_document::all()->count()),
             'degree_id' => $this->faker->numberBetween(1, degree::all()->count()),
 
+
         ];
     }
 }

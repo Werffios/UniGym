@@ -1,7 +1,11 @@
 <?php
 
 return [
+    'column_toggle' => [
 
+        'heading' => 'Columnas',
+
+    ],
 
     'columns' => [
 
@@ -28,6 +32,34 @@ return [
 
     ],
 
+    'summary' => [
+
+        'heading' => 'Resumen',
+
+        'subheadings' => [
+            'all' => 'Todos los :label',
+            'group' => 'Resumen de :group',
+            'page' => 'Esta página',
+        ],
+
+        'summarizers' => [
+
+            'average' => [
+                'label' => 'Promedio',
+            ],
+
+            'count' => [
+                'label' => 'Conteo',
+            ],
+
+            'sum' => [
+                'label' => 'Suma',
+            ],
+
+        ],
+
+    ],
+
     'actions' => [
 
         'disable_reordering' => [
@@ -40,6 +72,10 @@ return [
 
         'filter' => [
             'label' => 'Filtrar',
+        ],
+
+        'group' => [
+            'label' => 'Agrupar',
         ],
 
         'open_bulk_actions' => [
@@ -55,6 +91,8 @@ return [
     'empty' => [
 
         'heading' => 'No se encontraron registros',
+
+        'description' => 'Crear un :model para comenzar.',
 
     ],
 
@@ -76,6 +114,8 @@ return [
             ],
 
         ],
+
+        'heading' => 'Filtros',
 
         'indicator' => 'Filtros activos',
 
@@ -99,8 +139,26 @@ return [
 
         ],
 
-        'heading' => 'Filtros',
+    ],
 
+    'grouping' => [
+
+        'fields' => [
+
+            'group' => [
+                'label' => 'Agrupar por',
+                'placeholder' => 'Seleccionar un campo',
+            ],
+
+            'direction' => [
+                'label' => 'Dirección del grupo',
+                'options' => [
+                    'asc' => 'Ascendente',
+                    'desc' => 'Descendente',
+                ],
+            ],
+
+        ],
     ],
 
     'reorder_indicator' => 'Arrastrar los registros en el orden.',
@@ -146,20 +204,6 @@ return [
 
     ],
 
-    'summary' => [
 
-        'heading' => 'Resumen de la tabla',
-
-        'no_results_heading' => 'No se encontraron registros',
-
-        'subheadings' => [
-
-            'page' => 'Resultado de la página actual.',
-            'all' => 'Resultado de todas las páginas.',
-
-            ],
-
-
-    ],
 
 ];

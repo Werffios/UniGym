@@ -26,4 +26,10 @@ class degree extends Model
     {
         return $this->hasMany(Client::class);
     }
+
+    // Relación uno a muchos con la tabla faculties
+    public function faculty(): BelongsTo
+    {
+        return $this->belongsTo(Faculty::class);
+    }
 }

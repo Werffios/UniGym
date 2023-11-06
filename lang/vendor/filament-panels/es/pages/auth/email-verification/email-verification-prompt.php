@@ -6,6 +6,14 @@ return [
 
     'heading' => 'Verifique su dirección de correo electrónico',
 
+    'actions' => [
+
+        'resend_notification' => [
+            'label' => 'Reenviar',
+        ],
+
+    ],
+
     'buttons' => [
 
         'resend_notification' => [

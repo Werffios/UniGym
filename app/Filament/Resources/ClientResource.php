@@ -6,9 +6,12 @@ use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\Widgets;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
+use App\Models\Faculty;
 use App\Models\type_client;
 use App\Models\type_document;
 use App\Models\degree;
+use Carbon\Carbon;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -23,9 +26,10 @@ use Filament\Infolists\Components\IconEntry;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-use Filament\Tables\Actions\ActionGroup;
+use Illuminate\Database\QueryException;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Actions\{ActionGroup, Action as TableAction};
 
 class ClientResource extends Resource
 {
@@ -103,6 +107,16 @@ class ClientResource extends Resource
                     ->placeholder('Ingrese la fecha de nacimiento del cliente')
                     ->helperText('Escribe la fecha de nacimiento del cliente.'),
 
+                Select::make('degree_id')->label('Grado del cliente')
+                    ->placeholder('Seleccione el grado del cliente')
+                    ->options(
+                        degree::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->searchable()
+                    ->helperText('Seleccione el grado del cliente.'),
+
+
             ]);
     }
 
@@ -134,7 +148,37 @@ class ClientResource extends Resource
                 TextColumn::make('birth_date')
                     ->label('Fecha de nacimiento')
                     ->searchable()
-                    ->date('j/M/Y'),
+                    ->date('j/M/Y')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('degree.name')
+                    ->label('Grado')
+                    ->searchable()
+                    ->toggleable(),
+                TextColumn::make('degree.typeDegree.name')
+                    ->label('Tipo de grado')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('degree.faculty.name')
+                    ->label('Facultad')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('height')
+                    ->label('Altura (cm)')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('weight')
+                    ->label('Peso (kg)')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('degree.faculty.name')
+                    ->label('Facultad')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('gender')
+                    ->label('Género')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('attendances_count')
                     ->label('Asistencias')
                     ->sortable()
@@ -148,6 +192,37 @@ class ClientResource extends Resource
             ])->defaultSort('id', 'desc')
 
             ->actions([
+                TableAction::make('attendance_add')
+                    ->icon('heroicon-o-hand-thumb-up')
+                    ->iconButton()
+                    ->action(function (Client $client) {
+                        try {
+                            $client->attendances()->create([
+                                'client_id' => $client->id,
+                            ]);
+                        } catch (QueryException $e) {
+                            if ($e->getCode() == 23000) {
+                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                            }
+                            throw $e;
+                        }
+                    }
+                ),
+                TableAction::make('attendance_remove')
+                    ->icon('heroicon-o-hand-thumb-down')
+                    ->iconButton()
+                    ->action(function (Client $client) {
+                        try {
+                            $client->attendances()
+                                ->where('date_attendance', Carbon::today())
+                                ->delete();
+                        } catch (QueryException $e) {
+                            if ($e->getCode() == 23000) {
+                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                            }
+                            throw $e;
+                        }
+                    }),
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
                         ->icon('heroicon-o-wrench')
@@ -163,7 +238,7 @@ class ClientResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     ExportBulkAction::make()
-                        ->label('Exportar')
+                        ->label('Exportar a Excel')
                         ->icon('heroicon-o-arrow-down-tray')
                         ->color('primary'),
                 ]),
@@ -196,6 +271,12 @@ class ClientResource extends Resource
                     )
                     ->searchable()
                     ->default(null),
+                SelectFilter::make('degree.faculty_id')
+                    ->label('Facultad')
+                    ->multiple()
+                    ->options(
+                        Faculty::all()->pluck('name', 'id')
+                    ),
                 TernaryFilter::make('active')
                     ->label('Suscripción')
                     ->placeholder('Todos los clientes')

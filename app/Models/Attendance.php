@@ -10,6 +10,10 @@ class Attendance extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'client_id'
+    ];
+
     public function clients() : BelongsTo
     {
         return $this->belongsTo(Client::class);

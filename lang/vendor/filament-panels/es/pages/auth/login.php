@@ -4,7 +4,7 @@ return [
 
     'title' => 'Login',
 
-    'heading' => 'Entre a su cuenta',
+    'heading' => 'Entrada al sistema',
 
     'form' => [
 
@@ -23,7 +23,7 @@ return [
         'actions' => [
 
             'authenticate' => [
-                'label' => 'Entrar',
+                'label' => 'Ingresar',
             ],
 
         ],

@@ -11,16 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('faculties', function (Blueprint $table) {
             $table->id();
-            $table->date('date_attendance');
-
-            $table->unsignedBigInteger('client_id')->notNullValue();
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
-
-            // Llave compuesta
-            $table->unique(['client_id', 'date_attendance']);
-
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('faculties');
     }
 };

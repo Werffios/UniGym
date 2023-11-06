@@ -23,6 +23,7 @@ class Client extends Model
         'active',
         'type_client_id',
         'type_document_id',
+        'degree_id',
 
     ];
 

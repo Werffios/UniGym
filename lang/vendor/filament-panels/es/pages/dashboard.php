@@ -2,6 +2,6 @@
 
 return [
 
-    'title' => 'Escritorio',
+    'title' => 'Resumen',
 
 ];
