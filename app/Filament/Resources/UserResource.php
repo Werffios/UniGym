@@ -34,6 +34,7 @@ class UserResource extends Resource
                     ->maxLength(255)
                     ->placeholder('Ingrese el nombre del usuario')
                     ->helperText('Escribe el nombre del usuario.')
+                    ->autocomplete(false)
                     ->hint('El nombre debe ser único.'),
                 TextInput::make('email')->label('Correo electrónico')
                     ->required()
@@ -45,6 +46,7 @@ class UserResource extends Resource
                     ->hint('El correo electrónico debe ser único.'),
                 TextInput::make('password')->label('Contraseña')
                     ->password()
+                    ->autocomplete('new-password')
                     ->required()
                     ->visibleOn('create')
                     ->minLength(8)
@@ -59,16 +61,13 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('email_verified_at')
-                    ->searchable()
-                    ->sortable(),
-
             ])
             ->filters([
                 //

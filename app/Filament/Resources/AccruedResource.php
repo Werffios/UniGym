@@ -66,7 +66,10 @@ class AccruedResource extends Resource
                 TextColumn::make('amount')
                     ->searchable()
                     ->money('COP')
-                    ->summarize(Sum::make()),
+                    ->summarize(
+                        Sum::make()
+                        ->money('COP')
+                    ),
 
             ])
             ->filters([
@@ -74,8 +77,14 @@ class AccruedResource extends Resource
                     ->label('Filtrar fechas')
                     ->form([
                         DatePicker::make('date_from')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->prefix('Desde')
                             ->label('Fecha de inicio'),
                         DatePicker::make('date_to')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->prefix('Hasta')
                             ->label('Fecha de fin'),
                     ])
                     ->query(function (Builder $query, array $data) {

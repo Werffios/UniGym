@@ -5,31 +5,44 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\Widgets;
 use App\Filament\Resources\ClientResource\RelationManagers;
+
 use App\Models\Client;
 use App\Models\Faculty;
 use App\Models\type_client;
 use App\Models\type_document;
 use App\Models\degree;
+
 use Carbon\Carbon;
-use Filament\Actions\Action;
+
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Select;
+
+use Filament\Infolists\Components\Tabs;
+use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\IconEntry;
+
 use Filament\Resources\Resource;
+
+use Filament\Support\Enums\IconPosition;
+
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\IconEntry;
-use Filament\Forms\Components\Select;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-use Illuminate\Database\QueryException;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Actions\{ActionGroup, Action as TableAction};
+
+use Illuminate\Database\QueryException;
+
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+
 
 class ClientResource extends Resource
 {
@@ -63,6 +76,7 @@ class ClientResource extends Resource
 
                 TextInput::make('name')->label('Nombre del cliente')
                     ->required()
+                    ->autocapitalize('words')
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el nombre del cliente')
@@ -70,6 +84,7 @@ class ClientResource extends Resource
 
                 TextInput::make('surname')->label('Apellido del cliente')
                     ->required()
+                    ->autocapitalize('words')
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el apellido del cliente')
@@ -91,13 +106,13 @@ class ClientResource extends Resource
                     ->placeholder('Ingrese el peso del cliente en KG')
                     ->helperText('Ejemplo: 70'),
 
-                Select::make('gender')->label('Género del cliente')
+                Radio::make('gender')->label('Género del cliente')
                     ->options([
                         'Masculino' => 'Masculino',
                         'Femenino' => 'Femenino',
                     ])
                     ->required()
-                    ->placeholder('No ha seleccionado el género del cliente')
+                    ->inline()
                     ->helperText('Seleccione el género del cliente.'),
 
                 Select::make('type_client_id')->label('Tipo de cliente')
@@ -111,6 +126,8 @@ class ClientResource extends Resource
 
                 DatePicker::make('birth_date')->label('Fecha de nacimiento del cliente')
                     ->required()
+                    ->native(false)
+                    ->closeOnDateSelection()
                     ->placeholder('Ingrese la fecha de nacimiento del cliente')
                     ->helperText('Escribe la fecha de nacimiento del cliente.'),
 
@@ -140,29 +157,29 @@ class ClientResource extends Resource
                     ->copyMessage('Copiado al portapapeles.')
                     ->copyMessageDuration(1500)
                     ->icon('heroicon-o-identification'),
-                IconColumn::make('active')
-                    ->label('Estado')
-                    ->boolean(),
+                TextColumn::make('active')
+                    ->label('Estado'),
                 TextColumn::make('name')
                     ->label('Nombre')
                     ->searchable(),
                 TextColumn::make('surname')
                     ->label('Apellido')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('birth_date')
                     ->label('Fecha de nacimiento')
                     ->searchable()
                     ->date('j/M/Y')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('degree.name')
                     ->label('Grado')
                     ->searchable()
+                    ->wrap()
                     ->toggleable(),
                 TextColumn::make('degree.typeDegree.name')
                     ->label('Tipo de grado')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('degree.faculty.name')
                     ->label('Facultad')
                     ->searchable()
@@ -179,7 +196,6 @@ class ClientResource extends Resource
                     ->label('Facultad')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('gender')
                     ->label('Género')
                     ->searchable()
@@ -197,10 +213,12 @@ class ClientResource extends Resource
             ])->defaultSort('id', 'desc')
 
             ->actions([
+
                 TableAction::make('attendance_add')
                     ->icon('heroicon-o-hand-thumb-up')
                     ->iconButton()
                     ->action(function (Client $client) {
+
                         try {
                             $client->attendances()->create([
                                 'client_id' => $client->id,
@@ -211,6 +229,7 @@ class ClientResource extends Resource
                             }
                             throw $e;
                         }
+
                     }
                 ),
                 TableAction::make('attendance_remove')
@@ -303,61 +322,105 @@ class ClientResource extends Resource
         return $infolist
             -> schema([
 
-            TextEntry::make('document')
-                ->label('Documento')
-                ->badge()
-                ->color('success')
-                ->copyable()
-                ->copyMessage('Copiado al portapapeles.')
-                ->copyMessageDuration(1500)
-                ->icon('heroicon-o-identification'),
+                Tabs::make('cliente_information')
+                    ->label('Información del cliente')
+                    ->tabs([
+                    Tab::make('Información básica')
+                        ->icon('heroicon-m-user-circle')
+                        ->schema([
+                        TextEntry::make('document')
+                            ->label('Documento')
+                            ->badge()
+                            ->color('success')
+                            ->copyable()
+                            ->copyMessage('Copiado al portapapeles.')
+                            ->copyMessageDuration(1500)
+                            ->icon('heroicon-o-identification'),
 
-            IconEntry::make('active')
-                ->label('Estado')
-                ->boolean(),
+                        IconEntry::make('active')
+                            ->label('Estado')
+                            ->boolean(),
 
-            TextEntry::make('name')
-                ->label('Nombre')
-                ->icon('heroicon-o-user'),
+                        TextEntry::make('name')
+                            ->label('Nombre')
+                            ->icon('heroicon-o-user'),
 
-            TextEntry::make('surname')
-                ->label('Apellido')
-                ->icon('heroicon-o-user'),
+                        TextEntry::make('surname')
+                            ->label('Apellido')
+                            ->icon('heroicon-o-user'),
 
-            TextEntry::make('birth_date')
-                ->label('Edad')
-                ->icon('heroicon-o-cake')
-                ->since(),
+                        TextEntry::make('birth_date')
+                            ->label('Edad')
+                            ->icon('heroicon-o-cake')
+                            ->since(),
 
-            TextEntry::make('degree.name')
-                ->label('Grado')
-                ->icon('heroicon-o-academic-cap'),
+                        TextEntry::make('degree.name')
+                            ->label('Grado')
+                            ->icon('heroicon-o-academic-cap'),
 
-            TextEntry::make('gender')
-                ->label('Género')
-                ->icon('heroicon-o-user-group'),
+                        TextEntry::make('gender')
+                            ->label('Género')
+                            ->icon('heroicon-o-users'),
 
-            TextEntry::make('height')
-                ->label('Altura (cm)')
-                ->icon('heroicon-o-arrows-up-down'),
+                        TextEntry::make('height')
+                            ->label('Altura (cm)')
+                            ->icon('heroicon-o-arrows-up-down'),
 
-            TextEntry::make('weight')
-                ->label('Peso (kg)')
-                ->icon('heroicon-o-scale'),
+                        TextEntry::make('weight')
+                            ->label('Peso (kg)')
+                            ->icon('heroicon-o-scale'),
 
-            TextEntry::make('birth_date')
-                ->label('Fecha de nacimiento')
-                ->icon('heroicon-o-calendar')
-                ->date('j/M/Y'),
+                        TextEntry::make('birth_date')
+                            ->label('Fecha de nacimiento')
+                            ->icon('heroicon-o-calendar')
+                            ->date('j/M/Y'),
 
-            TextEntry::make('typeClient.name')
-                ->icon('heroicon-o-user-group'),
+                        TextEntry::make('typeClient.name')
+                            ->icon('heroicon-o-user-group'),
 
-            TextEntry::make('typeDocument.name')
-                ->icon('heroicon-o-identification'),
+                        TextEntry::make('typeDocument.name')
+                            ->icon('heroicon-o-identification'),
+                    ])->columnSpanFull(),
+                    Tab::make('test_1')
+                        ->label('Test Cardiovascular')
+                        ->icon('heroicon-m-heart')
+                        ->schema([
 
+                        TextEntry::make('name')
+                            ->label('Nombre')
+                            ->icon('heroicon-o-user'),
 
-        ]);
+                        TextEntry::make('surname')
+                            ->label('Apellido')
+                            ->icon('heroicon-o-user'),
+                    ])->columnSpanFull(),
+                    Tab::make('test_2')
+                        ->label('Test de fuerza')
+                        ->icon('heroicon-m-scale')
+                        ->schema([
+
+                        TextEntry::make('name')
+                            ->label('Nombre')
+                            ->icon('heroicon-o-user'),
+
+                        TextEntry::make('surname')
+                            ->label('Apellido')
+                            ->icon('heroicon-o-user'),
+                    ])->columnSpanFull(),
+                    Tab::make('test_3')
+                        ->label('Test de antropometría')
+                        ->icon('heroicon-m-document-magnifying-glass')
+                        ->schema([
+                        TextEntry::make('name')
+                            ->label('Nombre')
+                            ->icon('heroicon-o-user'),
+
+                        TextEntry::make('surname')
+                            ->label('Apellido')
+                            ->icon('heroicon-o-user'),
+                    ])->columnSpanFull(),
+                ])->columns(3),
+        ])->columns(1);
 
     }
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('pays', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->float('amount')->nullable();
 
@@ -25,6 +26,25 @@ return new class extends Migration
 
             $table->timestamps();
         });
+
+        // Crea el disparador
+        $triggerSQL = "
+            CREATE TRIGGER set_start_and_end_date_on_insert
+            BEFORE INSERT ON pays
+            FOR EACH ROW
+            BEGIN
+                DECLARE monthsToAdd INT;
+                DECLARE feeToAdd FLOAT;
+
+                SELECT months, fee INTO monthsToAdd, feeToAdd FROM type_clients WHERE id = NEW.client_id;
+
+                SET NEW.start_date = CURDATE();
+                SET NEW.end_date = IF(monthsToAdd = 2, DATE_SUB(DATE_ADD(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY), INTERVAL MOD(MONTH(CURDATE()), 2) MONTH), INTERVAL 1 DAY), DATE_ADD(NEW.start_date, INTERVAL monthsToAdd MONTH));
+                SET NEW.amount = feeToAdd;
+            END;
+        ";
+
+        DB::unprepared($triggerSQL);
     }
 
     /**
@@ -32,6 +52,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Elimina el disparador
+        DB::unprepared("DROP TRIGGER IF EXISTS set_start_and_end_date_on_insert");
+
         Schema::dropIfExists('pays');
     }
 };

@@ -57,4 +57,9 @@ class Client extends Model
     {
         return $this->belongsTo(TypeClientController::class);
     }
+
+    public function getActiveAttribute()
+    {
+        return $this->attributes['active'] == 1 ? 'Activo' : 'Inactivo';
+    }
 }
