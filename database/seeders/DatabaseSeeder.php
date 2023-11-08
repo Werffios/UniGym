@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
             UserSeeder::class,
 
-            PaySeeder::class,
+            //PaySeeder::class,
 
         ]);
     }

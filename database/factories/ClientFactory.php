@@ -28,7 +28,7 @@ class ClientFactory extends Factory
             'weight' => $this->faker->numberBetween(50, 100),
             'gender' => $this->faker->randomElement(['Masculino', 'Femenino']),
             'birth_date' => $this->faker->dateTimeBetween('-50 years', '-16 years'),
-            'active' => $this->faker->boolean(),
+            'active' => $this->faker->numberBetween(0, 0),
 
 
             'type_client_id' => $this->faker->numberBetween(1, type_client::all()->count()),

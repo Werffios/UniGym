@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-
+use Filament\Support\Enums\Alignment;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -64,10 +64,12 @@ class UserResource extends Resource
 
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nombre de usuario')
                     ->searchable(),
                 TextColumn::make('email')
-                    ->searchable()
-                    ->sortable(),
+                    ->label('Correo electrónico')
+                    ->alignment(Alignment::End)
+                    ->searchable(),
             ])
             ->filters([
                 //

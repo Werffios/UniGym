@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('pays', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date')->nullable();
+            $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->float('amount')->nullable();
 

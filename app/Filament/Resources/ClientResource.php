@@ -214,6 +214,26 @@ class ClientResource extends Resource
 
             ->actions([
 
+                TableAction::make('suscription_add')
+                    ->icon('heroicon-o-currency-dollar')
+                    ->iconButton()
+                    ->action(function (Client $client) {
+                        try {
+                            $client->pay()->create([
+                                'client_id' => $client->id,
+                            ]);
+                            $client->update([
+                                'active' => true,
+                            ]);
+                        } catch (QueryException $e) {
+                            if ($e->getCode() == 23000) {
+                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de suscripción.');
+                            }
+                            throw $e;
+                        }
+                    }
+                    ),
+
                 TableAction::make('attendance_add')
                     ->icon('heroicon-o-hand-thumb-up')
                     ->iconButton()

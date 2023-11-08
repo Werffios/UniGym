@@ -17,22 +17,22 @@ class TypeClientSeeder extends Seeder
         type_client::class::create([
             'name' => 'Estudiante',
             'fee' => 100000,
-            'months' => 1,
+            'months' => 2,
         ]);
         type_client::class::create([
             'name' => 'Egresado',
             'fee' => 150000,
-            'months' => 1,
+            'months' => 2,
         ]);
         type_client::class::create([
             'name' => 'Docente',
             'fee' => 200000,
-            'months' => 1,
+            'months' => 2,
         ]);
         type_client::class::create([
             'name' => 'Administrativo',
             'fee' => 250000,
-            'months' => 1,
+            'months' => 2,
         ]);
         type_client::class::create([
             'name' => 'Particular',
