@@ -215,6 +215,7 @@ class ClientResource extends Resource
             ->actions([
 
                 TableAction::make('suscription_add')
+                    ->label('Suscribir cliente')
                     ->icon('heroicon-o-currency-dollar')
                     ->iconButton()
                     ->action(function (Client $client) {
@@ -370,9 +371,14 @@ class ClientResource extends Resource
                             ->icon('heroicon-o-user'),
 
                         TextEntry::make('birth_date')
-                            ->label('Edad')
+                            ->label('Nacimiento')
                             ->icon('heroicon-o-cake')
                             ->since(),
+
+                        TextEntry::make('birth_date')
+                            ->label('Fecha de nacimiento')
+                            ->icon('heroicon-o-calendar')
+                            ->date('j/M/Y'),
 
                         TextEntry::make('degree.name')
                             ->label('Grado')
@@ -396,9 +402,11 @@ class ClientResource extends Resource
                             ->date('j/M/Y'),
 
                         TextEntry::make('typeClient.name')
+                            ->label('Tipo de cliente')
                             ->icon('heroicon-o-user-group'),
 
                         TextEntry::make('typeDocument.name')
+                            ->label('Tipo de documento')
                             ->icon('heroicon-o-identification'),
                     ])->columnSpanFull(),
                     Tab::make('test_1')
@@ -419,13 +427,23 @@ class ClientResource extends Resource
                         ->icon('heroicon-m-scale')
                         ->schema([
 
-                        TextEntry::make('name')
-                            ->label('Nombre')
-                            ->icon('heroicon-o-user'),
+                            TextEntry::make('name')
+                            ->label('Nombre'),
 
-                        TextEntry::make('surname')
-                            ->label('Apellido')
-                            ->icon('heroicon-o-user'),
+                            TextEntry::make('surname')
+                            ->label('Apellido'),
+
+                            TextEntry::make('testForce.upperLimbs')
+                            ->label('Miembros superiores'),
+
+                            TextEntry::make('testForce.lowerLimbs')
+                            ->label('Miembros inferiores'),
+
+                            TextEntry::make('testForce.relationUpperLowerLimbs')
+                            ->label('Relación miembros superiores e inferiores'),
+
+                            TextEntry::make('testForce.date')
+                            ->label('Fecha'),
                     ])->columnSpanFull(),
                     Tab::make('test_3')
                         ->label('Test de antropometría')
@@ -438,6 +456,15 @@ class ClientResource extends Resource
                         TextEntry::make('surname')
                             ->label('Apellido')
                             ->icon('heroicon-o-user'),
+
+                            TextEntry::make('testForce.upperLimbs')
+                            ->label('Miembros superiores'),
+
+                            TextEntry::make('testForce.lowerLimbs')
+                            ->label('Miembros inferiores'),
+
+                            TextEntry::make('testForce.relationUpperLowerLimbs')
+                            ->label('Relación miembros superiores e inferiores'),
                     ])->columnSpanFull(),
                 ])->columns(3),
         ])->columns(1);

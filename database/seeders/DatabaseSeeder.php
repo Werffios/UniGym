@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
 
             //PaySeeder::class,
 
+            TestForceSeeder::class,
         ]);
     }
 }

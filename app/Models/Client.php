@@ -12,6 +12,7 @@ class Client extends Model
 {
     use HasFactory;
 
+    public mixed $id;
     protected $fillable = [
         'document',
         'name',
@@ -58,8 +59,8 @@ class Client extends Model
         return $this->belongsTo(TypeClientController::class);
     }
 
-    public function getActiveAttribute()
+    public function testForce(): HasMany
     {
-        return $this->attributes['active'] == 1 ? 'Activo' : 'Inactivo';
+        return $this->hasMany(TestForce::class);
     }
 }
