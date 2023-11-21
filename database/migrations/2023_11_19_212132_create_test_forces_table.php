@@ -15,28 +15,28 @@ return new class extends Migration
             $table->id();
 
             //Peso levantado en el ejercicio de press de banca plana y repeticiones
-            $table->string('benchPress')->nullable();
-            $table->string('benchPressReps')->nullable();
+            $table->string('benchPress');
+            $table->string('benchPressReps');
 
             //Pesos levantados en el ejercicio de polea alta abierta y repeticiones
-            $table->string('pulleyOpenHigh')->nullable();
-            $table->string('pulleyOpenHighReps')->nullable();
+            $table->string('pulleyOpenHigh');
+            $table->string('pulleyOpenHighReps');
 
             //Pesos levantados en el ejercicio de curl de bíceps con barra y repeticiones
-            $table->string('barbellBicepsCurl')->nullable();
-            $table->string('barbellBicepsCurlReps')->nullable();
+            $table->string('barbellBicepsCurl');
+            $table->string('barbellBicepsCurlReps');
 
             //Pesos levantados en el ejercicio de flexión de piernas y repeticiones
-            $table->string('legFlexion')->nullable();
-            $table->string('legFlexionReps')->nullable();
+            $table->string('legFlexion');
+            $table->string('legFlexionReps');
 
             //Pesos levantados en el ejercicio de extensión de piernas y repeticiones
-            $table->string('legExtension')->nullable();
-            $table->string('legExtensionReps')->nullable();
+            $table->string('legExtension');
+            $table->string('legExtensionReps');
 
             //Pesos levantados en el ejercicio de flex-ext de piernas y repeticiones
-            $table->string('legFlexExt')->nullable();
-            $table->string('legFlexExtReps')->nullable();
+            $table->string('legFlexExt');
+            $table->string('legFlexExtReps');
 
             // Campo que almacena el resumen del tren superior, es decir, los resultados de los ejercicios de tren superior (brazos, hombros, espalda, pecho)
             $table->string('upperLimbs')->nullable();
