@@ -10,6 +10,18 @@ class TestForce extends Model
     use HasFactory;
 
     protected $fillable = [
+        'benchPress',
+        'benchPressReps',
+        'pulleyOpenHigh',
+        'pulleyOpenHighReps',
+        'barbellBicepsCurl',
+        'barbellBicepsCurlReps',
+        'legFlexion',
+        'legFlexionReps',
+        'legExtension',
+        'legExtensionReps',
+        'legFlexExt',
+        'legFlexExtReps',
         'upperLimbs',
         'lowerLimbs',
         'relationUpperLowerLimbs',

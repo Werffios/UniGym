@@ -27,46 +27,76 @@ class TestForceRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-
-
             ->schema([
                 Wizard::make([
-                    Wizard\Step::make('Limbs')
+                    Wizard\Step::make('TrenSuperior')
+                        ->description('Ejercicios de tren superior')
                         ->schema([
-                            TextInput::make('upperLimbs')
+                            TextInput::make('benchPress')
                                 ->numeric()
                                 ->required()
                                 ->hint('Ingrese el valor en Kg')
-                                ->label('Miembros superiores'),
-                            TextInput::make('lowerLimbs')
+                                ->label('Press de banca plana'),
+                            TextInput::make('benchPressReps')
+                                ->numeric()
+                                ->required()
+                                ->hint('Ingrese el valor en repeticiones')
+                                ->label('Repeticiones'),
+                            TextInput::make('pulleyOpenHigh')
                                 ->numeric()
                                 ->required()
                                 ->hint('Ingrese el valor en Kg')
-                                ->label('Miembros inferiores'),
-                        ])
-                    ->label('Miembros')
-                    ->columnSpanFull(),
-                    Wizard\Step::make('Relation')
-                        ->schema([
-                            TextInput::make('relationUpperLowerLimbs')
+                                ->label('Polea alta abierta'),
+                            TextInput::make('pulleyOpenHighReps')
+                                ->numeric()
+                                ->required()
+                                ->hint('Ingrese el valor en repeticiones')
+                                ->label('Repeticiones'),
+                            TextInput::make('barbellBicepsCurl')
                                 ->numeric()
                                 ->required()
                                 ->hint('Ingrese el valor en Kg')
-                                ->label('Relación miembros superiores e inferiores (%)'),
-                        ])
-                    ->label('Relación')
-                    ->columnSpanFull(),
-                    Wizard\Step::make('Date')
-                        ->schema([
-                            DatePicker::make('date')
+                                ->label('Curl de bíceps con barra'),
+                            TextInput::make('barbellBicepsCurlReps')
+                                ->numeric()
                                 ->required()
-                                ->native(false)
-                                ->closeOnDateSelection()
-                                ->hint('Ingrese la fecha')
-                                ->label('Fecha'),
-                        ])
-                    ->label('Fecha')
-                    ->columnSpanFull(),
+                                ->hint('Ingrese el valor en repeticiones')
+                                ->label('Repeticiones'),
+                        ]),
+                    Wizard\Step::make('Tren Inferior')
+                        ->description('Ejercicios de tren inferior')
+                        ->schema([
+                            TextInput::make('legFlexion')
+                                ->numeric()
+                                ->required()
+                                ->hint('Ingrese el valor en Kg')
+                                ->label('Flexión de piernas'),
+                            TextInput::make('legFlexionReps')
+                                ->numeric()
+                                ->required()
+                                ->hint('Ingrese el valor en repeticiones')
+                                ->label('Repeticiones'),
+                            TextInput::make('legExtension')
+                                ->numeric()
+                                ->required()
+                                ->hint('Ingrese el valor en Kg')
+                                ->label('Extensión de piernas'),
+                            TextInput::make('legExtensionReps')
+                                ->numeric()
+                                ->required()
+                                ->hint('Ingrese el valor en repeticiones')
+                                ->label('Repeticiones'),
+                            TextInput::make('legFlexExt')
+                                ->numeric()
+                                ->required()
+                                ->hint('Ingrese el valor en Kg')
+                                ->label('Flex-ext de piernas'),
+                            TextInput::make('legFlexExtReps')
+                                ->numeric()
+                                ->required()
+                                ->hint('Ingrese el valor en repeticiones')
+                                ->label('Repeticiones'),
+                        ]),
                 ])
                 ->columns(2),
             ])
@@ -78,7 +108,6 @@ class TestForceRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('testForce')
             ->columns([
-
                 TextColumn::make('date')
                     ->date('j/M/Y')
                     ->label('Fecha'),

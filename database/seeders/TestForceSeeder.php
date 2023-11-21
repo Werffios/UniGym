@@ -13,6 +13,6 @@ class TestForceSeeder extends Seeder
      */
     public function run(): void
     {
-        TestForce::class::factory(4000)->create();
+        TestForce::class::factory(1000)->create();
     }
 }
