@@ -20,15 +20,13 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Select;
 
-use Filament\Infolists\Components\Tabs;
-use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\Section;
 
 use Filament\Resources\Resource;
 
-use Filament\Support\Enums\IconPosition;
 
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
@@ -331,144 +329,92 @@ class ClientResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Información del cliente')
+                ->description('En esta sección se muestra la información detallada del cliente.')
+                ->columns([
+                    'sm' => 2,
+                    'md' => 3,
+                    'xl' => 4,
+                ])
+                ->icon('heroicon-o-user')
+                ->schema([
+                    TextEntry::make('document')
+                        ->label('Documento')
+                        ->badge()
+                        ->color('success')
+                        ->copyable()
+                        ->copyMessage('Copiado al portapapeles.')
+                        ->copyMessageDuration(1500)
+                        ->icon('heroicon-o-identification'),
+
+                    IconEntry::make('active')
+                        ->label('Estado')
+                        ->boolean(),
+
+                    TextEntry::make('name')
+                        ->label('Nombre')
+                        ->icon('heroicon-o-user'),
+
+                    TextEntry::make('surname')
+                        ->label('Apellido')
+                        ->icon('heroicon-o-user'),
+
+                    TextEntry::make('birth_date')
+                        ->label('Nacimiento')
+                        ->icon('heroicon-o-cake')
+                        ->since(),
+
+                    TextEntry::make('birth_date')
+                        ->label('Fecha de nacimiento')
+                        ->icon('heroicon-o-calendar')
+                        ->date('j/M/Y'),
+
+                    TextEntry::make('degree.name')
+                        ->label('Grado')
+                        ->icon('heroicon-o-academic-cap'),
+
+                    TextEntry::make('gender')
+                        ->label('Género')
+                        ->icon('heroicon-o-users'),
+
+                    TextEntry::make('height')
+                        ->label('Altura (cm)')
+                        ->icon('heroicon-o-arrows-up-down'),
+
+                    TextEntry::make('weight')
+                        ->label('Peso (kg)')
+                        ->icon('heroicon-o-scale'),
+
+                    TextEntry::make('birth_date')
+                        ->label('Fecha de nacimiento')
+                        ->icon('heroicon-o-calendar')
+                        ->date('j/M/Y'),
+
+                    TextEntry::make('typeClient.name')
+                        ->label('Tipo de cliente')
+                        ->icon('heroicon-o-user-group'),
+
+                    TextEntry::make('typeDocument.name')
+                        ->label('Tipo de documento')
+                        ->icon('heroicon-o-identification'),
+                ])
+                    ->collapsible()
+                    ->collapsed()
+            ]);
+
+    }
+
     public static function getRelations(): array
     {
         return [
             RelationManagers\AttendancesRelationManager::class,
+            RelationManagers\TestForceRelationManager::class,
+
         ];
-    }
-
-    public static function infolist(Infolist $infolist): Infolist
-    {
-        return $infolist
-            -> schema([
-
-                Tabs::make('cliente_information')
-                    ->label('Información del cliente')
-                    ->tabs([
-                    Tab::make('Información básica')
-                        ->icon('heroicon-m-user-circle')
-                        ->schema([
-                        TextEntry::make('document')
-                            ->label('Documento')
-                            ->badge()
-                            ->color('success')
-                            ->copyable()
-                            ->copyMessage('Copiado al portapapeles.')
-                            ->copyMessageDuration(1500)
-                            ->icon('heroicon-o-identification'),
-
-                        IconEntry::make('active')
-                            ->label('Estado')
-                            ->boolean(),
-
-                        TextEntry::make('name')
-                            ->label('Nombre')
-                            ->icon('heroicon-o-user'),
-
-                        TextEntry::make('surname')
-                            ->label('Apellido')
-                            ->icon('heroicon-o-user'),
-
-                        TextEntry::make('birth_date')
-                            ->label('Nacimiento')
-                            ->icon('heroicon-o-cake')
-                            ->since(),
-
-                        TextEntry::make('birth_date')
-                            ->label('Fecha de nacimiento')
-                            ->icon('heroicon-o-calendar')
-                            ->date('j/M/Y'),
-
-                        TextEntry::make('degree.name')
-                            ->label('Grado')
-                            ->icon('heroicon-o-academic-cap'),
-
-                        TextEntry::make('gender')
-                            ->label('Género')
-                            ->icon('heroicon-o-users'),
-
-                        TextEntry::make('height')
-                            ->label('Altura (cm)')
-                            ->icon('heroicon-o-arrows-up-down'),
-
-                        TextEntry::make('weight')
-                            ->label('Peso (kg)')
-                            ->icon('heroicon-o-scale'),
-
-                        TextEntry::make('birth_date')
-                            ->label('Fecha de nacimiento')
-                            ->icon('heroicon-o-calendar')
-                            ->date('j/M/Y'),
-
-                        TextEntry::make('typeClient.name')
-                            ->label('Tipo de cliente')
-                            ->icon('heroicon-o-user-group'),
-
-                        TextEntry::make('typeDocument.name')
-                            ->label('Tipo de documento')
-                            ->icon('heroicon-o-identification'),
-                    ])->columnSpanFull(),
-                    Tab::make('test_1')
-                        ->label('Test Cardiovascular')
-                        ->icon('heroicon-m-heart')
-                        ->schema([
-
-                        TextEntry::make('name')
-                            ->label('Nombre')
-                            ->icon('heroicon-o-user'),
-
-                        TextEntry::make('surname')
-                            ->label('Apellido')
-                            ->icon('heroicon-o-user'),
-                    ])->columnSpanFull(),
-                    Tab::make('test_2')
-                        ->label('Test de fuerza')
-                        ->icon('heroicon-m-scale')
-                        ->schema([
-
-                            TextEntry::make('name')
-                            ->label('Nombre'),
-
-                            TextEntry::make('surname')
-                            ->label('Apellido'),
-
-                            TextEntry::make('testForce.upperLimbs')
-                            ->label('Miembros superiores'),
-
-                            TextEntry::make('testForce.lowerLimbs')
-                            ->label('Miembros inferiores'),
-
-                            TextEntry::make('testForce.relationUpperLowerLimbs')
-                            ->label('Relación miembros superiores e inferiores'),
-
-                            TextEntry::make('testForce.date')
-                            ->label('Fecha'),
-                    ])->columnSpanFull(),
-                    Tab::make('test_3')
-                        ->label('Test de antropometría')
-                        ->icon('heroicon-m-document-magnifying-glass')
-                        ->schema([
-                        TextEntry::make('name')
-                            ->label('Nombre')
-                            ->icon('heroicon-o-user'),
-
-                        TextEntry::make('surname')
-                            ->label('Apellido')
-                            ->icon('heroicon-o-user'),
-
-                            TextEntry::make('testForce.upperLimbs')
-                            ->label('Miembros superiores'),
-
-                            TextEntry::make('testForce.lowerLimbs')
-                            ->label('Miembros inferiores'),
-
-                            TextEntry::make('testForce.relationUpperLowerLimbs')
-                            ->label('Relación miembros superiores e inferiores'),
-                    ])->columnSpanFull(),
-                ])->columns(3),
-        ])->columns(1);
-
     }
 
     public static function getWidgets(): array

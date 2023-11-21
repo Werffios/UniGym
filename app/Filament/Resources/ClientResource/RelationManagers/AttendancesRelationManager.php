@@ -17,13 +17,16 @@ class AttendancesRelationManager extends RelationManager
 {
     protected static string $relationship = 'attendances';
 
+    public function isReadOnly(): bool
+    {
+        return false;
+    }
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('count')
-                    ->required()
-                    ->maxLength(255),
+
             ]);
     }
 
@@ -43,8 +46,14 @@ class AttendancesRelationManager extends RelationManager
                     ->label('Filtrar fechas')
                     ->form([
                         DatePicker::make('date_from')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->prefix('Desde')
                             ->label('Fecha de inicio'),
                         DatePicker::make('date_to')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->prefix('Hasta')
                             ->label('Fecha de fin'),
                     ])
                     ->query(function (Builder $query, array $data) {
@@ -62,7 +71,6 @@ class AttendancesRelationManager extends RelationManager
 
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make(),

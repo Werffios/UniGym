@@ -12,7 +12,6 @@ class Client extends Model
 {
     use HasFactory;
 
-    public mixed $id;
     protected $fillable = [
         'document',
         'name',
