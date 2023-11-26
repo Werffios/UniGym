@@ -62,4 +62,9 @@ class Client extends Model
     {
         return $this->hasMany(TestForce::class);
     }
+
+    public function testAnthropometry(): HasMany
+    {
+        return $this->hasMany(TestAnthropometry::class);
+    }
 }

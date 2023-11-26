@@ -27,7 +27,6 @@ use Filament\Infolists\Components\Section;
 
 use Filament\Resources\Resource;
 
-
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -155,7 +154,8 @@ class ClientResource extends Resource
                     ->copyMessage('Copiado al portapapeles.')
                     ->copyMessageDuration(1500)
                     ->icon('heroicon-o-identification'),
-                TextColumn::make('active')
+                IconColumn::make('active')
+                    ->boolean()
                     ->label('Estado'),
                 TextColumn::make('name')
                     ->label('Nombre')
@@ -364,11 +364,6 @@ class ClientResource extends Resource
                         ->icon('heroicon-o-user'),
 
                     TextEntry::make('birth_date')
-                        ->label('Nacimiento')
-                        ->icon('heroicon-o-cake')
-                        ->since(),
-
-                    TextEntry::make('birth_date')
                         ->label('Fecha de nacimiento')
                         ->icon('heroicon-o-calendar')
                         ->date('j/M/Y'),
@@ -413,6 +408,7 @@ class ClientResource extends Resource
         return [
             RelationManagers\AttendancesRelationManager::class,
             RelationManagers\TestForceRelationManager::class,
+            RelationManagers\TestAnthropometryRelationManager::class,
 
         ];
     }

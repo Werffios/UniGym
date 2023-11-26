@@ -6,26 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TestForce extends Model
+class TestAnthropometry extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'benchPress',
-        'benchPressReps',
-        'pulleyOpenHigh',
-        'pulleyOpenHighReps',
-        'barbellBicepsCurl',
-        'barbellBicepsCurlReps',
-        'legFlexion',
-        'legFlexionReps',
-        'legExtension',
-        'legExtensionReps',
-        'legFlexExt',
-        'legFlexExtReps',
-        'upperLimbs',
-        'lowerLimbs',
-        'relationUpperLowerLimbs',
+        'bicepCircumference',
+        'tricepCircumference',
+        'carpusPerimeter',
+        'subscapular',
+        'suprailiac',
+        'fatPercentage',
+        'IMC',
+        'IMCEvaluation',
+        'healthyWeight',
         'date',
         'client_id',
     ];
@@ -35,5 +29,4 @@ class TestForce extends Model
     {
         return $this->belongsTo(Client::class);
     }
-
 }
