@@ -63,25 +63,23 @@ return new class extends Migration
 
         // Trigger para calcular el IMC
         DB::unprepared('
+
             CREATE TRIGGER `calculatecamps` BEFORE INSERT ON `test_anthropometries` FOR EACH ROW
-            BEGIN
-                SET NEW.date = CURDATE();
-            END
-            BEGIN
-                SET NEW.fatPercentage = (1.2 * NEW.subscapular) + (0.23 * NEW.tricepCircumference) + (0.8 * NEW.suprailiac) + (0.8 * NEW.bicepCircumference) + (0.6 * NEW.carpusPerimeter);
-                -- VERIFICAR FORMULA
-            END
             BEGIN
                 DECLARE client_height DOUBLE;
                 DECLARE client_weight DOUBLE;
+
+                SET NEW.date = CURDATE();
+
+                SET NEW.fatPercentage = (1.2 * NEW.subscapular) + (0.23 * NEW.tricepCircumference) + (0.8 * NEW.suprailiac) + (0.8 * NEW.bicepCircumference) + (0.6 * NEW.carpusPerimeter);
+                -- VERIFICAR FORMULA
 
                 SELECT height, weight INTO client_height, client_weight
                 FROM clients
                 WHERE clients.id = NEW.client_id;
 
                 SET NEW.IMC = (client_weight / (client_height * client_height));
-            END
-            BEGIN
+
                 IF NEW.IMC < 18.5 THEN
                     SET NEW.IMCEvaluation = "Peso insuficiente";
                 ELSEIF NEW.IMC >= 18.5 AND NEW.IMC <= 24.9 THEN
@@ -99,17 +97,11 @@ return new class extends Migration
                 ELSEIF NEW.IMC >= 50 THEN
                     SET NEW.IMCEvaluation = "Obesidad de tipo IV (extrema)";
                 END IF;
-            END
-            BEGIN
-                DECLARE client_height DOUBLE;
-                DECLARE client_weight DOUBLE;
-
-                SELECT height, weight INTO client_height, client_weight
-                FROM clients
-                WHERE clients.id = NEW.client_id;
 
                 SET NEW.healthyWeight = (client_height * client_height) * 24.9;
             END
+
+
             '
             );
 
