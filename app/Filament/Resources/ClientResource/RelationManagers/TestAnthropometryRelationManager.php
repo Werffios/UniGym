@@ -61,11 +61,19 @@ class TestAnthropometryRelationManager extends RelationManager
                     ->date('j/M/Y')
                     ->label('Fecha'),
 
+                TextColumn::make('fatPercentage')
+                    ->label('Porcentaje de grasa'),
+
                 TextColumn::make('healthyWeight')
                     ->label('Peso saludable'),
 
                 TextColumn::make('IMC')
                     ->label('IMC'),
+
+                TextColumn::make('IMCEvaluation')
+                    ->label('Evaluación IMC'),
+
+
 
             ])->defaultSort('id', 'desc')
             ->filters([

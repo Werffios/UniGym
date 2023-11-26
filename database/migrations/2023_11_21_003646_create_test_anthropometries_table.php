@@ -71,14 +71,14 @@ return new class extends Migration
 
                 SET NEW.date = CURDATE();
 
-                SET NEW.fatPercentage = (1.2 * NEW.subscapular) + (0.23 * NEW.tricepCircumference) + (0.8 * NEW.suprailiac) + (0.8 * NEW.bicepCircumference) + (0.6 * NEW.carpusPerimeter);
+                SET NEW.fatPercentage = Round((1.2 * NEW.subscapular) + (0.23 * NEW.tricepCircumference) + (0.8 * NEW.suprailiac) + (0.8 * NEW.bicepCircumference) + (0.6 * NEW.carpusPerimeter), 2);
                 -- VERIFICAR FORMULA
 
                 SELECT height, weight INTO client_height, client_weight
                 FROM clients
                 WHERE clients.id = NEW.client_id;
 
-                SET NEW.IMC = (client_weight / (client_height * client_height));
+                SET NEW.IMC = Round((client_weight / (client_height/100 * client_height/100)), 2);
 
                 IF NEW.IMC < 18.5 THEN
                     SET NEW.IMCEvaluation = "Peso insuficiente";
@@ -98,7 +98,7 @@ return new class extends Migration
                     SET NEW.IMCEvaluation = "Obesidad de tipo IV (extrema)";
                 END IF;
 
-                SET NEW.healthyWeight = (client_height * client_height) * 24.9;
+                SET NEW.healthyWeight = Round((client_height/100 * client_height/100) * 22, 2);
             END
 
 
