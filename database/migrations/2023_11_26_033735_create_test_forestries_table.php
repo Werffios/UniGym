@@ -46,153 +46,74 @@ return new class extends Migration
 
         // Trigger para calcular el VO2max
 
-        DB::unprepared('
+        DB::unprepared("
 
-        CREATE TRIGGER tr_calculate_VO2max
-BEFORE INSERT ON test_forestries
-FOR EACH ROW
-BEGIN
-    DECLARE edad INTEGER;
-    DECLARE VO2max INTEGER;
-    DECLARE FCmax INTEGER;
-    DECLARE FCReposo INTEGER;
-    DECLARE FCReserva INTEGER;
-    DECLARE VO2maxEvaluation VARCHAR(50);
-    DECLARE gender VARCHAR(10);
-    SET edad = (SELECT TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) FROM clients WHERE id = NEW.client_id);
-    SET gender = (SELECT gender FROM clients WHERE id = NEW.client_id);
-    SET FCmax = 191.5 - (0.007 * edad * edad);
-    SET FCReposo = NEW.restingPulse;
-    SET FCReserva = FCmax - FCReposo;
-    SET VO2max = (15 * FCmax) / FCReposo;
-    SET VO2maxEvaluation = CASE
-        WHEN gender = "Masculino"
-        THEN
+        CREATE TRIGGER after_insert_test_forestries
+        before INSERT ON test_forestries
+        FOR EACH ROW
+        BEGIN
+            -- Variables de entrada desde la tabla insertada
+            DECLARE edad INT;
+            DECLARE genero VARCHAR(255);
+            DECLARE n INT;
+            -- Variables para la clasificación
+            DECLARE clasificacion VARCHAR(255);
+
+            -- hallar genero y guardar en la columna
+            SELECT gender INTO genero FROM clients WHERE id = NEW.client_id;
+
+            -- Obtener los valores insertados
+            SET n = NEW.VO2max;
+
+            -- Calcular la edad restando la fecha actual y la fecha de nacimiento
+            SELECT TIMESTAMPDIFF(YEAR, c.birth_date, CURDATE())
+            INTO edad
+            FROM clients c
+            WHERE c.id = NEW.client_id;
+            -- Lógica de clasificación (la misma que antes)
+            -- Casos para edad entre 15 y 19
+
+        -- Actualizar el atributo VO2maxEvaluation en la tabla
             CASE
-                WHEN edad BETWEEN 13 AND 19 THEN
-                    CASE
-                        WHEN VO2max < 35.0 THEN "Very Poor"
-                        WHEN VO2max <= 38.3 THEN "Poor"
-                        WHEN VO2max <= 45.1 THEN "Fair"
-                        WHEN VO2max <= 50.9 THEN "Good"
-                        WHEN VO2max <= 55.9 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                WHEN edad BETWEEN 20 AND 29 THEN
-                    CASE
-                        WHEN VO2max < 33.0 THEN "Very Poor"
-                        WHEN VO2max <= 36.4 THEN "Poor"
-                        WHEN VO2max <= 42.4 THEN "Fair"
-                        WHEN VO2max <= 46.4 THEN "Good"
-                        WHEN VO2max <= 52.4 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                WHEN edad BETWEEN 30 AND 39 THEN
-                    CASE
-                        WHEN VO2max < 31.5 THEN "Very Poor"
-                        WHEN VO2max <= 35.4 THEN "Poor"
-                        WHEN VO2max <= 40.9 THEN "Fair"
-                        WHEN VO2max <= 44.9 THEN "Good"
-                        WHEN VO2max <= 49.4 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                WHEN edad BETWEEN 40 AND 49 THEN
-                    CASE
-                        WHEN VO2max < 30.2 THEN "Very Poor"
-                        WHEN VO2max <= 33.5 THEN "Poor"
-                        WHEN VO2max <= 38.9 THEN "Fair"
-                        WHEN VO2max <= 43.7 THEN "Good"
-                        WHEN VO2max <= 48.0 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                WHEN edad BETWEEN 50 AND 59 THEN
-                    CASE
-                        WHEN VO2max < 26.1 THEN "Very Poor"
-                        WHEN VO2max <= 30.9 THEN "Poor"
-                        WHEN VO2max <= 35.7 THEN "Fair"
-                        WHEN VO2max <= 40.9 THEN "Good"
-                        WHEN VO2max <= 45.3 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                ELSE
-                    CASE
-                        WHEN VO2max < 20.5 THEN "Very Poor"
-                        WHEN VO2max <= 26.0 THEN "Poor"
-                        WHEN VO2max <= 32.2 THEN "Fair"
-                        WHEN VO2max <= 36.4 THEN "Good"
-                        WHEN VO2max <= 44.2 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-            END
-        WHEN gender = "Femenino" THEN
-            CASE
-                WHEN edad BETWEEN 13 AND 19 THEN
-                    CASE
-                        WHEN VO2max < 25.0 THEN "Very Poor"
-                        WHEN VO2max <= 30.9 THEN "Poor"
-                        WHEN VO2max <= 34.9 THEN "Fair"
-                        WHEN VO2max <= 38.9 THEN "Good"
-                        WHEN VO2max <= 41.9 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                WHEN edad BETWEEN 20 AND 29 THEN
-                    CASE
-                        WHEN VO2max < 23.6 THEN "Very Poor"
-                        WHEN VO2max <= 28.9 THEN "Poor"
-                        WHEN VO2max <= 32.9 THEN "Fair"
-                        WHEN VO2max <= 36.9 THEN "Good"
-                        WHEN VO2max <= 41.0 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                WHEN edad BETWEEN 30 AND 39 THEN
-                    CASE
-                        WHEN VO2max < 22.8 THEN "Very Poor"
-                        WHEN VO2max <= 26.9 THEN "Poor"
-                        WHEN VO2max <= 31.4 THEN "Fair"
-                        WHEN VO2max <= 35.6 THEN "Good"
-                        WHEN VO2max <= 40.0 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                WHEN edad BETWEEN 40 AND 49 THEN
-                    CASE
-                        WHEN VO2max < 21.0 THEN "Very Poor"
-                        WHEN VO2max <= 24.4 THEN "Poor"
-                        WHEN VO2max <= 28.9 THEN "Fair"
-                        WHEN VO2max <= 32.8 THEN "Good"
-                        WHEN VO2max <= 36.9 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                WHEN edad BETWEEN 50 AND 59 THEN
-                    CASE
-                        WHEN VO2max < 20.2 THEN "Very Poor"
-                        WHEN VO2max <= 22.7 THEN "Poor"
-                        WHEN VO2max <= 26.9 THEN "Fair"
-                        WHEN VO2max <= 31.4 THEN "Good"
-                        WHEN VO2max <= 35.7 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-                ELSE
-                    CASE
-                        WHEN VO2max < 17.5 THEN "Very Poor"
-                        WHEN VO2max <= 20.1 THEN "Poor"
-                        WHEN VO2max <= 24.4 THEN "Fair"
-                        WHEN VO2max <= 30.2 THEN "Good"
-                        WHEN VO2max <= 31.4 THEN "Excellent"
-                        ELSE "Superior"
-                    END
-            END
-        ELSE "No se pudo calcular"
-        END;
-    SET NEW.FCmax = FCmax;
-    SET NEW.FCReposo = FCReposo;
-    SET NEW.FCReserva = FCReserva;
-    SET NEW.VO2max = VO2max;
-    SET NEW.VO2maxEvaluation = VO2maxEvaluation;
-END;
+            WHEN edad BETWEEN 15 AND 19 THEN
+                CASE
+                    WHEN genero = 'Masculino' THEN
+                        CASE
+                            WHEN n > 56 THEN SET clasificacion = 'Superior';
+                            WHEN n BETWEEN 52 AND 56 THEN SET clasificacion = 'Excelente';
+                            WHEN n BETWEEN 47 AND 51 THEN SET clasificacion = 'Muy bien';
+                            WHEN n BETWEEN 42 AND 46 THEN SET clasificacion = 'Bien';
+                            WHEN n BETWEEN 37 AND 41 THEN SET clasificacion = 'Regular';
+                            WHEN n BETWEEN 32 AND 36 THEN SET clasificacion = 'Pobre';
+                            WHEN n < 32 THEN SET clasificacion = 'Muy pobre';
+                            ELSE
+                                SET clasificacion = 'else n';
+                        END CASE;
+                    WHEN genero = 'Femenino' THEN
+                        CASE
+                            WHEN n > 53 THEN SET clasificacion = 'Superior';
+                            WHEN n BETWEEN 49 AND 53 THEN SET clasificacion = 'Excelente';
+                            WHEN n BETWEEN 44 AND 48 THEN SET clasificacion = 'Muy bien';
+                            WHEN n BETWEEN 39 AND 43 THEN SET clasificacion = 'Bien';
+                            WHEN n BETWEEN 34 AND 38 THEN SET clasificacion = 'Regular';
+                            WHEN n BETWEEN 29 AND 33 THEN SET clasificacion = 'Pobre';
+                            WHEN n < 29 THEN SET clasificacion = 'Muy pobre';
+                            ELSE
+                                SET clasificacion = 'else n';
+                        END CASE;
+                    ELSE
+                        SET clasificacion = genero;
+                END CASE;
+            ELSE
+                SET clasificacion = 'else genero';
+        END CASE;
+            -- Actualizar el atributo VO2maxEvaluation en la tabla
+            SET new.VO2maxEvaluation = clasificacion;
+
+        end
 
 
-
-            '
+         "
         );
 
     }
@@ -202,7 +123,7 @@ END;
      */
     public function down(): void
     {
-        DB::unprepared("DROP TRIGGER IF EXISTS tr_calculate_VO2max");
+        DB::unprepared("DROP TRIGGER IF EXISTS after_insert_test_forestries");
         Schema::dropIfExists('test_forestries');
     }
 };
