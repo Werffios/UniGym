@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AccruedResource\Pages;
-use App\Filament\Resources\AccruedResource\RelationManagers;
 use App\Models\Pay;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
@@ -20,22 +19,20 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 class AccruedResource extends Resource
 {
     protected static ?string $model = Pay::class;
-
     protected static ?string $modelLabel = 'recaudo';
-
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
-
     protected static ?string $navigationLabel = 'Recaudos';
-
     protected static ?string $navigationGroup = 'Finanzas';
+    public static function canCreate(): bool
+    {
+        return false;
+    }
 
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                //
-            ]);
+            ->schema([]);
     }
 
     public static function table(Table $table): Table
@@ -70,7 +67,6 @@ class AccruedResource extends Resource
                         Sum::make()
                         ->money('COP')
                     ),
-
             ])
             ->filters([
                 Filter::make('start_date')
@@ -113,22 +109,14 @@ class AccruedResource extends Resource
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListAccrueds::route('/'),
-            'create' => Pages\CreateAccrued::route('/create'),
+            //'create' => Pages\CreateAccrued::route('/create'),
             // 'edit' => Pages\EditAccrued::route('/{record}/edit'),
         ];
     }

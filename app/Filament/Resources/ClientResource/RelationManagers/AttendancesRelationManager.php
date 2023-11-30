@@ -17,6 +17,7 @@ class AttendancesRelationManager extends RelationManager
 {
     protected static string $relationship = 'attendances';
 
+
     protected static ?string $title = 'Asistencias';
 
     public function isReadOnly(): bool
@@ -83,7 +84,6 @@ class AttendancesRelationManager extends RelationManager
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
             ]);
     }
 }

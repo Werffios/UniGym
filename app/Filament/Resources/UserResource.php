@@ -21,8 +21,8 @@ class UserResource extends Resource
 
     protected static ?string $modelLabel = 'usuario';
     protected static ?string $navigationIcon = 'heroicon-o-key';
-
     protected static ?string $navigationGroup = 'Mantenimiento';
+
 
     public static function form(Form $form): Form
     {
@@ -49,7 +49,6 @@ class UserResource extends Resource
                     ->password()
                     ->autocomplete('new-password')
                     ->required()
-                    ->visibleOn('create')
                     ->confirmed()
                     ->minLength(8)
                     ->maxLength(255)
@@ -60,7 +59,6 @@ class UserResource extends Resource
                     ->password()
                     ->autocomplete('new-password')
                     ->required()
-                    ->visibleOn('create')
                     ->minLength(8)
                     ->maxLength(255)
                     ->placeholder('Ingrese la contraseña del usuario')

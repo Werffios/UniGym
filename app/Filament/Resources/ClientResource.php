@@ -20,6 +20,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Select;
 
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
@@ -38,6 +39,7 @@ use Filament\Tables\Actions\{ActionGroup, Action as TableAction};
 
 use Illuminate\Database\QueryException;
 
+use Filament\Notifications\Notification;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 
@@ -215,9 +217,10 @@ class ClientResource extends Resource
             ->actions([
 
                 TableAction::make('suscription_add')
-                    ->label('Suscribir cliente')
+                    ->label('')
                     ->icon('heroicon-o-currency-dollar')
                     ->iconButton()
+                    ->tooltip('Suscribir cliente')
                     ->action(function (Client $client) {
                         try {
                             $client->pay()->create([
@@ -226,8 +229,19 @@ class ClientResource extends Resource
                             $client->update([
                                 'active' => true,
                             ]);
+                            Notification::make()
+                                ->title('Suscripción activada.')
+                                ->icon('heroicon-o-currency-dollar')
+                                ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ha sido suscrito.')
+                                ->iconColor('primary')
+                                ->send();
                         } catch (QueryException $e) {
                             if ($e->getCode() == 23000) {
+                                Notification::make()
+                                    ->title('Alerta')
+                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ya tiene una suscripción activa.')
+                                    ->danger()
+                                    ->send();
                                 return back()->with('error', 'Entrada duplicada para el cliente y la fecha de suscripción.');
                             }
                             throw $e;
@@ -236,16 +250,28 @@ class ClientResource extends Resource
                     ),
 
                 TableAction::make('attendance_add')
+                    ->label('')
                     ->icon('heroicon-o-hand-thumb-up')
                     ->iconButton()
+                    ->tooltip('Agregar asistencia')
                     ->action(function (Client $client) {
 
                         try {
                             $client->attendances()->create([
                                 'client_id' => $client->id,
+                                Notification::make()
+                                    ->title('Asistencia agregada.')
+                                    ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
+                                    ->success()
+                                    ->send()
                             ]);
                         } catch (QueryException $e) {
                             if ($e->getCode() == 23000) {
+                                Notification::make()
+                                    ->title('Alerta')
+                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ya tiene una asistencia el día de hoy.')
+                                    ->warning()
+                                    ->send();
                                 return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
                             }
                             throw $e;
@@ -254,15 +280,27 @@ class ClientResource extends Resource
                     }
                 ),
                 TableAction::make('attendance_remove')
+                    ->label('')
                     ->icon('heroicon-o-hand-thumb-down')
                     ->iconButton()
+                    ->tooltip('Eliminar asistencia')
                     ->action(function (Client $client) {
                         try {
                             $client->attendances()
                                 ->where('date_attendance', Carbon::today())
                                 ->delete();
+                                Notification::make()
+                                ->title('Asistencia eliminada.')
+                                ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
+                                ->success()
+                                ->send();
                         } catch (QueryException $e) {
-                            if ($e->getCode() == 23000) {
+                            if ($e->getCode() == 23000 or $e->getCode() == 22007) {
+                                Notification::make()
+                                    ->title('Alerta')
+                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' no tiene una asistencia el día de hoy.')
+                                    ->warning()
+                                    ->send();
                                 return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
                             }
                             throw $e;
@@ -371,9 +409,11 @@ class ClientResource extends Resource
                         ->date('j/M/Y'),
 
                     TextEntry::make('birth_date')
-                        ->label('Edad (años)')
+                        ->label('Edad')
                         ->icon('heroicon-o-cake')
-                        ->date(Carbon::parse($infolist->record->birth_date)->age ),
+                        ->suffix(' años')
+                        ->date(Carbon::parse($infolist->record->birth_date)->age )
+                    ,
 
                     TextEntry::make('degree.name')
                         ->label('Grado')
@@ -384,11 +424,13 @@ class ClientResource extends Resource
                         ->icon('heroicon-o-users'),
 
                     TextEntry::make('height')
-                        ->label('Altura (cm)')
+                        ->label('Altura')
+                        ->suffix(' cm')
                         ->icon('heroicon-o-arrows-up-down'),
 
                     TextEntry::make('weight')
-                        ->label('Peso (kg)')
+                        ->label('Peso')
+                        ->suffix(' kg')
                         ->icon('heroicon-o-scale'),
 
                     TextEntry::make('typeClient.name')
@@ -402,30 +444,55 @@ class ClientResource extends Resource
                     ->collapsible()
                     ->collapsed(),
                 Section::make('Resumen de test')
-                ->description('En esta sección se muestra el resumen de los test realizados al cliente.')
-                ->columns([
-                    'sm' => 2,
-                    'md' => 3,
-                    'xl' => 4,
-                ])
-                ->icon('heroicon-o-clipboard-document-list')
-                ->schema([
-                    TextEntry::make('testForce')
-                        ->label('Test de fuerza')
-                        ,
+                    ->description('En esta sección se muestra el resumen de los test realizados al cliente.')
+                    ->columns([
+                        'sm' => 3,
+                    ])
+                    ->icon('heroicon-o-clipboard-document-list')
+                    ->schema([
+                        Fieldset::make('Fuerza')
+                            ->schema([
+                                TextEntry::make('testForce')
+                                    ->label('Test de fuerza')
+                                    ->getStateUsing(function (Client $client) {
+                                        $testForce = $client->testForce()->latest('date')->first();
+                                        if ($testForce) {
+                                            return $testForce['relationUpperLowerLimbs'] . ' %';
+                                        }
+                                        return 'No se ha realizado el test.';
+                                    }),
 
-                    TextEntry::make('testAnthropometry')
-                        ->label('Test de antropometría')
-                        ->icon('heroicon-o-clipboard-document-list'),
+                                TextEntry::make('testAnthropometry')
+                                    ->label('Test de antropometría')
+                                    ->listWithLineBreaks()
+                                    ->getStateUsing(function (Client $client) {
+                                        $testAnthropometry = $client->testAnthropometry()->latest('date')->first();
+                                        if ($testAnthropometry) {
+                                            return [$testAnthropometry['fatPercentage'] . '% porcentaje de grasa.', $testAnthropometry['IMC'] . ' IMC', $testAnthropometry['healthyWeight'] . ' kg peso saludable'];
+                                        }
+                                        return 'No se ha realizado el test.';
+                                    }),
 
-                    TextEntry::make('testForestry')
-                        ->label('Test de Forestry'),
+                                TextEntry::make('testForestry')
+                                    ->label('Test de forestery')
+                                    ->getStateUsing(function (Client $client) {
+                                        $testForestry = $client->testForestry()->latest('date')->first();
+                                        if ($testForestry) {
+                                            return $testForestry['VO2'] . ' ml/kg/min';
+                                        }
+                                        return 'No se ha realizado el test.';
+                                    }),
+                            ])
+                            ->columns([
+                                'sm' => 3,
+                                'md' => 3,
+                                'xl' => 3,
+                            ]),
+                    ])
+                    ->collapsible()
+                    ->collapsed()
 
-                    TextEntry::make('testCicloergometer')
-                        ->label('Test de cicloergómetro'),
-
-                ])
-                    ->collapsible(),
+                ,
 
             ]);
 

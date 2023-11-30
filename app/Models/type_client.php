@@ -10,6 +10,12 @@ class type_client extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'fee',
+        'months',
+    ];
+
 
     // Relación uno a muchos con la tabla clients
     public function clients() : HasMany

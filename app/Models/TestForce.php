@@ -31,6 +31,7 @@ class TestForce extends Model
     ];
 
     // Relación uno a muchos con la tabla clients
+
     public function clients() : BelongsTo
     {
         return $this->belongsTo(Client::class);
