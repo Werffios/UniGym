@@ -38,6 +38,7 @@ class UserResource extends Resource
                     ->hint('El nombre debe ser único.'),
                 TextInput::make('email')->label('Correo electrónico')
                     ->required()
+                    ->unique()
                     ->email()
                     ->minLength(2)
                     ->maxLength(255)
@@ -45,6 +46,17 @@ class UserResource extends Resource
                     ->helperText('Escribe el correo electrónico del usuario.')
                     ->hint('El correo electrónico debe ser único.'),
                 TextInput::make('password')->label('Contraseña')
+                    ->password()
+                    ->autocomplete('new-password')
+                    ->required()
+                    ->visibleOn('create')
+                    ->confirmed()
+                    ->minLength(8)
+                    ->maxLength(255)
+                    ->placeholder('Ingrese la contraseña del usuario')
+                    ->helperText('Escribe la contraseña del usuario.')
+                    ->hint('La contraseña debe tener al menos 8 caracteres.'),
+                TextInput::make('password_confirmation')->label('Confirmar contraseña')
                     ->password()
                     ->autocomplete('new-password')
                     ->required()

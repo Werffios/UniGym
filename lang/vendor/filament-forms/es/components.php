@@ -284,11 +284,11 @@ return [
         'actions' => [
 
             'previous_step' => [
-                'label' => 'Anterior',
+                'label' => 'Paso Anterior',
             ],
 
             'next_step' => [
-                'label' => 'Siguiente',
+                'label' => 'Paso Siguiente',
             ],
 
         ],

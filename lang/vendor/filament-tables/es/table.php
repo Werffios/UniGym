@@ -28,6 +28,7 @@ return [
         'search' => [
             'label' => 'Búsqueda',
             'placeholder' => 'Buscar',
+            'indicator' => 'Buscando',
         ],
 
     ],

@@ -27,13 +27,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Crea el disparador
-        $triggerSQL = "
-            CREATE TRIGGER set_start_and_end_date_on_insert
+        DB::unprepared(
+            'CREATE TRIGGER set_start_and_end_date_on_insert
             BEFORE INSERT ON pays
             FOR EACH ROW
-            BEGIN
-                DECLARE monthsToAdd INT;
+                BEGIN
+            DECLARE monthsToAdd INT;
                 DECLARE feeToAdd FLOAT;
 
                 SELECT months, fee INTO monthsToAdd, feeToAdd FROM type_clients WHERE id = NEW.client_id;
@@ -42,10 +41,11 @@ return new class extends Migration
                 SET NEW.end_date = IF(monthsToAdd = 2, DATE_SUB(DATE_ADD(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY), INTERVAL MOD(MONTH(CURDATE()), 2) MONTH), INTERVAL 1 DAY), DATE_ADD(NEW.start_date, INTERVAL monthsToAdd MONTH));
                 SET NEW.amount = feeToAdd;
             END;
-        ";
+            '
+        );
 
-        DB::unprepared($triggerSQL);
     }
+
 
     /**
      * Reverse the migrations.

@@ -56,8 +56,9 @@ class ClientResource extends Resource
                 TextInput::make('document')->label('Documento del cliente')
                     ->numeric()
                     ->required()
-                    ->minLength(2)
-                    ->maxLength(12)
+                    ->minLength(3)
+                    ->maxLength(20)
+                    ->unique(ignoreRecord: true)
                     ->placeholder('Ingrese el documento del cliente')
                     ->helperText('Escribe el documento del cliente.')
                     ->hint('El documento debe ser único.'),
@@ -74,6 +75,7 @@ class ClientResource extends Resource
                 TextInput::make('name')->label('Nombre del cliente')
                     ->required()
                     ->autocapitalize('words')
+                    ->alpha()
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el nombre del cliente')
@@ -368,6 +370,11 @@ class ClientResource extends Resource
                         ->icon('heroicon-o-calendar')
                         ->date('j/M/Y'),
 
+                    TextEntry::make('birth_date')
+                        ->label('Edad (años)')
+                        ->icon('heroicon-o-cake')
+                        ->date(Carbon::parse($infolist->record->birth_date)->age ),
+
                     TextEntry::make('degree.name')
                         ->label('Grado')
                         ->icon('heroicon-o-academic-cap'),
@@ -384,11 +391,6 @@ class ClientResource extends Resource
                         ->label('Peso (kg)')
                         ->icon('heroicon-o-scale'),
 
-                    TextEntry::make('birth_date')
-                        ->label('Fecha de nacimiento')
-                        ->icon('heroicon-o-calendar')
-                        ->date('j/M/Y'),
-
                     TextEntry::make('typeClient.name')
                         ->label('Tipo de cliente')
                         ->icon('heroicon-o-user-group'),
@@ -398,7 +400,33 @@ class ClientResource extends Resource
                         ->icon('heroicon-o-identification'),
                 ])
                     ->collapsible()
-                    ->collapsed()
+                    ->collapsed(),
+                Section::make('Resumen de test')
+                ->description('En esta sección se muestra el resumen de los test realizados al cliente.')
+                ->columns([
+                    'sm' => 2,
+                    'md' => 3,
+                    'xl' => 4,
+                ])
+                ->icon('heroicon-o-clipboard-document-list')
+                ->schema([
+                    TextEntry::make('testForce')
+                        ->label('Test de fuerza')
+                        ,
+
+                    TextEntry::make('testAnthropometry')
+                        ->label('Test de antropometría')
+                        ->icon('heroicon-o-clipboard-document-list'),
+
+                    TextEntry::make('testForestry')
+                        ->label('Test de Forestry'),
+
+                    TextEntry::make('testCicloergometer')
+                        ->label('Test de cicloergómetro'),
+
+                ])
+                    ->collapsible(),
+
             ]);
 
     }
@@ -409,6 +437,7 @@ class ClientResource extends Resource
             RelationManagers\AttendancesRelationManager::class,
             RelationManagers\TestForceRelationManager::class,
             RelationManagers\TestAnthropometryRelationManager::class,
+            RelationManagers\TestForestryRelationManager::class,
 
         ];
     }

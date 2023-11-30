@@ -67,4 +67,11 @@ class Client extends Model
     {
         return $this->hasMany(TestAnthropometry::class);
     }
+
+    public function testForestry(): HasMany
+    {
+        return $this->hasMany(TestForestry::class);
+    }
+
+
 }

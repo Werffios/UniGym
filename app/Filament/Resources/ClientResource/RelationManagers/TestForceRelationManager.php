@@ -18,6 +18,8 @@ class TestForceRelationManager extends RelationManager
 {
     protected static string $relationship = 'testForce';
 
+    protected static ?string $title = 'Test de fuerza';
+
 
     public function isReadOnly(): bool
     {

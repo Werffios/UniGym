@@ -19,6 +19,8 @@ class TestAnthropometryRelationManager extends RelationManager
 {
     protected static string $relationship = 'testAnthropometry';
 
+    protected static ?string $title = 'Test de antropometría';
+
 
     public function isReadOnly(): bool
     {
@@ -49,6 +51,7 @@ class TestAnthropometryRelationManager extends RelationManager
                     ->label('Suprailíaco')
                     ->required()
                     ->numeric(),
+
             ]);
     }
 
@@ -57,6 +60,7 @@ class TestAnthropometryRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('date')
             ->columns([
+
                 TextColumn::make('date')
                     ->date('j/M/Y')
                     ->label('Fecha'),

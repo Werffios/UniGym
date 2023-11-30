@@ -49,14 +49,10 @@ return new class extends Migration
             $table->date('date')->nullable();
 
             // Añade las columnas de llave foránea
-            // Foranea de la tabla clients
             $table->unsignedBigInteger('client_id');
-            // Foranea de la tabla de valoracion de grasa llamada fat_evaluations
-            //$table->unsignedBigInteger('fat_evaluation_id');
 
             // Crea las restricciones de llave foránea
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
-            //$table->foreign('fat_evaluation_id')->references('id')->on('fat_evaluations')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -100,7 +96,6 @@ return new class extends Migration
 
                 SET NEW.healthyWeight = Round((client_height/100 * client_height/100) * 22, 2);
             END
-
 
             '
             );
