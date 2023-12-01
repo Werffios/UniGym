@@ -23,10 +23,6 @@ class TestForce extends Model
         'legExtensionReps',
         'legFlexExt',
         'legFlexExtReps',
-        'upperLimbs',
-        'lowerLimbs',
-        'relationUpperLowerLimbs',
-        'date',
         'client_id',
     ];
 

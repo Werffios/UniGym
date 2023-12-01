@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ClientResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -17,13 +18,31 @@ class TestForestryRelationManager extends RelationManager
 
     protected static ?string $title = 'Test de Forestry';
 
+
+    public function isReadOnly(): bool
+    {
+        return false;
+    }
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('date')
+                TextInput::make('restingPulse')
+                    ->numeric()
                     ->required()
-                    ->maxLength(255),
+                    ->hint('Ingrese el valor en pulsaciones por minuto')
+                    ->label('Pulso en reposo'),
+                TextInput::make('effortPulse')
+                    ->numeric()
+                    ->required()
+                    ->hint('Ingrese el valor en pulsaciones por minuto')
+                    ->label('Pulso en esfuerzo'),
+                TextInput::make('recoveryPulse')
+                    ->numeric()
+                    ->required()
+                    ->hint('Ingrese el valor en pulsaciones por minuto')
+                    ->label('Pulso en recuperación'), // 74 156 132
             ]);
     }
 
@@ -70,7 +89,6 @@ class TestForestryRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

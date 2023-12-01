@@ -11,16 +11,9 @@ class TestForestry extends Model
     use HasFactory;
 
     protected $fillable = [
-        'bicepCircumference',
-        'tricepCircumference',
-        'carpusPerimeter',
-        'subscapular',
-        'suprailiac',
-        'fatPercentage',
-        'IMC',
-        'IMCEvaluation',
-        'healthyWeight',
-        'date',
+        'restingPulse',
+        'effortPulse',
+        'recoveryPulse',
         'client_id',
     ];
 

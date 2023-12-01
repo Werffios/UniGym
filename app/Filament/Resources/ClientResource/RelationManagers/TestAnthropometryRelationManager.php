@@ -39,10 +39,6 @@ class TestAnthropometryRelationManager extends RelationManager
                     ->label('Circunferencia del tricep')
                     ->required()
                     ->numeric(),
-                TextInput::make('carpusPerimeter')
-                    ->label('Perímetro del carpo')
-                    ->required()
-                    ->numeric(),
                 TextInput::make('subscapular')
                     ->label('Subescapular')
                     ->required()
@@ -66,10 +62,15 @@ class TestAnthropometryRelationManager extends RelationManager
                     ->label('Fecha'),
 
                 TextColumn::make('fatPercentage')
-                    ->label('Porcentaje de grasa'),
+                    ->label('Grasa')
+                    ->suffix(' %'),
+
+                TextColumn::make('fatPercentageEvaluation')
+                    ->label('Evaluación grasa'),
 
                 TextColumn::make('healthyWeight')
-                    ->label('Peso saludable'),
+                    ->label('Peso saludable')
+                    ->suffix(' kg'),
 
                 TextColumn::make('IMC')
                     ->label('IMC'),

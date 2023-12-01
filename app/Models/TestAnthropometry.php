@@ -13,14 +13,8 @@ class TestAnthropometry extends Model
     protected $fillable = [
         'bicepCircumference',
         'tricepCircumference',
-        'carpusPerimeter',
         'subscapular',
         'suprailiac',
-        'fatPercentage',
-        'IMC',
-        'IMCEvaluation',
-        'healthyWeight',
-        'date',
         'client_id',
     ];
 

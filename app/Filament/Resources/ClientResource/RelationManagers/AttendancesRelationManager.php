@@ -6,9 +6,11 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\Filter;
 
@@ -36,13 +38,18 @@ class AttendancesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('count')
             ->columns([
                 TextColumn::make('date_attendance')
                     ->label('Fecha de asistencia')
                     ->dateTime('d/M/Y')
                     ->sortable(),
-
+                TextColumn::make('client.name')
+                    ->label('')
+                    ->summarize(
+                        Count::make()
+                            ->label('Total de asistencias')
+                    )
+                    ->searchable(),
             ])->defaultSort('id', 'desc')
             ->filters([
                 Filter::make('date_attendance')

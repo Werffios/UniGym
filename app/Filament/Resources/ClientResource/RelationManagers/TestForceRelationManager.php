@@ -108,7 +108,7 @@ class TestForceRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('testForce')
+            ->recordTitleAttribute('date')
             ->columns([
                 TextColumn::make('date')
                     ->date('j/M/Y')
@@ -121,7 +121,8 @@ class TestForceRelationManager extends RelationManager
                     ->label('Miembros inferiores'),
 
                 TextColumn::make('relationUpperLowerLimbs')
-                    ->label('Relación miembros superiores e inferiores (%)'),
+                    ->label('Relación miembros superiores e inferiores')
+                    ->suffix(' %'),
             ])->defaultSort('id', 'desc')
             ->filters([
                 Filter::make('date')

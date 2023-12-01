@@ -450,10 +450,12 @@ class ClientResource extends Resource
                     ])
                     ->icon('heroicon-o-clipboard-document-list')
                     ->schema([
-                        Fieldset::make('Fuerza')
+                        Fieldset::make('Resumen de los ultimos test')
                             ->schema([
                                 TextEntry::make('testForce')
                                     ->label('Test de fuerza')
+                                    ->tooltip('Relación tren superior e inferior')
+                                    ->hint($infolist->record->testForce()->latest('date')->first()['date'] ?? '')
                                     ->getStateUsing(function (Client $client) {
                                         $testForce = $client->testForce()->latest('date')->first();
                                         if ($testForce) {
@@ -464,6 +466,8 @@ class ClientResource extends Resource
 
                                 TextEntry::make('testAnthropometry')
                                     ->label('Test de antropometría')
+                                    ->tooltip('Porcentaje de grasa, IMC y peso saludable')
+                                    ->hint($infolist->record->testAnthropometry()->latest('date')->first()['date'] ?? '')
                                     ->listWithLineBreaks()
                                     ->getStateUsing(function (Client $client) {
                                         $testAnthropometry = $client->testAnthropometry()->latest('date')->first();
@@ -475,10 +479,12 @@ class ClientResource extends Resource
 
                                 TextEntry::make('testForestry')
                                     ->label('Test de forestery')
+                                    ->tooltip('VO2')
+                                    ->hint($infolist->record->testForestry()->latest('date')->first()['date'] ?? '')
                                     ->getStateUsing(function (Client $client) {
                                         $testForestry = $client->testForestry()->latest('date')->first();
                                         if ($testForestry) {
-                                            return $testForestry['VO2'] . ' ml/kg/min';
+                                            return $testForestry['VO2max'] . ' ml/kg/min';
                                         }
                                         return 'No se ha realizado el test.';
                                     }),
