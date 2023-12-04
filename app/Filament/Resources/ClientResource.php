@@ -338,6 +338,7 @@ class ClientResource extends Resource
                     )
                     ->searchable()
                     ->default(null),
+
                 SelectFilter::make('type_document_id')
                     ->label('Tipo de documento')
                     ->multiple()
@@ -346,6 +347,7 @@ class ClientResource extends Resource
                     )
                     ->searchable()
                     ->default(null),
+
                 SelectFilter::make('degree_id')
                     ->label('Grado')
                     ->multiple()
@@ -373,23 +375,14 @@ class ClientResource extends Resource
     {
         return $infolist
             ->schema([
-                Section::make('Información del cliente')
-                ->description('En esta sección se muestra la información detallada del cliente.')
-                ->columns([
-                    'sm' => 2,
-                    'md' => 3,
-                    'xl' => 4,
-                ])
-                ->icon('heroicon-o-user')
-                ->schema([
-                    TextEntry::make('document')
-                        ->label('Documento')
-                        ->badge()
-                        ->color('success')
-                        ->copyable()
-                        ->copyMessage('Copiado al portapapeles.')
-                        ->copyMessageDuration(1500)
-                        ->icon('heroicon-o-identification'),
+                Section::make([TextEntry::make('document')
+                    ->label('Documento')
+                    ->badge()
+                    ->color('success')
+                    ->copyable()
+                    ->copyMessage('Copiado al portapapeles.')
+                    ->copyMessageDuration(1500)
+                    ->icon('heroicon-o-identification'),
 
                     IconEntry::make('active')
                         ->label('Estado')
@@ -440,61 +433,69 @@ class ClientResource extends Resource
                     TextEntry::make('typeDocument.name')
                         ->label('Tipo de documento')
                         ->icon('heroicon-o-identification'),
+                    ])
+                    ->heading('Información del cliente')
+                ->description('En esta sección se muestra la información detallada del cliente.')
+                ->columns([
+                    'sm' => 2,
+                    'md' => 3,
+                    'xl' => 4,
                 ])
+                ->icon('heroicon-o-user')
                     ->collapsible()
                     ->collapsed(),
-                Section::make('Resumen de test')
+                Section::make([
+                    Fieldset::make('Resumen de los ultimos test')
+                        ->schema([
+                            TextEntry::make('testForce')
+                                ->label('Test de fuerza')
+                                ->tooltip('Relación tren superior e inferior')
+                                ->hint($infolist->record->testForce()->latest('date')->first()['date'] ?? '')
+                                ->getStateUsing(function (Client $client) {
+                                    $testForce = $client->testForce()->latest('date')->first();
+                                    if ($testForce) {
+                                        return $testForce['relationUpperLowerLimbs'] . ' %';
+                                    }
+                                    return 'No se ha realizado el test.';
+                                }),
+
+                            TextEntry::make('testAnthropometry')
+                                ->label('Test de antropometría')
+                                ->tooltip('Porcentaje de grasa, IMC y peso saludable')
+                                ->hint($infolist->record->testAnthropometry()->latest('date')->first()['date'] ?? '')
+                                ->listWithLineBreaks()
+                                ->getStateUsing(function (Client $client) {
+                                    $testAnthropometry = $client->testAnthropometry()->latest('date')->first();
+                                    if ($testAnthropometry) {
+                                        return [$testAnthropometry['fatPercentage'] . '% porcentaje de grasa.', $testAnthropometry['IMC'] . ' IMC', $testAnthropometry['healthyWeight'] . ' kg peso saludable'];
+                                    }
+                                    return 'No se ha realizado el test.';
+                                }),
+
+                            TextEntry::make('testForestry')
+                                ->label('Test de forestery')
+                                ->tooltip('VO2')
+                                ->hint($infolist->record->testForestry()->latest('date')->first()['date'] ?? '')
+                                ->getStateUsing(function (Client $client) {
+                                    $testForestry = $client->testForestry()->latest('date')->first();
+                                    if ($testForestry) {
+                                        return $testForestry['VO2max'] . ' ml/kg/min';
+                                    }
+                                    return 'No se ha realizado el test.';
+                                }),
+                        ])
+                        ->columns([
+                            'sm' => 3,
+                            'md' => 3,
+                            'xl' => 3,
+                        ]),
+                ])
+                    ->heading('Resumen de los últimos test')
                     ->description('En esta sección se muestra el resumen de los test realizados al cliente.')
                     ->columns([
                         'sm' => 3,
                     ])
                     ->icon('heroicon-o-clipboard-document-list')
-                    ->schema([
-                        Fieldset::make('Resumen de los ultimos test')
-                            ->schema([
-                                TextEntry::make('testForce')
-                                    ->label('Test de fuerza')
-                                    ->tooltip('Relación tren superior e inferior')
-                                    ->hint($infolist->record->testForce()->latest('date')->first()['date'] ?? '')
-                                    ->getStateUsing(function (Client $client) {
-                                        $testForce = $client->testForce()->latest('date')->first();
-                                        if ($testForce) {
-                                            return $testForce['relationUpperLowerLimbs'] . ' %';
-                                        }
-                                        return 'No se ha realizado el test.';
-                                    }),
-
-                                TextEntry::make('testAnthropometry')
-                                    ->label('Test de antropometría')
-                                    ->tooltip('Porcentaje de grasa, IMC y peso saludable')
-                                    ->hint($infolist->record->testAnthropometry()->latest('date')->first()['date'] ?? '')
-                                    ->listWithLineBreaks()
-                                    ->getStateUsing(function (Client $client) {
-                                        $testAnthropometry = $client->testAnthropometry()->latest('date')->first();
-                                        if ($testAnthropometry) {
-                                            return [$testAnthropometry['fatPercentage'] . '% porcentaje de grasa.', $testAnthropometry['IMC'] . ' IMC', $testAnthropometry['healthyWeight'] . ' kg peso saludable'];
-                                        }
-                                        return 'No se ha realizado el test.';
-                                    }),
-
-                                TextEntry::make('testForestry')
-                                    ->label('Test de forestery')
-                                    ->tooltip('VO2')
-                                    ->hint($infolist->record->testForestry()->latest('date')->first()['date'] ?? '')
-                                    ->getStateUsing(function (Client $client) {
-                                        $testForestry = $client->testForestry()->latest('date')->first();
-                                        if ($testForestry) {
-                                            return $testForestry['VO2max'] . ' ml/kg/min';
-                                        }
-                                        return 'No se ha realizado el test.';
-                                    }),
-                            ])
-                            ->columns([
-                                'sm' => 3,
-                                'md' => 3,
-                                'xl' => 3,
-                            ]),
-                    ])
                     ->collapsible()
                     ->collapsed()
 

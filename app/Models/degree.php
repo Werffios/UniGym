@@ -14,6 +14,7 @@ class degree extends Model
     protected $fillable = [
         'name',
         'type_degree_id',
+        'faculty_id',
     ];
 
     // Relación uno a muchos con la tabla type_degrees
