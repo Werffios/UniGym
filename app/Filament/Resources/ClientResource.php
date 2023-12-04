@@ -362,6 +362,13 @@ class ClientResource extends Resource
                     ->options(
                         Faculty::all()->pluck('name', 'id')
                     ),
+                SelectFilter::make('gender')
+                    ->label('Género')
+                    ->options([
+                        'Masculino' => 'Masculino',
+                        'Femenino' => 'Femenino',
+                    ])
+                    ->default(null),
                 TernaryFilter::make('active')
                     ->label('Suscripción')
                     ->placeholder('Todos los clientes')
