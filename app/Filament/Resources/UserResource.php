@@ -94,7 +94,8 @@ class UserResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])->paginated([10, 25, 50])
+            ->defaultPaginationPageOption(25);
     }
 
     public static function getRelations(): array

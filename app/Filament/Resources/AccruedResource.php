@@ -109,7 +109,8 @@ class AccruedResource extends Resource
                 ]),
             ])
             ->emptyStateActions([
-            ]);
+            ])->paginated([50, 100, 200])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getPages(): array

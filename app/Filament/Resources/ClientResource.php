@@ -8,6 +8,7 @@ use App\Filament\Resources\ClientResource\RelationManagers;
 
 use App\Models\Client;
 use App\Models\Faculty;
+use App\Models\Pay;
 use App\Models\type_client;
 use App\Models\type_document;
 use App\Models\degree;
@@ -32,12 +33,14 @@ use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Actions\{ActionGroup, Action as TableAction};
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
 
 use Filament\Notifications\Notification;
@@ -217,7 +220,6 @@ class ClientResource extends Resource
             ])->defaultSort('id', 'desc')
 
             ->actions([
-
                 TableAction::make('suscription_add')
                     ->label('')
                     ->icon('heroicon-o-currency-dollar')
@@ -385,7 +387,8 @@ class ClientResource extends Resource
                     ->label('Tipo de cliente')
                     ->multiple()
                     ->options(
-                        type_client::all()->pluck('name', 'id')
+                        fn (): array =>
+                        type_client::all()->pluck('name', 'id')->all()
                     )
                     ->searchable()
                     ->default(null),
@@ -394,7 +397,8 @@ class ClientResource extends Resource
                     ->label('Tipo de documento')
                     ->multiple()
                     ->options(
-                        type_document::all()->pluck('name', 'id')
+                        fn (): array =>
+                        type_document::all()->pluck('name', 'id')->all()
                     )
                     ->searchable()
                     ->default(null),
@@ -403,16 +407,39 @@ class ClientResource extends Resource
                     ->label('Grado')
                     ->multiple()
                     ->options(
-                        degree::all()->pluck('name', 'id')
+                        fn (): array =>
+                        degree::all()->pluck('name', 'id')->all()
                     )
                     ->searchable()
                     ->default(null),
-                SelectFilter::make('degree.faculty_id')
-                    ->label('Facultad')
-                    ->multiple()
-                    ->options(
-                        Faculty::all()->pluck('name', 'id')
-                    ),
+
+                Filter::make('faculty')
+                    ->form([
+                        Select::make('faculty_id')
+                            ->label('Facultad')
+                            ->multiple()
+                            ->options(
+                                fn (): array =>
+                                Faculty::all()->pluck('name', 'id')->all()
+                            )
+                            ->searchable()
+                            ->default(null),
+                    ])->query(function (Builder $query, array $data) {
+                        if (isset($data['faculty_id']) && $data['faculty_id'] != null) {
+                            return $query->whereHas('degree', function (Builder $query) use ($data) {
+                                $query->whereIn('faculty_id', $data['faculty_id']);
+                            });
+                        }
+                        return $query;
+                    })->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['faculty_id'] ?? null) {
+                            $facultyNames = Faculty::whereIn('id', $data['faculty_id'])->pluck('name')->all();
+                            $indicators[] = 'Facultad: ' . implode(', ', $facultyNames);
+                        }
+                        return $indicators;
+                    }),
+
                 SelectFilter::make('gender')
                     ->label('Género')
                     ->options([
@@ -420,13 +447,65 @@ class ClientResource extends Resource
                         'Femenino' => 'Femenino',
                     ])
                     ->default(null),
+
                 TernaryFilter::make('active')
                     ->label('Suscripción')
                     ->placeholder('Todos los clientes')
                     ->trueLabel('Clientes con suscripción activa')
                     ->falseLabel('Clientes con suscripción inactiva'),
 
-            ]);
+                Filter::make('between_dates')
+                    ->label('Filtrar fechas')
+                    ->form([
+                        DatePicker::make('date_from')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->prefix('Desde')
+                            ->label('Fecha de inicio'),
+                        DatePicker::make('date_to')
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->prefix('Hasta')
+                            ->label('Fecha de fin'),
+                    ])->columns(2)
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['date_from'] ?? null) {
+                            $indicators[] = 'Fecha: desde ' . Carbon::parse($data['date_from'])->format('j/M/Y');
+                        }
+                        if ($data['date_to'] ?? null) {
+                            if ($indicators != null) {
+                                $indicators[] = 'Rango de fechas: desde ' . Carbon::parse($data['date_from'])->format('j/M/Y') . ' & hasta ' . Carbon::parse($data['date_to'])->format('j/M/Y');
+                            }
+                            else{
+                                $indicators[] = 'Fecha: hasta ' . Carbon::parse($data['date_to'])->format('j/M/Y');
+                            }
+                        }
+
+                        return $indicators;
+
+                    })
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when(
+                                $data['date_from'] ?? null,
+                                fn (Builder $query, $date) => $query->whereHas('pay', function (Builder $query) use ($date) {
+                                    $query->where('start_date', '>=', $date);
+                                }),
+                            )
+                            ->when(
+                                $data['date_to'] ?? null,
+                                fn (Builder $query, $date) => $query->whereHas('pay', function (Builder $query) use ($date) {
+                                    $query->where('start_date', '<=', $date);
+                                }),
+                            );
+
+                    }),
+
+            ])
+            ->filtersFormColumns(3)
+            ->paginated([10, 50, 100, 200])
+            ->defaultPaginationPageOption(10);
     }
 
     public static function infolist(Infolist $infolist): Infolist

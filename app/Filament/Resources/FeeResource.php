@@ -4,10 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FeeResource\Pages;
 use App\Filament\Resources\FeeResource\RelationManagers;
+use App\Models\Client;
+use App\Models\Pay;
 use App\Models\type_client;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -66,6 +70,23 @@ class FeeResource extends Resource
                     ->money('COP')
                     ->searchable(),
                 TextColumn::make('months'),
+            ])->headerActions([
+                Tables\Actions\Action::make('restoreStatus')
+                    ->label('Reiniciar suscripciones')
+                    ->icon('heroicon-o-arrow-path')
+                    ->color('primary')
+                    ->action(function () {
+                        Client::where('active', true)->update(['active' => false]);
+                        Pay::where('start_date', '>=', Carbon::today())->update(['start_date' => Carbon::yesterday()]);
+                        Pay::where('end_date', '>=', Carbon::today())->update(['end_date' => Carbon::yesterday()]);
+                        Notification::make()
+                            ->title('Suscripciones reiniciadas.')
+                            ->body('Se han reiniciado las suscripciones de los clientes.')
+                            ->success()
+                            ->send();
+                        return back()->with('success', 'Suscripciones reiniciadas correctamente.');
+                    }),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -77,7 +98,8 @@ class FeeResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])->paginated([10, 25, 50])
+            ->defaultPaginationPageOption(25);
     }
 
     public static function getRelations(): array

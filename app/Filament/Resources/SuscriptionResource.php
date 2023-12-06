@@ -54,10 +54,10 @@ class SuscriptionResource extends Resource
                     ->money('COP'),
                 TextColumn::make('start_date')
                     ->label('Fecha de inicio')
-                    ->searchable(),
+                    ->date('j/M/Y'),
                 TextColumn::make('end_date')
                     ->label('Fecha de fin')
-                    ->searchable(),
+                    ->date('j/M/Y'),
 
             ])
             ->filters([
@@ -99,7 +99,8 @@ class SuscriptionResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])->paginated([10, 25, 50])
+            ->defaultPaginationPageOption(25);
     }
 
     public static function getRelations(): array
