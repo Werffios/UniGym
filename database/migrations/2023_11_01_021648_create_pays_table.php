@@ -28,7 +28,7 @@ return new class extends Migration
         });
 
         DB::unprepared(
-            'CREATE TRIGGER set_start_and_end_date_on_insert
+            'CREATE TRIGGER pays_trigger
             BEFORE INSERT ON pays
             FOR EACH ROW
                 BEGIN
@@ -37,7 +37,7 @@ return new class extends Migration
 
                 SELECT months, fee INTO monthsToAdd, feeToAdd FROM type_clients WHERE id = NEW.client_id;
 
-                SET NEW.start_date = CURDATE();
+                SET NEW.start_date = NOW();
                 SET NEW.end_date = IF(monthsToAdd = 2, DATE_SUB(DATE_ADD(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY), INTERVAL MOD(MONTH(CURDATE()), 2) MONTH), INTERVAL 1 DAY), DATE_ADD(NEW.start_date, INTERVAL monthsToAdd MONTH));
                 SET NEW.amount = feeToAdd;
             END;
@@ -53,7 +53,7 @@ return new class extends Migration
     public function down(): void
     {
         // Elimina el disparador
-        DB::unprepared("DROP TRIGGER IF EXISTS set_start_and_end_date_on_insert");
+        DB::unprepared("DROP TRIGGER IF EXISTS pays_trigger");
 
         Schema::dropIfExists('pays');
     }

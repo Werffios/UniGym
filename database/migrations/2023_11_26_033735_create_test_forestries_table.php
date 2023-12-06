@@ -48,7 +48,7 @@ return new class extends Migration
 
         DB::unprepared("
 
-        CREATE TRIGGER after_insert_test_forestries
+        CREATE TRIGGER test_forestries_trigger
         BEFORE INSERT ON test_forestries
         FOR EACH ROW
         BEGIN
@@ -64,7 +64,7 @@ return new class extends Migration
             SELECT gender INTO genero FROM clients WHERE id = NEW.client_id;
 
             -- declarar fecha
-            SET NEW.date = CURDATE();
+            SET NEW.date = NOW();
 
             -- calcular VO2max
             CASE
@@ -467,7 +467,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared("DROP TRIGGER IF EXISTS after_insert_test_forestries");
+        DB::unprepared("DROP TRIGGER IF EXISTS test_forestries_trigger");
         Schema::dropIfExists('test_forestries');
     }
 };

@@ -60,21 +60,21 @@ return new class extends Migration
         // Trigger para calcular el IMC
         DB::unprepared("
 
-            CREATE TRIGGER `calculatecamps` BEFORE INSERT ON `test_anthropometries` FOR EACH ROW
+            CREATE TRIGGER test_anthropometries_trigger
+            BEFORE INSERT ON `test_anthropometries`
+            FOR EACH ROW
             BEGIN
                 DECLARE client_height DOUBLE;
                 DECLARE client_weight DOUBLE;
                 DECLARE client_age INT;
                 DECLARE client_gender VARCHAR(20);
                 DECLARE client_sumOfSkinfolds DOUBLE;
+                DECLARE addFatPercentage INT;
 
                 SELECT gender INTO client_gender FROM clients WHERE id = NEW.client_id;
-
                 SELECT TIMESTAMPDIFF(YEAR, c.birth_date, CURDATE()) INTO client_age FROM clients c WHERE c.id = NEW.client_id;
-
                 SET client_sumOfSkinfolds = NEW.subscapular + NEW.suprailiac + NEW.tricepCircumference + NEW.bicepCircumference;
-
-                SET NEW.date = CURDATE();
+                SET NEW.date = NOW();
 
                 SELECT height, weight INTO client_height, client_weight
                 FROM clients
@@ -1104,13 +1104,7 @@ return new class extends Migration
                                         SET NEW.fatPercentage = '52.3';
                                 END CASE;
                         END CASE;
-
-
                 END CASE;
-
-                SELECT height, weight INTO client_height, client_weight
-                FROM clients
-                WHERE clients.id = NEW.client_id;
 
                 SET NEW.IMC = Round((client_weight / (client_height/100 * client_height/100)), 2);
 
@@ -1134,6 +1128,51 @@ return new class extends Migration
 
                 SET NEW.healthyWeight = Round((client_height/100 * client_height/100) * 22.5, 2);
 
+                SET addFatPercentage = 0;
+                CASE
+                    WHEN client_age >= 20 AND client_age < 30 THEN
+                        CASE
+                            WHEN client_gender = 'Masculino' THEN
+                                SET addFatPercentage = 1;
+                            WHEN client_gender = 'Femenino' THEN
+                                SET addFatPercentage = 6;
+                        END CASE;
+                    WHEN client_age >= 30 AND client_age < 40 THEN
+                        CASE
+                            WHEN client_gender = 'Masculino' THEN
+                                SET addFatPercentage = 2;
+                            WHEN client_gender = 'Femenino' THEN
+                                SET addFatPercentage = 7;
+                        END CASE;
+                    WHEN client_age >= 40 AND client_age < 50 THEN
+                        CASE
+                            WHEN client_gender = 'Masculino' THEN
+                                SET addFatPercentage = 3;
+                            WHEN client_gender = 'Femenino' THEN
+                                SET addFatPercentage = 8;
+                        END CASE;
+                    WHEN client_age >= 50 THEN
+                        CASE
+                            WHEN client_gender = 'Masculino' THEN
+                                SET addFatPercentage = 4;
+                            WHEN client_gender = 'Femenino' THEN
+                                SET addFatPercentage = 9;
+                        END CASE;
+                END CASE;
+
+                CASE
+                    WHEN NEW.fatPercentage < 12.5 + addFatPercentage THEN
+                        SET NEW.fatPercentageEvaluation = 'BAJO';
+                    WHEN NEW.fatPercentage >= 12.5 + addFatPercentage AND NEW.fatPercentage < 17.5 + addFatPercentage THEN
+                        SET NEW.fatPercentageEvaluation = 'BIEN';
+                    WHEN NEW.fatPercentage >= 17.5 + addFatPercentage AND NEW.fatPercentage < 22.5 + addFatPercentage THEN
+                        SET NEW.fatPercentageEvaluation = 'MODERADO';
+                    WHEN NEW.fatPercentage >= 22.5 + addFatPercentage AND NEW.fatPercentage < 27.5 + addFatPercentage THEN
+                        SET NEW.fatPercentageEvaluation = 'ALTO';
+                    WHEN NEW.fatPercentage >= 27.5 + addFatPercentage THEN
+                        SET NEW.fatPercentageEvaluation = 'OBESO';
+                END CASE;
+
             END
 
             "
@@ -1146,7 +1185,7 @@ return new class extends Migration
      */
     public function down(): void
     {   // Elimina el disparador
-        DB::unprepared("DROP TRIGGER IF EXISTS calculatecamps");
+        DB::unprepared("DROP TRIGGER IF EXISTS test_anthropometries_trigger");
         Schema::dropIfExists('test_anthropometries');
 
     }
