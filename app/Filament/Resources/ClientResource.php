@@ -224,13 +224,13 @@ class ClientResource extends Resource
                     ->iconButton()
                     ->tooltip('Suscribir cliente')
                     ->action(function (Client $client) {
-                        try { //where('active'== true)
+                        try {
                             if ($client['active'] == true)
                             {
                                 Notification::make()
                                     ->title('Alerta')
                                     ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ya tiene una suscripción activa.')
-                                    ->warning()
+                                    ->danger()
                                     ->send();
                                 return back()->with('error', 'Entrada duplicada para el cliente y la fecha de suscripción.');
                             }
@@ -271,7 +271,7 @@ class ClientResource extends Resource
                     ->action(function (Client $client) {
 
                         try {
-                            if ($client->attendances()->where('date_attendance', Carbon::today())->count() == 0)
+                            if ($client->attendances()->where('date_attendance', Carbon::today())->count() == 0 and $client['active'] == true)
                             {
                                 $client->attendances()->create([
                                     'client_id' => $client->id,
@@ -282,6 +282,15 @@ class ClientResource extends Resource
                                     ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
                                     ->success()
                                     ->send();
+                                return back()->with('success', 'Asistencia agregada correctamente.');
+                            }
+                            elseif ($client['active'] == false){
+                                Notification::make()
+                                    ->title('Alerta')
+                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' no tiene una suscripción activa.')
+                                    ->danger()
+                                    ->send();
+                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
                             }
                             else{
                                 Notification::make()
@@ -307,7 +316,7 @@ class ClientResource extends Resource
                     ->tooltip('Eliminar asistencia')
                     ->action(function (Client $client) {
                         try {
-                            if ($client->attendances()->where('date_attendance', Carbon::today())->count() != 0) {
+                            if ($client->attendances()->where('date_attendance', Carbon::today())->count() != 0 and $client['active'] == true) {
                                 $client->attendances()
                                     ->where('date_attendance', Carbon::today())
                                     ->delete();
@@ -316,6 +325,15 @@ class ClientResource extends Resource
                                     ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
                                     ->success()
                                     ->send();
+                                return back()->with('success', 'Asistencia eliminada correctamente.');
+                            }
+                            elseif ($client['active'] == false){
+                                Notification::make()
+                                    ->title('Alerta')
+                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' no tiene una suscripción activa.')
+                                    ->danger()
+                                    ->send();
+                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
                             }
                             else {
                                 Notification::make()

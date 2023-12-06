@@ -24,5 +24,8 @@ return [
     'string' => 'El campo :attribute debe ser una cadena de caracteres',
     'alpha' => 'El campo :attribute debe contener solo letras',
     'min_digits' => 'El campo :attribute debe tener al menos :min_digits dígitos',
+    'max_digits' => 'El campo :attribute no puede tener más de :max_digits dígitos',
+    'between_digits' => 'El campo :attribute debe tener entre :min_digits y :max_digits dígitos',
+    'between' => 'El campo :attribute debe estar entre :min y :max',
 
 ];

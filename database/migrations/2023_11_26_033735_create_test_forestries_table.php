@@ -49,7 +49,7 @@ return new class extends Migration
         DB::unprepared("
 
         CREATE TRIGGER after_insert_test_forestries
-        before INSERT ON test_forestries
+        BEFORE INSERT ON test_forestries
         FOR EACH ROW
         BEGIN
             -- Variables de entrada desde la tabla insertada
@@ -66,7 +66,7 @@ return new class extends Migration
             -- declarar fecha
             SET NEW.date = CURDATE();
 
-        -- calcular VO2max
+            -- calcular VO2max
             CASE
                 WHEN genero = 'Masculino' THEN SET VO2 = 111.33 - 0.42 * New.effortPulse;
                 WHEN genero = 'Femenino' THEN SET VO2 = 65.81 - 0.1847 * New.effortPulse;
@@ -85,9 +85,8 @@ return new class extends Migration
             -- Lógica de clasificación (la misma que antes)
             -- Casos para edad entre 15 y 19
 
-        -- Actualizar el atributo VO2maxEvaluation en la tabla
+            -- Actualizar el atributo VO2maxEvaluation en la tabla
             CASE
-            -- 1 caso de edades
             WHEN edad BETWEEN 15 AND 19 THEN
                 CASE
                     WHEN genero = 'Masculino' THEN

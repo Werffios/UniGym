@@ -309,12 +309,10 @@ class TestForceRelationManager extends RelationManager
                                 ->label('Fuerza/Peso'),
                         ])->columns(7),
 
-
-
-
                     ])
                     ->iconButton()
-                    ->icon('heroicon-o-arrows-pointing-out')
+                    ->icon('heroicon-o-window')
+                    ->color('primary')
                     ->tooltip('Ver detalles del test de fuerza')
                     ->label('')
                 ,
