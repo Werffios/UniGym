@@ -1,3 +1,10 @@
+
+        <!-- Autores - UniGym -->
+        <!-- 01 diciembre 2023 -->
+        <!-- Nicolás Alonso Suárez - https://github.com/Werffios -->
+        <!-- Luis Felipe Pulgar -->
+
+
 @if (isset($data))
     <script>
         window.filamentData = @js($data)

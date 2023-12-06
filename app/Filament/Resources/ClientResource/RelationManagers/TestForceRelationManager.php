@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources\ClientResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Forms\Form;
+use App\Models\Client;
+use Filament\Forms\Components\Fieldset;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Forms\Form;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Wizard;
 
 class TestForceRelationManager extends RelationManager
@@ -152,11 +153,175 @@ class TestForceRelationManager extends RelationManager
                     }),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->createAnother(false)
+                    ->label('Agregar test de fuerza'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->mutateRecordDataUsing(
+                        function (array $data) {
+
+                            $weight = Client::find($data['client_id'])->weight;
+
+                            $dataForce = [
+                                'benchPressMaxForce' => round($data['benchPress'] * 100 / (102.78 - (2.78 * $data['benchPressReps']))),
+                                'pulleyOpenHighMaxForce' => round($data['pulleyOpenHigh'] * 100 / (102.78 - (2.78 * $data['pulleyOpenHighReps']))),
+                                'barbellBicepsCurlMaxForce' => round($data['barbellBicepsCurl'] * 100 / (102.78 - (2.78 * $data['barbellBicepsCurlReps']))),
+
+                                'flexionLegsMaxForce' => round($data['legFlexion'] * 100 / (102.78 - (2.78 * $data['legFlexionReps']))),
+                                'legExtensionMaxForce' => round($data['legExtension'] * 100 / (102.78 - (2.78 * $data['legExtensionReps']))),
+                                'flexExtLegsMaxForce' => round($data['legFlexExt'] * 100 / (102.78 - (2.78 * $data['legFlexExtReps']))),
+                            ];
+
+                            $dataForce['benchPressForce/Peso'] = round($dataForce['benchPressMaxForce'] / $weight, 2);
+                            $dataForce['pulleyOpenHighForce/Peso'] = round($dataForce['pulleyOpenHighMaxForce'] / $weight, 2);
+                            $dataForce['barbellBicepsCurlForce/Peso'] = round($dataForce['barbellBicepsCurlMaxForce'] / $weight, 2);
+                            $dataForce['flexionLegsForce/Peso'] = round($dataForce['flexionLegsMaxForce'] / $weight, 2);
+                            $dataForce['legExtensionForce/Peso'] = round($dataForce['legExtensionMaxForce'] / $weight, 2);
+                            $dataForce['flexExtLegsForce/Peso'] = round($dataForce['flexExtLegsMaxForce'] / $weight, 2);
+
+                            $dataForce['benchPressForce75'] = round($dataForce['benchPressMaxForce'] * 0.75, 2);
+                            $dataForce['pulleyOpenHighForce75'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.75, 2);
+                            $dataForce['barbellBicepsCurlForce75'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.75, 2);
+                            $dataForce['flexionLegsForce75'] = round($dataForce['flexionLegsMaxForce'] * 0.75, 2);
+                            $dataForce['legExtensionForce75'] = round($dataForce['legExtensionMaxForce'] * 0.75, 2);
+                            $dataForce['flexExtLegsForce75'] = round($dataForce['flexExtLegsMaxForce'] * 0.75, 2);
+
+                            $dataForce['benchPressForce70'] = round($dataForce['benchPressMaxForce'] * 0.70, 2);
+                            $dataForce['pulleyOpenHighForce70'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.70, 2);
+                            $dataForce['barbellBicepsCurlForce70'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.70, 2);
+                            $dataForce['flexionLegsForce70'] = round($dataForce['flexionLegsMaxForce'] * 0.70, 2);
+                            $dataForce['legExtensionForce70'] = round($dataForce['legExtensionMaxForce'] * 0.70, 2);
+                            $dataForce['flexExtLegsForce70'] = round($dataForce['flexExtLegsMaxForce'] * 0.70, 2);
+
+                            $dataForce['benchPressForce65'] = round($dataForce['benchPressMaxForce'] * 0.65, 2);
+                            $dataForce['pulleyOpenHighForce65'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.65, 2);
+                            $dataForce['barbellBicepsCurlForce65'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.65, 2);
+                            $dataForce['flexionLegsForce65'] = round($dataForce['flexionLegsMaxForce'] * 0.65, 2);
+                            $dataForce['legExtensionForce65'] = round($dataForce['legExtensionMaxForce'] * 0.65, 2);
+                            $dataForce['flexExtLegsForce65'] = round($dataForce['flexExtLegsMaxForce'] * 0.65, 2);
+
+                            $dataForce['benchPressForce60'] = round($dataForce['benchPressMaxForce'] * 0.60, 2);
+                            $dataForce['pulleyOpenHighForce60'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.60, 2);
+                            $dataForce['barbellBicepsCurlForce60'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.60, 2);
+                            $dataForce['flexionLegsForce60'] = round($dataForce['flexionLegsMaxForce'] * 0.60, 2);
+                            $dataForce['legExtensionForce60'] = round($dataForce['legExtensionMaxForce'] * 0.60, 2);
+                            $dataForce['flexExtLegsForce60'] = round($dataForce['flexExtLegsMaxForce'] * 0.60, 2);
+
+                            return $dataForce;
+                        }
+                    )
+                    ->form([
+                        Fieldset::make('Press de banca plana')
+                            ->schema([
+                            TextInput::make('benchPressMaxForce')
+                                ->label('Máxima'),
+                            TextInput::make('benchPressForce75')
+                                ->label('75%'),
+                            TextInput::make('benchPressForce70')
+                                ->label('70%'),
+                            TextInput::make('benchPressForce65')
+                                ->label('65%'),
+                            TextInput::make('benchPressForce60')
+                                ->label('60%'),
+                            TextInput::make('benchPressForce/Peso')
+                                ->label('Fuerza/Peso'),
+                        ])->columns(7),
+
+                        Fieldset::make('Polea alta abierta')
+                            ->schema([
+                            TextInput::make('pulleyOpenHighMaxForce')
+                                ->label('Máxima'),
+                            TextInput::make('pulleyOpenHighForce75')
+                                ->label('75%'),
+                            TextInput::make('pulleyOpenHighForce70')
+                                ->label('70%'),
+                            TextInput::make('pulleyOpenHighForce65')
+                                ->label('65%'),
+                            TextInput::make('pulleyOpenHighForce60')
+                                ->label('60%'),
+                            TextInput::make('pulleyOpenHighForce/Peso')
+                                ->label('Fuerza/Peso'),
+                        ])->columns(7),
+
+                        Fieldset::make('Curl de bíceps con barra')
+                            ->schema([
+                            TextInput::make('barbellBicepsCurlMaxForce')
+                                ->label('Máxima'),
+                            TextInput::make('barbellBicepsCurlForce75')
+                                ->label('75%'),
+                            TextInput::make('barbellBicepsCurlForce70')
+                                ->label('70%'),
+                            TextInput::make('barbellBicepsCurlForce65')
+                                ->label('65%'),
+                            TextInput::make('barbellBicepsCurlForce60')
+                                ->label('60%'),
+                            TextInput::make('barbellBicepsCurlForce/Peso')
+                                ->label('Fuerza/Peso'),
+                        ])->columns(7),
+
+                        Fieldset::make('Flexión de piernas')
+                            ->schema([
+                            TextInput::make('flexionLegsMaxForce')
+                                ->label('Máxima'),
+                            TextInput::make('flexionLegsForce75')
+                                ->label('75%'),
+                            TextInput::make('flexionLegsForce70')
+                                ->label('70%'),
+                            TextInput::make('flexionLegsForce65')
+                                ->label('65%'),
+                            TextInput::make('flexionLegsForce60')
+                                ->label('60%'),
+                            TextInput::make('flexionLegsForce/Peso')
+                                ->label('Fuerza/Peso'),
+                        ])->columns(7),
+
+                        Fieldset::make('Extensión de piernas')
+                            ->schema([
+                            TextInput::make('legExtensionMaxForce')
+                                ->label('Máxima'),
+                            TextInput::make('legExtensionForce75')
+                                ->label('75%'),
+                            TextInput::make('legExtensionForce70')
+                                ->label('70%'),
+                            TextInput::make('legExtensionForce65')
+                                ->label('65%'),
+                            TextInput::make('legExtensionForce60')
+                                ->label('60%'),
+                            TextInput::make('legExtensionForce/Peso')
+                                ->label('Fuerza/Peso'),
+                        ])->columns(7),
+
+                        Fieldset::make('Flex-ext de piernas')
+                            ->schema([
+                            TextInput::make('flexExtLegsMaxForce')
+                                ->label('Máxima'),
+                            TextInput::make('flexExtLegsForce75')
+                                ->label('75%'),
+                            TextInput::make('flexExtLegsForce70')
+                                ->label('70%'),
+                            TextInput::make('flexExtLegsForce65')
+                                ->label('65%'),
+                            TextInput::make('flexExtLegsForce60')
+                                ->label('60%'),
+                            TextInput::make('flexExtLegsForce/Peso')
+                                ->label('Fuerza/Peso'),
+                        ])->columns(7),
+
+
+
+
+                    ])
+                    ->iconButton()
+                    ->icon('heroicon-o-arrows-pointing-out')
+                    ->tooltip('Ver detalles del test de fuerza')
+                    ->label('')
+                ,
+                Tables\Actions\DeleteAction::make()
+                    ->iconButton()
+                    ->tooltip('Eliminar test de fuerza')
+                    ->label(''),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

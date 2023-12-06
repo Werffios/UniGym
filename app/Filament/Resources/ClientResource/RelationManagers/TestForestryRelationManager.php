@@ -42,7 +42,7 @@ class TestForestryRelationManager extends RelationManager
                     ->numeric()
                     ->required()
                     ->hint('Ingrese el valor en pulsaciones por minuto')
-                    ->label('Pulso en recuperación'), // 74 156 132
+                    ->label('Pulso en recuperación'),
             ]);
     }
 
@@ -56,40 +56,50 @@ class TestForestryRelationManager extends RelationManager
                     ->label('Fecha'),
 
                 TextColumn::make('restingPulse')
-                    ->label('Pulso en reposo'),
+                    ->label('Pulso en reposo')
+                    ->suffix(' ppm'),
 
                 TextColumn::make('effortPulse')
-                    ->label('Pulso en esfuerzo'),
+                    ->label('Pulso en esfuerzo')
+                    ->suffix(' ppm'),
 
                 TextColumn::make('recoveryPulse')
-                    ->label('Pulso en recuperación'),
+                    ->label('Pulso en recuperación')
+                    ->suffix(' ppm'),
 
                 TextColumn::make('VO2max')
-                    ->label('VO2max'),
+                    ->label('VO2max')
+                    ->suffix(' ml/kg/min'),
 
                 TextColumn::make('VO2maxEvaluation')
                     ->label('Valoración VO2max'),
 
                 TextColumn::make('FCmax')
-                    ->label('FCmax'),
+                    ->label('FCmax')
+                    ->suffix(' ppm'),
 
                 TextColumn::make('FCReposo')
-                    ->label('FCReposo'),
+                    ->label('FCReposo')
+                    ->suffix(' ppm'),
 
                 TextColumn::make('FCReserva')
-                    ->label('FCReserva'),
-
-
+                    ->label('FCReserva')
+                    ->suffix(' ppm'),
 
             ])->defaultSort('id', 'desc')
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->createAnother(false)
+                    ->label('Nuevo test de forestry'),
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->iconButton()
+                    ->tooltip('Eliminar test de forestry')
+                    ->label(''),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

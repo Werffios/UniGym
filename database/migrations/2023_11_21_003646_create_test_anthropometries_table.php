@@ -1132,7 +1132,7 @@ return new class extends Migration
                     SET NEW.IMCEvaluation = 'Obesidad de tipo IV (extrema)';
                 END IF;
 
-                SET NEW.healthyWeight = Round((client_height/100 * client_height/100) * 22, 2);
+                SET NEW.healthyWeight = Round((client_height/100 * client_height/100) * 22.5, 2);
 
             END
 

@@ -68,7 +68,8 @@ return new class extends Migration
             SET NEW.relationUpperLowerLimbs = Round(((New.benchPress*100)/(102.78-(2.78*New.benchPressReps))+(New.pulleyOpenHigh*100)/(102.78-(2.78*New.pulleyOpenHighReps))+(New.barbellBicepsCurl*100)/(102.78-(2.78*New.barbellBicepsCurlReps))) / ((New.legFlexion*100)/(102.78-(2.78*New.legFlexionReps))+(New.legExtension*100)/(102.78-(2.78*New.legExtensionReps))+(New.legFlexExt*100)/(102.78-(2.78*New.legFlexExtReps)))*100, 2);
             SET NEW.date = CURDATE();
         END;
-    ";
+        "
+        ;
 
         DB::unprepared($triggerSQL);
     }

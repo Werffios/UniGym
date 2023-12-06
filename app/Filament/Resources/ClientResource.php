@@ -28,6 +28,7 @@ use Filament\Infolists\Components\Section;
 
 use Filament\Resources\Resource;
 
+use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -86,6 +87,7 @@ class ClientResource extends Resource
                 TextInput::make('surname')->label('Apellido del cliente')
                     ->required()
                     ->autocapitalize('words')
+                    ->alpha()
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el apellido del cliente')
@@ -222,19 +224,31 @@ class ClientResource extends Resource
                     ->iconButton()
                     ->tooltip('Suscribir cliente')
                     ->action(function (Client $client) {
-                        try {
-                            $client->pay()->create([
-                                'client_id' => $client->id,
-                            ]);
-                            $client->update([
-                                'active' => true,
-                            ]);
-                            Notification::make()
-                                ->title('Suscripción activada.')
-                                ->icon('heroicon-o-currency-dollar')
-                                ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ha sido suscrito.')
-                                ->iconColor('primary')
-                                ->send();
+                        try { //where('active'== true)
+                            if ($client['active'] == true)
+                            {
+                                Notification::make()
+                                    ->title('Alerta')
+                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ya tiene una suscripción activa.')
+                                    ->warning()
+                                    ->send();
+                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de suscripción.');
+                            }
+                            else{
+                                $client->pay()->create([
+                                    'client_id' => $client->id,
+                                ]);
+                                $client->update([
+                                    'active' => true,
+                                ]);
+                                Notification::make()
+                                    ->title('Suscripción activada.')
+                                    ->icon('heroicon-o-currency-dollar')
+                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ha sido suscrito.')
+                                    ->iconColor('primary')
+                                    ->send();
+                            }
+
                         } catch (QueryException $e) {
                             if ($e->getCode() == 23000) {
                                 Notification::make()
@@ -257,21 +271,28 @@ class ClientResource extends Resource
                     ->action(function (Client $client) {
 
                         try {
-                            $client->attendances()->create([
-                                'client_id' => $client->id,
+                            if ($client->attendances()->where('date_attendance', Carbon::today())->count() == 0)
+                            {
+                                $client->attendances()->create([
+                                    'client_id' => $client->id,
+
+                                ]);
                                 Notification::make()
                                     ->title('Asistencia agregada.')
                                     ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
                                     ->success()
-                                    ->send()
-                            ]);
-                        } catch (QueryException $e) {
-                            if ($e->getCode() == 23000) {
+                                    ->send();
+                            }
+                            else{
                                 Notification::make()
                                     ->title('Alerta')
                                     ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ya tiene una asistencia el día de hoy.')
                                     ->warning()
                                     ->send();
+                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                            }
+                        } catch (QueryException $e) {
+                            if ($e->getCode() == 23000) {
                                 return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
                             }
                             throw $e;
@@ -286,14 +307,26 @@ class ClientResource extends Resource
                     ->tooltip('Eliminar asistencia')
                     ->action(function (Client $client) {
                         try {
-                            $client->attendances()
-                                ->where('date_attendance', Carbon::today())
-                                ->delete();
+                            if ($client->attendances()->where('date_attendance', Carbon::today())->count() != 0) {
+                                $client->attendances()
+                                    ->where('date_attendance', Carbon::today())
+                                    ->delete();
                                 Notification::make()
-                                ->title('Asistencia eliminada.')
-                                ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
-                                ->success()
-                                ->send();
+                                    ->title('Asistencia eliminada.')
+                                    ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
+                                    ->success()
+                                    ->send();
+                            }
+                            else {
+                                Notification::make()
+                                    ->title('Alerta')
+                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' no tiene una asistencia el día de hoy.')
+                                    ->warning()
+                                    ->send();
+                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                            }
+
+                                return back()->with('success', 'Asistencia eliminada correctamente.');
                         } catch (QueryException $e) {
                             if ($e->getCode() == 23000 or $e->getCode() == 22007) {
                                 Notification::make()
@@ -412,8 +445,7 @@ class ClientResource extends Resource
                         ->label('Edad')
                         ->icon('heroicon-o-cake')
                         ->suffix(' años')
-                        ->date(Carbon::parse($infolist->record->birth_date)->age )
-                    ,
+                        ->date(Carbon::parse($infolist->record->birth_date)->age ),
 
                     TextEntry::make('degree.name')
                         ->label('Grado')
@@ -457,9 +489,10 @@ class ClientResource extends Resource
                             TextEntry::make('testForce')
                                 ->label('Test de fuerza')
                                 ->tooltip('Relación tren superior e inferior')
+                                ->alignment(Alignment::Center)
                                 ->hint($infolist->record->testForce()->latest('date')->first()['date'] ?? '')
                                 ->getStateUsing(function (Client $client) {
-                                    $testForce = $client->testForce()->latest('date')->first();
+                                    $testForce = $client->testForce()->latest('id')->first();
                                     if ($testForce) {
                                         return $testForce['relationUpperLowerLimbs'] . ' %';
                                     }
@@ -469,22 +502,24 @@ class ClientResource extends Resource
                             TextEntry::make('testAnthropometry')
                                 ->label('Test de antropometría')
                                 ->tooltip('Porcentaje de grasa, IMC y peso saludable')
+                                ->alignment(Alignment::Center)
                                 ->hint($infolist->record->testAnthropometry()->latest('date')->first()['date'] ?? '')
                                 ->listWithLineBreaks()
                                 ->getStateUsing(function (Client $client) {
-                                    $testAnthropometry = $client->testAnthropometry()->latest('date')->first();
+                                    $testAnthropometry = $client->testAnthropometry()->latest('id')->first();
                                     if ($testAnthropometry) {
-                                        return [$testAnthropometry['fatPercentage'] . '% porcentaje de grasa.', $testAnthropometry['IMC'] . ' IMC', $testAnthropometry['healthyWeight'] . ' kg peso saludable'];
+                                        return [$testAnthropometry['fatPercentage'] . '% porcentaje de grasa', $testAnthropometry['IMC'] . ' IMC', $testAnthropometry['healthyWeight'] . ' kg peso saludable'];
                                     }
                                     return 'No se ha realizado el test.';
                                 }),
 
                             TextEntry::make('testForestry')
                                 ->label('Test de forestery')
-                                ->tooltip('VO2')
+                                ->tooltip('VO2max')
+                                ->alignment(Alignment::Center)
                                 ->hint($infolist->record->testForestry()->latest('date')->first()['date'] ?? '')
                                 ->getStateUsing(function (Client $client) {
-                                    $testForestry = $client->testForestry()->latest('date')->first();
+                                    $testForestry = $client->testForestry()->latest('id')->first();
                                     if ($testForestry) {
                                         return $testForestry['VO2max'] . ' ml/kg/min';
                                     }
