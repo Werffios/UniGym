@@ -163,6 +163,7 @@ class TestForceRelationManager extends RelationManager
                         function (array $data) {
 
                             $weight = Client::find($data['client_id'])->weight;
+                            $gender = Client::find($data['client_id'])->gender;
 
                             $dataForce = [
                                 'benchPressMaxForce' => round($data['benchPress'] * 100 / (102.78 - (2.78 * $data['benchPressReps']))),
@@ -180,6 +181,67 @@ class TestForceRelationManager extends RelationManager
                             $dataForce['flexionLegsForce/Peso'] = round($dataForce['flexionLegsMaxForce'] / $weight, 2);
                             $dataForce['legExtensionForce/Peso'] = round($dataForce['legExtensionMaxForce'] / $weight, 2);
                             $dataForce['flexExtLegsForce/Peso'] = round($dataForce['flexExtLegsMaxForce'] / $weight, 2);
+
+
+                            $controlgenderPressForce = $gender == 'Masculino' ? 0 : -0.5;
+
+                            if ($dataForce['benchPressForce/Peso'] >= 1.3 + $controlgenderPressForce) {
+                                $dataForce['benchPressForceClassification'] = 'Optimo';
+                            } elseif ($dataForce['benchPressForce/Peso'] >= 1 + $controlgenderPressForce && $dataForce['benchPressForce/Peso'] < 1.3 + $controlgenderPressForce) {
+                                $dataForce['benchPressForceClassification'] = 'Normal';
+                            } else {
+                                $dataForce['benchPressForceClassification'] = 'Bajo';
+                            }
+
+                            $controlgenderPulleyForce = $gender == 'Masculino' ? 0 : -0.35;
+
+                            if ($dataForce['pulleyOpenHighForce/Peso'] >= 1.1 + $controlgenderPulleyForce) {
+                                $dataForce['pulleyOpenHighForceClassification'] = 'Optimo';
+                            } elseif ($dataForce['pulleyOpenHighForce/Peso'] >= 0.95 + $controlgenderPulleyForce && $dataForce['pulleyOpenHighForce/Peso'] < 1.1 + $controlgenderPulleyForce) {
+                                $dataForce['pulleyOpenHighForceClassification'] = 'Normal';
+                            } else {
+                                $dataForce['pulleyOpenHighForceClassification'] = 'Bajo';
+                            }
+
+                            $controlgenderBicepsForce = $gender == 'Masculino' ? 0 : -0.2;
+
+                            if ($dataForce['barbellBicepsCurlForce/Peso'] >= 0.6 + $controlgenderBicepsForce) {
+                                $dataForce['barbellBicepsCurlForceClassification'] = 'Optimo';
+                            } elseif ($dataForce['barbellBicepsCurlForce/Peso'] >= 0.45 + $controlgenderBicepsForce && $dataForce['barbellBicepsCurlForce/Peso'] < 0.6 + $controlgenderBicepsForce) {
+                                $dataForce['barbellBicepsCurlForceClassification'] = 'Normal';
+                            } else {
+                                $dataForce['barbellBicepsCurlForceClassification'] = 'Bajo';
+                            }
+
+                            $controlgenderLegsForce = $gender == 'Masculino' ? 0 : -0.3;
+
+                            if ($dataForce['flexionLegsForce/Peso'] >= 2.6 + $controlgenderLegsForce) {
+                                $dataForce['flexionLegsForceClassification'] = 'Optimo';
+                            } elseif ($dataForce['flexionLegsForce/Peso'] >= 2 + $controlgenderLegsForce && $dataForce['flexionLegsForce/Peso'] < 2.6 + $controlgenderLegsForce) {
+                                $dataForce['flexionLegsForceClassification'] = 'Normal';
+                            } else {
+                                $dataForce['flexionLegsForceClassification'] = 'Bajo';
+                            }
+
+                            $controlgenderExtensionForce = $gender == 'Masculino' ? 0 : -0.1;
+
+                            if ($dataForce['legExtensionForce/Peso'] >= 0.7 + $controlgenderExtensionForce) {
+                                $dataForce['legExtensionForceClassification'] = 'Optimo';
+                            } elseif ($dataForce['legExtensionForce/Peso'] >= 0.55 + $controlgenderExtensionForce && $dataForce['legExtensionForce/Peso'] < 0.7 + $controlgenderExtensionForce) {
+                                $dataForce['legExtensionForceClassification'] = 'Normal';
+                            } else {
+                                $dataForce['legExtensionForceClassification'] = 'Bajo';
+                            }
+
+                            $controlgenderFlexExtForce = $gender == 'Masculino' ? 0 : -0.1;
+
+                            if ($dataForce['flexExtLegsForce/Peso'] >= 0.6 + $controlgenderFlexExtForce) {
+                                $dataForce['flexExtLegsForceClassification'] = 'Optimo';
+                            } elseif ($dataForce['flexExtLegsForce/Peso'] >= 0.45 + $controlgenderFlexExtForce && $dataForce['flexExtLegsForce/Peso'] < 0.6 + $controlgenderFlexExtForce) {
+                                $dataForce['flexExtLegsForceClassification'] = 'Normal';
+                            } else {
+                                $dataForce['flexExtLegsForceClassification'] = 'Bajo';
+                            }
 
                             $dataForce['benchPressForce75'] = round($dataForce['benchPressMaxForce'] * 0.75, 2);
                             $dataForce['pulleyOpenHighForce75'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.75, 2);
@@ -227,6 +289,8 @@ class TestForceRelationManager extends RelationManager
                                 ->label('60%'),
                             TextInput::make('benchPressForce/Peso')
                                 ->label('Fuerza/Peso'),
+                            TextInput::make('benchPressForceClassification')
+                                ->label('Clasificación'),
                         ])->columns(7),
 
                         Fieldset::make('Polea alta abierta')
@@ -243,6 +307,8 @@ class TestForceRelationManager extends RelationManager
                                 ->label('60%'),
                             TextInput::make('pulleyOpenHighForce/Peso')
                                 ->label('Fuerza/Peso'),
+                            TextInput::make('pulleyOpenHighForceClassification')
+                                ->label('Clasificación'),
                         ])->columns(7),
 
                         Fieldset::make('Curl de bíceps con barra')
@@ -259,6 +325,8 @@ class TestForceRelationManager extends RelationManager
                                 ->label('60%'),
                             TextInput::make('barbellBicepsCurlForce/Peso')
                                 ->label('Fuerza/Peso'),
+                            TextInput::make('barbellBicepsCurlForceClassification')
+                                ->label('Clasificación'),
                         ])->columns(7),
 
                         Fieldset::make('Flexión de piernas')
@@ -275,6 +343,8 @@ class TestForceRelationManager extends RelationManager
                                 ->label('60%'),
                             TextInput::make('flexionLegsForce/Peso')
                                 ->label('Fuerza/Peso'),
+                            TextInput::make('flexionLegsForceClassification')
+                                ->label('Clasificación'),
                         ])->columns(7),
 
                         Fieldset::make('Extensión de piernas')
@@ -291,6 +361,8 @@ class TestForceRelationManager extends RelationManager
                                 ->label('60%'),
                             TextInput::make('legExtensionForce/Peso')
                                 ->label('Fuerza/Peso'),
+                            TextInput::make('legExtensionForceClassification')
+                                ->label('Clasificación'),
                         ])->columns(7),
 
                         Fieldset::make('Flex-ext de piernas')
@@ -307,6 +379,8 @@ class TestForceRelationManager extends RelationManager
                                 ->label('60%'),
                             TextInput::make('flexExtLegsForce/Peso')
                                 ->label('Fuerza/Peso'),
+                            TextInput::make('flexExtLegsForceClassification')
+                                ->label('Clasificación'),
                         ])->columns(7),
 
                     ])

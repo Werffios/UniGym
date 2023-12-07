@@ -214,7 +214,7 @@ De mantenimiento',
                                 Textarea::make('VO2Range')
                                     ->rows(12)
                                     ->extraAttributes(['style' => 'resize: none;'])
-                                    ->label('Rango de VO2'),
+                                    ->label('%VO2res. y %RFC'),
                                 Textarea::make('minutes')
                                     ->rows(12)
                                     ->extraAttributes(['style' => 'resize: none;'])

@@ -1162,15 +1162,15 @@ return new class extends Migration
 
                 CASE
                     WHEN NEW.fatPercentage < 12.5 + addFatPercentage THEN
-                        SET NEW.fatPercentageEvaluation = 'BAJO';
+                        SET NEW.fatPercentageEvaluation = 'Bajo';
                     WHEN NEW.fatPercentage >= 12.5 + addFatPercentage AND NEW.fatPercentage < 17.5 + addFatPercentage THEN
-                        SET NEW.fatPercentageEvaluation = 'BIEN';
+                        SET NEW.fatPercentageEvaluation = 'Bien';
                     WHEN NEW.fatPercentage >= 17.5 + addFatPercentage AND NEW.fatPercentage < 22.5 + addFatPercentage THEN
-                        SET NEW.fatPercentageEvaluation = 'MODERADO';
+                        SET NEW.fatPercentageEvaluation = 'Moderado';
                     WHEN NEW.fatPercentage >= 22.5 + addFatPercentage AND NEW.fatPercentage < 27.5 + addFatPercentage THEN
-                        SET NEW.fatPercentageEvaluation = 'ALTO';
+                        SET NEW.fatPercentageEvaluation = 'Alto';
                     WHEN NEW.fatPercentage >= 27.5 + addFatPercentage THEN
-                        SET NEW.fatPercentageEvaluation = 'OBESO';
+                        SET NEW.fatPercentageEvaluation = 'Obeso';
                 END CASE;
 
             END

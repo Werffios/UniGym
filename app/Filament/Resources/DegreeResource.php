@@ -34,7 +34,7 @@ class DegreeResource extends Resource
             ->schema([
                 TextInput::make('name')->label('Nombre de la carrera')
                     ->required()
-                    ->unique(Degree::class, 'name')
+                    ->unique(ignoreRecord: true)
                     ->minLength(2)
                     ->maxLength(255)
                     ->placeholder('Ingrese el nombre de la carrera')

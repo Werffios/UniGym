@@ -40,6 +40,7 @@ class FeeResource extends Resource
                     ->placeholder('Ingrese el nombre de la tarifa')
                     ->helperText('Escribe el nombre de la tarifa.')
                     ->autocomplete(false)
+                    ->unique(ignoreRecord: true)
                     ->hint('El nombre debe ser único.'),
                 TextInput::make('fee')->label('Tarifa')
                     ->required()
@@ -47,15 +48,13 @@ class FeeResource extends Resource
                     ->maxLength(255)
                     ->placeholder('Ingrese la tarifa')
                     ->helperText('Escribe la tarifa.')
-                    ->autocomplete(false)
-                    ->hint('La tarifa debe ser única.'),
+                    ->autocomplete(false),
                 TextInput::make('months')->label('Meses')
                     ->required()
                     ->maxLength(1)
                     ->placeholder('Ingrese los meses')
                     ->helperText('Escribe los meses.')
-                    ->autocomplete(false)
-                    ->hint('Los meses deben ser únicos.'),
+                    ->autocomplete(false),
             ]);
     }
 
@@ -76,15 +75,29 @@ class FeeResource extends Resource
                     ->icon('heroicon-o-arrow-path')
                     ->color('primary')
                     ->action(function () {
-                        Client::where('active', true)->update(['active' => false]);
-                        Pay::where('start_date', '>=', Carbon::today())->update(['start_date' => Carbon::yesterday()]);
-                        Pay::where('end_date', '>=', Carbon::today())->update(['end_date' => Carbon::yesterday()]);
-                        Notification::make()
-                            ->title('Suscripciones reiniciadas.')
-                            ->body('Se han reiniciado las suscripciones de los clientes.')
-                            ->success()
-                            ->send();
-                        return back()->with('success', 'Suscripciones reiniciadas correctamente.');
+                        if (Client::where('active', true)->count() == 0) {
+                            Notification::make()
+                                ->title('No hay clientes activos.')
+                                ->body('En este momento no hay clientes activos.')
+                                ->danger()
+                                ->send();
+                            return back()->with('error', 'No hay clientes activos.');
+                        } else {
+                            $clientsNotParticular = Client::where('type_client_id', '!=', 5)->get();
+                            foreach ($clientsNotParticular as $client) {
+                                Client::where('id', $client->id)->update(['active' => false]);
+                                Pay::where('client_id', $client->id)->where('start_date', '>=', Carbon::today())->update(['start_date' => Carbon::yesterday()]);
+                                Pay::where('client_id', $client->id)->where('end_date', '>=', Carbon::today())->update(['end_date' => Carbon::yesterday()]);
+                            }
+                            Notification::make()
+                                ->title('Suscripciones reiniciadas.')
+                                ->body('Se han reiniciado las suscripciones de los clientes.')
+                                ->success()
+                                ->send();
+                            return back()->with('success', 'Suscripciones reiniciadas correctamente.');
+
+                        }
+
                     }),
 
             ])

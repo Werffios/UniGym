@@ -80,8 +80,6 @@ class ClientResource extends Resource
 
                 TextInput::make('name')->label('Nombre del cliente')
                     ->required()
-                    ->autocapitalize('words')
-                    ->alpha()
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el nombre del cliente')
@@ -89,16 +87,14 @@ class ClientResource extends Resource
 
                 TextInput::make('surname')->label('Apellido del cliente')
                     ->required()
-                    ->autocapitalize('words')
-                    ->alpha()
                     ->minLength(3)
                     ->maxLength(50)
                     ->placeholder('Ingrese el apellido del cliente')
                     ->helperText('Escribe el apellido del cliente.'),
 
-                TextInput::make('height')->label('Altura del cliente')
-                    ->numeric()
+                TextInput::make('height')->label('Estatura del cliente')
                     ->required()
+                    ->numeric()
                     ->minLength(2)
                     ->maxLength(3)
                     ->placeholder('Ingrese la altura del cliente en CM')
@@ -106,7 +102,6 @@ class ClientResource extends Resource
 
                 TextInput::make('weight')->label('Peso del cliente')
                     ->numeric()
-                    ->required()
                     ->minLength(2)
                     ->maxLength(4)
                     ->placeholder('Ingrese el peso del cliente en KG')
@@ -422,6 +417,7 @@ class ClientResource extends Resource
                                 fn (): array =>
                                 Faculty::all()->pluck('name', 'id')->all()
                             )
+                            ->preload()
                             ->searchable()
                             ->default(null),
                     ])->query(function (Builder $query, array $data) {
@@ -435,7 +431,7 @@ class ClientResource extends Resource
                         $indicators = [];
                         if ($data['faculty_id'] ?? null) {
                             $facultyNames = Faculty::whereIn('id', $data['faculty_id'])->pluck('name')->all();
-                            $indicators[] = 'Facultad: ' . implode(', ', $facultyNames);
+                            $indicators[] = 'Facultad: ' . implode(' & ', $facultyNames);
                         }
                         return $indicators;
                     }),
