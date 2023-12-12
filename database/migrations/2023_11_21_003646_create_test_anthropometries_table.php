@@ -15,11 +15,11 @@ return new class extends Migration
         Schema::create('test_anthropometries', function (Blueprint $table) {
             $table->id();
 
-            // Medida de la circunferencia del bicep
-            $table->float('bicepCircumference');
+            // Medida del pliegue del bicep
+            $table->float('bicepFold');
 
-            // Medida de la circunferencia del tricep
-            $table->float('tricepCircumference');
+            // Medida del pliegue del tricep
+            $table->float('tricepFold');
 
             // Subescapular
             $table->float('subscapular');
@@ -73,7 +73,7 @@ return new class extends Migration
 
                 SELECT gender INTO client_gender FROM clients WHERE id = NEW.client_id;
                 SELECT TIMESTAMPDIFF(YEAR, c.birth_date, CURDATE()) INTO client_age FROM clients c WHERE c.id = NEW.client_id;
-                SET client_sumOfSkinfolds = NEW.subscapular + NEW.suprailiac + NEW.tricepCircumference + NEW.bicepCircumference;
+                SET client_sumOfSkinfolds = NEW.subscapular + NEW.suprailiac + NEW.tricepFold + NEW.bicepFold;
                 SET NEW.date = NOW();
 
                 SELECT height, weight INTO client_height, client_weight

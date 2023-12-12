@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('document')->unique();
             $table->string('name');
             $table->string('surname');
-            $table->integer('height');
-            $table->integer('weight');
+            $table->string('email')->unique();
+            $table->integer('height')->nullable();
+            $table->integer('weight')->nullable();
             $table->enum('gender', ['Masculino', 'Femenino']);
             $table->date('birth_date');
             $table->boolean('active')->default(false);

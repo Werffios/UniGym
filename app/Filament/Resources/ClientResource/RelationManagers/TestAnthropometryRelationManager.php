@@ -31,23 +31,41 @@ class TestAnthropometryRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                TextInput::make('bicepCircumference')
-                    ->label('Circunferencia del bicep')
+//                TextInput::make('clients.height')->label('Estatura del usuario')
+//                    ->numeric()
+//                    ->minLength(2)
+//                    ->maxLength(3)
+//                    ->placeholder('Ingrese la altura del usuario en CM')
+//                    ->helperText('Ejemplo: 170')
+//                    ->hidden(empty($this->record->height)),
+
+                TextInput::make('bicepFold')
+                    ->label('Biceps')
                     ->required()
+                    ->hint('Medida en cm')
+                    ->placeholder('Ingrese la medida del pliegue en CM')
                     ->numeric(),
-                TextInput::make('tricepCircumference')
-                    ->label('Circunferencia del tricep')
+
+                TextInput::make('tricepFold')
+                    ->label('Triceps')
                     ->required()
+                    ->hint('Medida en cm')
+                    ->placeholder('Ingrese la medida del pliegue en CM')
                     ->numeric(),
+
                 TextInput::make('subscapular')
                     ->label('Subescapular')
                     ->required()
+                    ->hint('Medida en mm')
+                    ->placeholder('Ingrese la medida del pliegue en CM')
                     ->numeric(),
+
                 TextInput::make('suprailiac')
                     ->label('Suprailíaco')
                     ->required()
+                    ->hint('Medida en mm')
+                    ->placeholder('Ingrese la medida del pliegue en CM')
                     ->numeric(),
-
             ]);
     }
 
@@ -77,8 +95,6 @@ class TestAnthropometryRelationManager extends RelationManager
 
                 TextColumn::make('IMCEvaluation')
                     ->label('Evaluación IMC'),
-
-
 
             ])->defaultSort('id', 'desc')
             ->filters([
@@ -111,7 +127,8 @@ class TestAnthropometryRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     ->createAnother(false)
-                    ->label('Nuevo test de antropometría'),
+                    ->label('Nuevo test de antropometría')
+
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make()

@@ -17,6 +17,7 @@ class Client extends Model
         'document',
         'name',
         'surname',
+        'email',
         'height',
         'weight',
         'birth_date',

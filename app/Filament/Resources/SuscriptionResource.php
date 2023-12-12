@@ -22,12 +22,10 @@ class SuscriptionResource extends Resource
 
     protected static ?string $modelLabel = 'suscripción';
     protected static ?string $navigationIcon = 'heroicon-o-wallet';
-
     protected static ?string $navigationLabel = 'Suscripciones';
-
     protected static ?string $navigationGroup = 'Asistencia y Test';
 
-    public static function form(Form $form): Form
+        public static function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -90,7 +88,6 @@ class SuscriptionResource extends Resource
 
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -98,7 +95,6 @@ class SuscriptionResource extends Resource
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
             ])->paginated([10, 25, 50])
             ->defaultPaginationPageOption(25);
     }
@@ -114,8 +110,6 @@ class SuscriptionResource extends Resource
     {
         return [
             'index' => Pages\ListSuscriptions::route('/'),
-            'create' => Pages\CreateSuscription::route('/create'),
-            'edit' => Pages\EditSuscription::route('/{record}/edit'),
         ];
     }
 }

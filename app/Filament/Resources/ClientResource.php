@@ -50,23 +50,23 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
-    protected static ?string $modelLabel = 'cliente';
+    protected static ?string $modelLabel = 'usuario';
     protected static ?string $navigationGroup = 'Asistencia y Test';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?string $navigationLabel = 'Clientes';
+    protected static ?string $navigationLabel = 'Usuario';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('document')->label('Documento del cliente')
+                TextInput::make('document')->label('Documento del usuario')
                     ->numeric()
                     ->required()
                     ->minLength(3)
                     ->maxLength(20)
                     ->unique(ignoreRecord: true)
-                    ->placeholder('Ingrese el documento del cliente')
-                    ->helperText('Escribe el documento del cliente.')
+                    ->placeholder('Ingrese el documento del usuario')
+                    ->helperText('Escribe el documento del usuario.')
                     ->hint('El documento debe ser único.'),
 
                 Select::make('type_document_id')->label('Tipo de documento')
@@ -78,68 +78,74 @@ class ClientResource extends Resource
                     ->searchable()
                     ->helperText('Seleccione el tipo de documento.'),
 
-                TextInput::make('name')->label('Nombre del cliente')
+                TextInput::make('name')->label('Nombre del usuario')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
-                    ->placeholder('Ingrese el nombre del cliente')
-                    ->helperText('Escribe el nombre del cliente.'),
+                    ->placeholder('Ingrese el nombre del usuario')
+                    ->helperText('Escribe el nombre del usuario.'),
 
-                TextInput::make('surname')->label('Apellido del cliente')
+                TextInput::make('surname')->label('Apellido del usuario')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
-                    ->placeholder('Ingrese el apellido del cliente')
-                    ->helperText('Escribe el apellido del cliente.'),
+                    ->placeholder('Ingrese el apellido del usuario')
+                    ->helperText('Escribe el apellido del usuario.'),
 
-                TextInput::make('height')->label('Estatura del cliente')
+                TextInput::make('email')->label('Correo electrónico del usuario')
                     ->required()
+                    ->minLength(3)
+                    ->maxLength(50)
+                    ->placeholder('Ingrese el correo electrónico del usuario')
+                    ->helperText('Escribe el correo electrónico del usuario.'),
+
+                TextInput::make('height')->label('Estatura del usuario')
                     ->numeric()
                     ->minLength(2)
                     ->maxLength(3)
-                    ->placeholder('Ingrese la altura del cliente en CM')
+                    ->placeholder('Ingrese la altura del usuario en CM')
                     ->helperText('Ejemplo: 170'),
 
-                TextInput::make('weight')->label('Peso del cliente')
+                TextInput::make('weight')->label('Peso del usuario')
                     ->numeric()
                     ->minLength(2)
                     ->maxLength(4)
-                    ->placeholder('Ingrese el peso del cliente en KG')
+                    ->placeholder('Ingrese el peso del usuario en KG')
                     ->helperText('Ejemplo: 70'),
 
-                Radio::make('gender')->label('Género del cliente')
+                Radio::make('gender')->label('Género del usuario')
                     ->options([
                         'Masculino' => 'Masculino',
                         'Femenino' => 'Femenino',
                     ])
                     ->required()
                     ->inline()
-                    ->helperText('Seleccione el género del cliente.'),
+                    ->helperText('Seleccione el género del usuario.'),
 
-                Select::make('type_client_id')->label('Tipo de cliente')
-                    ->placeholder('Seleccione el tipo de cliente')
+                Select::make('type_client_id')->label('Tipo de usuario')
+                    ->placeholder('Seleccione el tipo de usuario')
                     ->options(
                         type_client::all()->pluck('name', 'id')
                     )
                     ->required()
                     ->searchable()
-                    ->helperText('Seleccione el tipo de cliente.'),
+                    ->helperText('Seleccione el tipo de usuario.'),
 
-                DatePicker::make('birth_date')->label('Fecha de nacimiento del cliente')
+                DatePicker::make('birth_date')->label('Fecha de nacimiento del usuario')
                     ->required()
                     ->native(false)
                     ->closeOnDateSelection()
-                    ->placeholder('Ingrese la fecha de nacimiento del cliente')
-                    ->helperText('Escribe la fecha de nacimiento del cliente.'),
+                    ->placeholder('Ingrese la fecha de nacimiento del usuario')
+                    ->helperText('Escribe la fecha de nacimiento del usuario.'),
 
-                Select::make('degree_id')->label('Grado del cliente')
-                    ->placeholder('Seleccione el grado del cliente')
+                Select::make('degree_id')->label('Grado del usuario')
+                    ->placeholder('Seleccione el grado del usuario')
                     ->options(
                         degree::all()->pluck('name', 'id')
                     )
                     ->required()
                     ->searchable()
-                    ->helperText('Seleccione el grado del cliente.'),
+                    ->helperText('Seleccione el grado del usuario.'),
             ]);
     }
 
@@ -182,6 +188,10 @@ class ClientResource extends Resource
                     ->label('Tipo de grado')
                     ->searchable()
                     ->toggleable(),
+                TextColumn::make('email')
+                    ->label('Correo electrónico')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('degree.faculty.name')
                     ->label('Facultad')
                     ->searchable()
@@ -219,17 +229,17 @@ class ClientResource extends Resource
                     ->label('')
                     ->icon('heroicon-o-currency-dollar')
                     ->iconButton()
-                    ->tooltip('Suscribir cliente')
+                    ->tooltip('Suscribir usuario')
                     ->action(function (Client $client) {
                         try {
                             if ($client['active'] == true)
                             {
                                 Notification::make()
                                     ->title('Alerta')
-                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ya tiene una suscripción activa.')
+                                    ->body('El usuario ' . $client->name . ' ' . $client->surname . ' ya tiene una suscripción activa.')
                                     ->danger()
                                     ->send();
-                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de suscripción.');
+                                return back()->with('error', 'Entrada duplicada para el usuario y la fecha de suscripción.');
                             }
                             else{
                                 $client->pay()->create([
@@ -241,7 +251,7 @@ class ClientResource extends Resource
                                 Notification::make()
                                     ->title('Suscripción activada.')
                                     ->icon('heroicon-o-currency-dollar')
-                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ha sido suscrito.')
+                                    ->body('El usuario ' . $client->name . ' ' . $client->surname . ' ha sido suscrito.')
                                     ->iconColor('primary')
                                     ->send();
                             }
@@ -250,13 +260,14 @@ class ClientResource extends Resource
                             if ($e->getCode() == 23000) {
                                 Notification::make()
                                     ->title('Alerta')
-                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ya tiene una suscripción activa.')
+                                    ->body('El usuario ' . $client->name . ' ' . $client->surname . ' ya tiene una suscripción activa.')
                                     ->danger()
                                     ->send();
-                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de suscripción.');
+                                return back()->with('error', 'Entrada duplicada para el usuario y la fecha de suscripción.');
                             }
                             throw $e;
                         }
+                        return back()->with('success', 'Suscripción agregada correctamente.');
                     }
                     ),
 
@@ -276,7 +287,7 @@ class ClientResource extends Resource
                                 ]);
                                 Notification::make()
                                     ->title('Asistencia agregada.')
-                                    ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
+                                    ->body('Para el usuario ' . $client->name . ' ' . $client->surname . '.')
                                     ->success()
                                     ->send();
                                 return back()->with('success', 'Asistencia agregada correctamente.');
@@ -284,22 +295,22 @@ class ClientResource extends Resource
                             elseif ($client['active'] == false){
                                 Notification::make()
                                     ->title('Alerta')
-                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' no tiene una suscripción activa.')
+                                    ->body('El usuario ' . $client->name . ' ' . $client->surname . ' no tiene una suscripción activa.')
                                     ->danger()
                                     ->send();
-                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                                return back()->with('error', 'Entrada duplicada para el usuario y la fecha de asistencia.');
                             }
                             else{
                                 Notification::make()
                                     ->title('Alerta')
-                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' ya tiene una asistencia el día de hoy.')
+                                    ->body('El usuario ' . $client->name . ' ' . $client->surname . ' ya tiene una asistencia el día de hoy.')
                                     ->warning()
                                     ->send();
-                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                                return back()->with('error', 'Entrada duplicada para el usuario y la fecha de asistencia.');
                             }
                         } catch (QueryException $e) {
                             if ($e->getCode() == 23000) {
-                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                                return back()->with('error', 'Entrada duplicada para el usuario y la fecha de asistencia.');
                             }
                             throw $e;
                         }
@@ -319,7 +330,7 @@ class ClientResource extends Resource
                                     ->delete();
                                 Notification::make()
                                     ->title('Asistencia eliminada.')
-                                    ->body('Para el cliente ' . $client->name . ' ' . $client->surname . '.')
+                                    ->body('Para el usuario ' . $client->name . ' ' . $client->surname . '.')
                                     ->success()
                                     ->send();
                                 return back()->with('success', 'Asistencia eliminada correctamente.');
@@ -327,29 +338,27 @@ class ClientResource extends Resource
                             elseif ($client['active'] == false){
                                 Notification::make()
                                     ->title('Alerta')
-                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' no tiene una suscripción activa.')
+                                    ->body('El usuario ' . $client->name . ' ' . $client->surname . ' no tiene una suscripción activa.')
                                     ->danger()
                                     ->send();
-                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                                return back()->with('error', 'Entrada duplicada para el usuario y la fecha de asistencia.');
                             }
                             else {
                                 Notification::make()
                                     ->title('Alerta')
-                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' no tiene una asistencia el día de hoy.')
+                                    ->body('El usuario ' . $client->name . ' ' . $client->surname . ' no tiene una asistencia el día de hoy.')
                                     ->warning()
                                     ->send();
-                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                                return back()->with('error', 'Entrada duplicada para el usuario y la fecha de asistencia.');
                             }
-
-                                return back()->with('success', 'Asistencia eliminada correctamente.');
                         } catch (QueryException $e) {
                             if ($e->getCode() == 23000 or $e->getCode() == 22007) {
                                 Notification::make()
                                     ->title('Alerta')
-                                    ->body('El cliente ' . $client->name . ' ' . $client->surname . ' no tiene una asistencia el día de hoy.')
+                                    ->body('El usuario ' . $client->name . ' ' . $client->surname . ' no tiene una asistencia el día de hoy.')
                                     ->warning()
                                     ->send();
-                                return back()->with('error', 'Entrada duplicada para el cliente y la fecha de asistencia.');
+                                return back()->with('error', 'Entrada duplicada para el usuario y la fecha de asistencia.');
                             }
                             throw $e;
                         }
@@ -358,10 +367,10 @@ class ClientResource extends Resource
                     Tables\Actions\EditAction::make()
                         ->icon('heroicon-o-wrench')
                         ->color('primary')
-                        ->label('Editar cliente'),
+                        ->label('Editar usuario'),
                     Tables\Actions\DeleteAction::make()
                         ->icon('heroicon-o-trash')
-                        ->label('Eliminar cliente'),
+                        ->label('Eliminar usuario'),
                 ])->icon('heroicon-o-chevron-double-down')
 
             ])
@@ -379,7 +388,7 @@ class ClientResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('type_client_id')
-                    ->label('Tipo de cliente')
+                    ->label('Tipo de usuario')
                     ->multiple()
                     ->options(
                         fn (): array =>
@@ -446,9 +455,9 @@ class ClientResource extends Resource
 
                 TernaryFilter::make('active')
                     ->label('Suscripción')
-                    ->placeholder('Todos los clientes')
-                    ->trueLabel('Clientes con suscripción activa')
-                    ->falseLabel('Clientes con suscripción inactiva'),
+                    ->placeholder('Todos los usuarios')
+                    ->trueLabel('Usuarios con suscripción activa')
+                    ->falseLabel('Usuarios con suscripción inactiva'),
 
                 Filter::make('between_dates')
                     ->label('Filtrar fechas')
@@ -500,6 +509,7 @@ class ClientResource extends Resource
 
             ])
             ->filtersFormColumns(3)
+            ->poll('20s')
             ->paginated([10, 50, 100, 200])
             ->defaultPaginationPageOption(10);
     }
@@ -508,7 +518,8 @@ class ClientResource extends Resource
     {
         return $infolist
             ->schema([
-                Section::make([TextEntry::make('document')
+                Section::make([
+                    TextEntry::make('document')
                     ->label('Documento')
                     ->badge()
                     ->color('success')
@@ -529,6 +540,10 @@ class ClientResource extends Resource
                         ->label('Apellido')
                         ->icon('heroicon-o-user'),
 
+                    TextEntry::make('degree.name')
+                        ->label('Grado')
+                        ->icon('heroicon-o-academic-cap'),
+
                     TextEntry::make('birth_date')
                         ->label('Fecha de nacimiento')
                         ->icon('heroicon-o-calendar')
@@ -540,38 +555,50 @@ class ClientResource extends Resource
                         ->suffix(' años')
                         ->date(Carbon::parse($infolist->record->birth_date)->age ),
 
-                    TextEntry::make('degree.name')
-                        ->label('Grado')
-                        ->icon('heroicon-o-academic-cap'),
-
                     TextEntry::make('gender')
                         ->label('Género')
                         ->icon('heroicon-o-users'),
 
                     TextEntry::make('height')
                         ->label('Altura')
-                        ->suffix(' cm')
-                        ->icon('heroicon-o-arrows-up-down'),
+                        ->icon('heroicon-o-arrows-up-down')
+                        ->getStateUsing(function (Client $client) {
+                            if ($client->height != null) {
+                                return $client['height'] . ' cm';
+                            }
+                            return 'No se ha ingresado una estatura.';
+                        }),
 
                     TextEntry::make('weight')
                         ->label('Peso')
-                        ->suffix(' kg')
-                        ->icon('heroicon-o-scale'),
+                        ->icon('heroicon-o-scale')
+                        ->getStateUsing(function (Client $client) {
+                            if ($client->weight != null) {
+                                return $client['weight'] . ' kg';
+                            }
+                            return 'No se ha ingresado un peso.';
+                        }),
 
                     TextEntry::make('typeClient.name')
-                        ->label('Tipo de cliente')
+                        ->label('Tipo de usuario')
                         ->icon('heroicon-o-user-group'),
 
                     TextEntry::make('typeDocument.name')
                         ->label('Tipo de documento')
                         ->icon('heroicon-o-identification'),
+
+
+                    TextEntry::make('email')
+                        ->label('Correo electrónico')
+                        ->icon('heroicon-o-at-symbol'),
                     ])
-                    ->heading('Información del cliente')
-                ->description('En esta sección se muestra la información detallada del cliente.')
+                    ->heading('Información del usuario')
+                ->description('En esta sección se muestra la información detallada del usuario.')
                 ->columns([
                     'sm' => 2,
                     'md' => 3,
                     'xl' => 4,
+                    '2xl' => 5,
                 ])
                 ->icon('heroicon-o-user')
                     ->collapsible()
@@ -626,7 +653,7 @@ class ClientResource extends Resource
                         ]),
                 ])
                     ->heading('Resumen de los últimos test')
-                    ->description('En esta sección se muestra el resumen de los test realizados al cliente.')
+                    ->description('En esta sección se muestra el resumen de los test realizados al usuario.')
                     ->columns([
                         'sm' => 3,
                     ])

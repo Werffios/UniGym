@@ -20,7 +20,6 @@ class TestForestryRelationManager extends RelationManager
 
     protected static ?string $title = 'Test de Forestry';
 
-
     public function isReadOnly(): bool
     {
         return false;
@@ -100,49 +99,63 @@ class TestForestryRelationManager extends RelationManager
                 Tables\Actions\ViewAction::make()
                     ->mutateRecordDataUsing(
                         function (array $data) {
+                            $FCReposo = $data['FCReposo'];
+                            $FCReserva = $data['FCReserva'];
                             if ($data['VO2maxEvaluation'] == 'Excelente' or $data['VO2maxEvaluation'] == 'Muy bien') {
                                 $dataForestry =
                                     [
                                         'stage' => '
 
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mantenimiento',
+Mejoramiento
+Mejoramiento
+Mejoramiento
+Mejoramiento
+Mejoramiento
+Mejoramiento
+Mejoramiento
+MaMntenimiento',
                                         'week' => '
 
-1-3
-4-6
-7-9
-10-12
-13-15
-16-18
-19-21
+ 1 - 3
+ 4 - 6
+ 7 - 9
+10 - 12
+13 - 15
+16 - 18
+19 - 21
 >21',
                                         'VO2Range' => '
 
-40-50
-50
-60
-60-70
-60-70
-40-50
-50
-60',
+60 - 70
+70 - 80
+70 - 80
+70 - 80
+70 - 80
+70 - 80
+70 - 80
+70 - 85',
+
                                         'minutes' => '
 
-15-20
-15-20
-20-25
-25-30
-30-35
-30-35
-30-35
-30-45',
+15 - 20
+15 - 20
+20 - 25
+25 - 30
+30 - 35
+30 - 35
+30 - 35
+30   - 35',
+                                        // Convierto un valor a string para que no se muestre el guión como rango
+                                        'FCMin - FCMax' => "\n\n" .strval((0.6 * $FCReserva) + $FCReposo) . ' -  '  . strval((0.7 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.85 * $FCReserva) + $FCReposo),
+
+
                                     ];
                             }else{
                                 $dataForestry =
@@ -152,49 +165,62 @@ Inicial
 Inicial
 Inicial
 Inicial
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mejoramiento
-De mantenimiento',
-                                        'week' => '1-3
-4-6
-7-9
-10-12
-13-15
-16-18
-19-21
-22-24
-25-27
-28-30
-31-33
+Mejoramiento
+Mejoramiento
+Mejoramiento
+Mejoramiento
+Mejoramiento
+Mejoramiento
+Mantenimiento',
+                                        'week' => ' 1 - 3
+ 4 - 6
+ 7 - 9
+10 - 12
+13 - 15
+16 - 18
+19 - 21
+22 - 24
+25 - 27
+28 - 30
+31 - 33
 >33',
-                                        'VO2Range' => '40-50
+                                        'VO2Range' => '40 - 50
 50
 60
-60-70
-60-70
-40-50
-50
-60
-60-70
-60-70
-60-70
-70-85',
-                                        'minutes' => '15-20
-15-20
-20-25
-25-30
-30-35
-30-35
-30-35
-30-35
-30-35
-30-35
-30-35
-30-45',
+60 - 70
+70 - 80
+70 - 80
+70 - 80
+70 - 80
+70 - 80
+70 - 80
+70 - 80
+70 - 85',
+                                        'minutes' => '15 - 20
+15 - 20
+20 - 25
+25 - 30
+30 - 35
+30 - 35
+30 - 35
+30 - 35
+30 - 35
+30 - 35
+30 - 35
+30 - 35',
+                                        'FCMin - FCMax' => strval((0.4 * $FCReserva) + $FCReposo) . ' -  '  . strval((0.5 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.5 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.6 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.6 * $FCReserva) + $FCReposo) . ' - ' . strval((0.7 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.6 * $FCReserva) + $FCReposo) . ' - ' . strval((0.7 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.85 * $FCReserva) + $FCReposo) ,
+
                                     ];
                             }
                             return $dataForestry;
@@ -219,13 +245,17 @@ De mantenimiento',
                                     ->rows(12)
                                     ->extraAttributes(['style' => 'resize: none;'])
                                     ->label('Minutos'),
+                                Textarea::make('FCMin - FCMax')
+                                    ->rows(12)
+                                    ->extraAttributes(['style' => 'resize: none;'])
+                                    ->label('FCMin - FCMax'),
                             ])
-                            ->columns(4),
+                            ->columns(5),
                     ])
                     ->iconButton()
                     ->icon('heroicon-o-window')
                     ->color('primary')
-                    ->tooltip('Ver test de forestry')
+                    ->tooltip('Ver prescripción de entrenamiento')
                     ->label(''),
                 Tables\Actions\DeleteAction::make()
                     ->iconButton()

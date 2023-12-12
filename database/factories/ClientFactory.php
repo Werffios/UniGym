@@ -24,6 +24,7 @@ class ClientFactory extends Factory
             'document' => $this->faker->unique()->randomNumber(9),
             'name' => $this->faker->firstName(),
             'surname' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->safeEmail(),
             'height' => $this->faker->numberBetween(150, 185),
             'weight' => $this->faker->numberBetween(50, 100),
             'gender' => $this->faker->randomElement(['Masculino', 'Femenino']),
