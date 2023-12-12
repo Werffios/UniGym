@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -45,6 +46,13 @@ class UserResource extends Resource
                     ->placeholder('Ingrese el correo electrónico del usuario')
                     ->helperText('Escribe el correo electrónico del usuario.')
                     ->hint('El correo electrónico debe ser único.'),
+                Select::make('role')->label('Rol')
+                    ->required()
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->placeholder('Seleccione el rol del usuario')
+                    ->helperText('Seleccione el rol del usuario.')
+                    ->hint('El rol determina los permisos del usuario.'),
                 TextInput::make('password')->label('Contraseña')
                     ->password()
                     ->autocomplete('new-password')
@@ -78,6 +86,10 @@ class UserResource extends Resource
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Correo electrónico')
+                    ->alignment(Alignment::End)
+                    ->searchable(),
+                TextColumn::make('role')
+                    ->label('Rol')
                     ->alignment(Alignment::End)
                     ->searchable(),
             ])
