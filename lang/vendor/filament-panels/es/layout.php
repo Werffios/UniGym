@@ -40,6 +40,10 @@ return [
                 'label' => 'A modo claro',
             ],
 
+            'system' => [
+                'label' => 'A modo del sistema',
+            ],
+
         ],
 
     ],
