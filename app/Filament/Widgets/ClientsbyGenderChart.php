@@ -5,9 +5,9 @@ namespace App\Filament\Widgets;
 use App\Models\Client;
 use Filament\Widgets\ChartWidget;
 
-class AttendancebyGenderChart extends ChartWidget
+class ClientsbyGenderChart extends ChartWidget
 {
-    protected static ?string $heading = 'Asistencia por género';
+    protected static ?string $heading = 'Usuarios por género';
 
     protected function getData(): array
     {
