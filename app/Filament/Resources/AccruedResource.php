@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AccruedResource\Pages;
 use App\Models\Pay;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -95,6 +96,21 @@ class AccruedResource extends Resource
                                 fn (Builder $query, $date) => $query->where('start_date', '<=', $date),
                             );
 
+                    })->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['date_from'] ?? null) {
+                            $indicators[] = 'Fecha: desde ' . Carbon::parse($data['date_from'])->format('j/M/Y');
+                        }
+                        if ($data['date_to'] ?? null) {
+                            if ($indicators != null) {
+                                $indicators[] = 'Rango de fechas: desde ' . Carbon::parse($data['date_from'])->format('j/M/Y') . ' & hasta ' . Carbon::parse($data['date_to'])->format('j/M/Y');
+                            }
+                            else{
+                                $indicators[] = 'Fecha: hasta ' . Carbon::parse($data['date_to'])->format('j/M/Y');
+                            }
+                        }
+
+                        return $indicators;
                     }),
             ])
             ->actions([
