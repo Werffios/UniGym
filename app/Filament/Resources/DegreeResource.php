@@ -21,7 +21,7 @@ use Filament\Forms\Components\Select;
 
 class DegreeResource extends Resource
 {
-    protected static ?string $model = Degree::class;
+    protected static ?string $model = degree::class;
 
     protected static ?string $modelLabel = 'grado';
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
