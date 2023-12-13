@@ -27,3 +27,8 @@ Route::get('/logout', function () {
     Auth::logout();
     return (redirect('/admin'));
 });
+
+Route::get('admin/logout', function () {
+    Auth::logout();
+    return (redirect('/admin'));
+});
