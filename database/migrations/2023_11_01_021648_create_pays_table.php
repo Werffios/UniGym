@@ -44,7 +44,7 @@ return new class extends Migration
             END;
 
             CREATE TRIGGER after_delete_pays
-            AFTER DELETE ON unigym.pays
+            AFTER DELETE ON pays
             FOR EACH ROW
             BEGIN
                 DECLARE client_active INT;
