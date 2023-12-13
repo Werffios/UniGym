@@ -28,7 +28,8 @@ return new class extends Migration
         });
 
         DB::unprepared(
-            'CREATE TRIGGER pays_trigger
+            '
+            CREATE TRIGGER pays_trigger
             BEFORE INSERT ON pays
             FOR EACH ROW
                 BEGIN
@@ -41,6 +42,24 @@ return new class extends Migration
                 SET NEW.end_date = IF(monthsToAdd = 2, DATE_SUB(DATE_ADD(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY), INTERVAL MOD(MONTH(CURDATE()), 2) MONTH), INTERVAL 1 DAY), DATE_ADD(NEW.start_date, INTERVAL monthsToAdd MONTH));
                 SET NEW.amount = feeToAdd;
             END;
+
+            CREATE TRIGGER after_delete_pays
+            AFTER DELETE ON unigym.pays
+            FOR EACH ROW
+            BEGIN
+                DECLARE client_active INT;
+
+                -- Obtener el valor de active para el cliente que se está eliminando
+                SELECT active INTO client_active
+                FROM unigym.clients
+                WHERE id = OLD.client_id;
+
+                -- Actualizar el valor de active a 0 para el cliente en la tabla clients
+                UPDATE unigym.clients
+                SET active = 0
+                WHERE id = OLD.client_id;
+            END;
+
             '
         );
 

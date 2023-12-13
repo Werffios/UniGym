@@ -20,7 +20,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $modelLabel = 'usuario';
+    protected static ?string $modelLabel = 'Administrador';
     protected static ?string $navigationIcon = 'heroicon-o-key';
     protected static ?string $navigationGroup = 'Mantenimiento';
 
@@ -29,12 +29,13 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->label('Nombre del usuario')
+                TextInput::make('name')
+                    ->label('Nombre del administrador')
                     ->required()
                     ->minLength(2)
                     ->maxLength(255)
-                    ->placeholder('Ingrese el nombre del usuario')
-                    ->helperText('Escribe el nombre del usuario.')
+                    ->placeholder('Ingrese el nombre del administrador')
+                    ->helperText('Escribe el nombre del administrador.')
                     ->autocomplete(false)
                     ->hint('El nombre debe ser único.'),
                 TextInput::make('email')->label('Correo electrónico')
@@ -43,16 +44,16 @@ class UserResource extends Resource
                     ->email()
                     ->minLength(2)
                     ->maxLength(255)
-                    ->placeholder('Ingrese el correo electrónico del usuario')
-                    ->helperText('Escribe el correo electrónico del usuario.')
+                    ->placeholder('Ingrese el correo electrónico del administrador')
+                    ->helperText('Escribe el correo electrónico del administrador.')
                     ->hint('El correo electrónico debe ser único.'),
                 Select::make('role')->label('Rol')
                     ->required()
                     ->multiple()
                     ->relationship('roles', 'name')
-                    ->placeholder('Seleccione el rol del usuario')
-                    ->helperText('Seleccione el rol del usuario.')
-                    ->hint('El rol determina los permisos del usuario.'),
+                    ->placeholder('Seleccione el rol del administrador')
+                    ->helperText('Seleccione el rol del administrador.')
+                    ->hint('El rol determina los permisos del administrador.'),
                 TextInput::make('password')->label('Contraseña')
                     ->password()
                     ->autocomplete('new-password')
@@ -60,8 +61,8 @@ class UserResource extends Resource
                     ->confirmed()
                     ->minLength(8)
                     ->maxLength(255)
-                    ->placeholder('Ingrese la contraseña del usuario')
-                    ->helperText('Escribe la contraseña del usuario.')
+                    ->placeholder('Ingrese la contraseña del administrador')
+                    ->helperText('Escribe la contraseña del administrador.')
                     ->hint('La contraseña debe tener al menos 8 caracteres.'),
                 TextInput::make('password_confirmation')->label('Confirmar contraseña')
                     ->password()
@@ -69,8 +70,8 @@ class UserResource extends Resource
                     ->required()
                     ->minLength(8)
                     ->maxLength(255)
-                    ->placeholder('Ingrese la contraseña del usuario')
-                    ->helperText('Escribe la contraseña del usuario.')
+                    ->placeholder('Ingrese la contraseña del administrador')
+                    ->helperText('Escribe la contraseña del administrador.')
                     ->hint('La contraseña debe tener al menos 8 caracteres.'),
 
             ]);
@@ -82,7 +83,7 @@ class UserResource extends Resource
 
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nombre de usuario')
+                    ->label('Nombre de administrador')
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Correo electrónico')
