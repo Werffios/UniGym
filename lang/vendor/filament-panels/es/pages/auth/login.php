@@ -4,7 +4,7 @@ return [
 
     'title' => 'Login',
 
-    'heading' => 'Entrada al sistema',
+    'heading' => 'Entrada al sistema del CAPF',
 
     'form' => [
 
