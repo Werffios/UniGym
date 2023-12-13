@@ -35,6 +35,7 @@ class UserResource extends Resource
                     ->required()
                     ->minLength(2)
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->placeholder('Ingrese el nombre del administrador')
                     ->helperText('Escribe el nombre del administrador.')
                     ->autocomplete(false)

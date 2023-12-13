@@ -97,6 +97,7 @@ class ClientResource extends Resource
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
+                    ->unique(ignoreRecord: true)
                     ->placeholder('Ingrese el correo electrónico del usuario')
                     ->helperText('Escribe el correo electrónico del usuario.'),
 
