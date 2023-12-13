@@ -40,6 +40,7 @@ class SuscriptionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('client.document')
+                    ->label('Documento')
                     ->searchable()
                     ->color('success')
                     ->copyable()

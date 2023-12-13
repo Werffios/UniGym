@@ -63,12 +63,15 @@ class FeeResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 TextColumn::make('fee')
+                    ->label('Tarifa')
                     // dollars
                     ->money('COP')
                     ->searchable(),
-                TextColumn::make('months'),
+                TextColumn::make('months')
+                    ->label('Meses'),
             ])->headerActions([
                 Tables\Actions\Action::make('restoreStatus')
                     ->label('Reiniciar suscripciones')

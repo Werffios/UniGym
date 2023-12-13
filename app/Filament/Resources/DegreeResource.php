@@ -61,8 +61,12 @@ class DegreeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->searchable(),
-                TextColumn::make('typeDegree.name')->label('Tipo de grado')->searchable(),
+                TextColumn::make('name')
+                    ->label('Nombre')
+                    ->searchable(),
+                TextColumn::make('typeDegree.name')
+                    ->label('Tipo de grado')
+                    ->searchable(),
             ])
             ->filters([
                 SelectFilter::make('type_degree_id')->label('Tipo de grado')

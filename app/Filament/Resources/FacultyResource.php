@@ -47,6 +47,7 @@ class FacultyResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nombre de la facultad')
                     ->searchable(),
             ])
             ->filters([
