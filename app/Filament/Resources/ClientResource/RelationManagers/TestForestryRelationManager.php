@@ -113,7 +113,7 @@ Mejoramiento
 Mejoramiento
 Mejoramiento
 Mejoramiento
-MaMntenimiento',
+Mantenimiento',
                                         'week' => '
 
  1 - 3
@@ -144,7 +144,7 @@ MaMntenimiento',
 30 - 35
 30 - 35
 30 - 35
-30   - 35',
+30  - 35',
                                         // Convierto un valor a string para que no se muestre el guión como rango
                                         'FCMin - FCMax' => "\n\n" .strval((0.6 * $FCReserva) + $FCReposo) . ' -  '  . strval((0.7 * $FCReserva) + $FCReposo) . "\n" .
                                         strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
