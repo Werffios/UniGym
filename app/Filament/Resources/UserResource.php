@@ -47,7 +47,7 @@ class UserResource extends Resource
                     ->placeholder('Ingrese el correo electrónico del administrador')
                     ->helperText('Escribe el correo electrónico del administrador.')
                     ->hint('El correo electrónico debe ser único.'),
-                Select::make('role')->label('Rol')
+                Select::make('roles')->label('Rol')
                     ->required()
                     ->multiple()
                     ->relationship('roles', 'name')
