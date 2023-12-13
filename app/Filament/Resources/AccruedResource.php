@@ -20,6 +20,7 @@ class AccruedResource extends Resource
 {
     protected static ?string $model = Pay::class;
     protected static ?string $modelLabel = 'recaudo';
+    protected static ?string $pluralModelLabel = 'recaudos';
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
     protected static ?string $navigationLabel = 'Recaudos';
     protected static ?string $navigationGroup = 'Finanzas';

@@ -22,8 +22,8 @@ class FeeResource extends Resource
 {
     protected static ?string $model = type_client::class;
 
-
     protected static ?string $modelLabel = 'tarifa';
+    protected static ?string $pluralModelLabel = 'tarifas';
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 

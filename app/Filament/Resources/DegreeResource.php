@@ -21,6 +21,7 @@ class DegreeResource extends Resource
     protected static ?string $model = degree::class;
 
     protected static ?string $modelLabel = 'grado';
+    protected static ?string $pluralModelLabel = 'grados';
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     protected static ?string $navigationGroup = 'Mantenimiento';

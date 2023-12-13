@@ -47,20 +47,18 @@ return new class extends Migration
             AFTER DELETE ON pays
             FOR EACH ROW
             BEGIN
-                DECLARE client_active INT;
+                 DECLARE client_active INT;
 
-                -- Obtener el valor de end_date y active para el cliente que se está eliminando
-                SELECT end_date, active INTO client_active
-                FROM pays
-                WHERE id = OLD.id;
+                    -- Obtener el valor de active para el cliente que se está eliminando
+                    SELECT active INTO client_active
+                    FROM clients
+                    WHERE id = OLD.client_id;
 
-                -- Verificar si end_date es mayor o igual a la fecha del sistema
-                IF client_active.end_date >= CURRENT_DATE() THEN
                     -- Actualizar el valor de active a 0 para el cliente en la tabla clients
                     UPDATE clients
                     SET active = 0
                     WHERE id = OLD.client_id;
-                END IF;
+
 
             END;
 
