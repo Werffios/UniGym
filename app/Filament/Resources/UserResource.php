@@ -89,7 +89,7 @@ class UserResource extends Resource
                     ->label('Correo electrónico')
                     ->alignment(Alignment::End)
                     ->searchable(),
-                TextColumn::make('role')
+                TextColumn::make('roles.name')
                     ->label('Rol')
                     ->alignment(Alignment::End)
                     ->searchable(),
