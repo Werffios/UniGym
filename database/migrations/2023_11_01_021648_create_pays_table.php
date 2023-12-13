@@ -51,13 +51,13 @@ return new class extends Migration
 
                 -- Obtener el valor de end_date y active para el cliente que se está eliminando
                 SELECT end_date, active INTO client_active
-                FROM unigym.pays
+                FROM pays
                 WHERE id = OLD.id;
 
                 -- Verificar si end_date es mayor o igual a la fecha del sistema
                 IF client_active.end_date >= CURRENT_DATE() THEN
                     -- Actualizar el valor de active a 0 para el cliente en la tabla clients
-                    UPDATE unigym.clients
+                    UPDATE clients
                     SET active = 0
                     WHERE id = OLD.client_id;
                 END IF;
