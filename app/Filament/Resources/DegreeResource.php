@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\DegreeResource\Pages;
 use App\Filament\Resources\DegreeResource\RelationManagers;
-use App\Models\Degree;
+use App\Models\degree;
 use App\Models\type_degree;
 use App\Models\Faculty;
 use Filament\Forms;
