@@ -64,6 +64,7 @@ class AccruedResource extends Resource
                     ->sortable(),
                 TextColumn::make('amount')
                     ->searchable()
+                    ->label('Valor')
                     ->money('COP')
                     ->summarize(
                         Sum::make()

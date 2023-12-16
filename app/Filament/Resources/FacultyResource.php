@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -46,12 +47,13 @@ class FacultyResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label('Nombre de la facultad')
-                    ->searchable(),
-            ])
-            ->filters([
-                //
+                Stack::make([
+                    TextColumn::make('name')
+                        ->label('Nombre de la facultad')
+                        ->searchable(),
+                ])
+            ])->contentGrid([
+                'md' => 2,
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

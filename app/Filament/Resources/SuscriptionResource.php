@@ -28,7 +28,7 @@ class SuscriptionResource extends Resource
     protected static ?string $navigationLabel = 'Suscripciones';
     protected static ?string $navigationGroup = 'Asistencia y Test';
 
-    //can Create, false
+
     public static function canCreate(): bool
     {
         return false;

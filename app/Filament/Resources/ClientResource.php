@@ -77,6 +77,7 @@ class ClientResource extends Resource
                     )
                     ->required()
                     ->searchable()
+                    ->default(1)
                     ->helperText('Seleccione el tipo de documento.'),
 
                 TextInput::make('name')->label('Nombre del usuario')
@@ -101,6 +102,17 @@ class ClientResource extends Resource
                     ->placeholder('Ingrese el correo electrónico del usuario')
                     ->helperText('Escribe el correo electrónico del usuario.'),
 
+                DatePicker::make('birth_date')->label('Fecha de nacimiento del usuario')
+                    ->required()
+                    ->native(false)
+                    ->closeOnDateSelection()
+                    ->maxDate(Carbon::now()->subYears(10))
+                    ->default(Carbon::now()->subYears(18))
+                    ->placeholder('Ingrese la fecha de nacimiento del usuario')
+                    ->helperText('Escribe la fecha de nacimiento del usuario.'),
+
+                //
+
                 TextInput::make('height')->label('Estatura del usuario')
                     ->numeric()
                     ->minLength(2)
@@ -121,8 +133,9 @@ class ClientResource extends Resource
                         'Femenino' => 'Femenino',
                     ])
                     ->required()
-                    ->inline()
                     ->helperText('Seleccione el género del usuario.'),
+
+                //
 
                 Select::make('type_client_id')->label('Tipo de usuario')
                     ->placeholder('Seleccione el tipo de usuario')
@@ -131,14 +144,9 @@ class ClientResource extends Resource
                     )
                     ->required()
                     ->searchable()
+                    ->hint('El tipo de usuario determina el costo de la suscripción.')
+                    ->default(1)
                     ->helperText('Seleccione el tipo de usuario.'),
-
-                DatePicker::make('birth_date')->label('Fecha de nacimiento del usuario')
-                    ->required()
-                    ->native(false)
-                    ->closeOnDateSelection()
-                    ->placeholder('Ingrese la fecha de nacimiento del usuario')
-                    ->helperText('Escribe la fecha de nacimiento del usuario.'),
 
                 Select::make('degree_id')->label('Grado del usuario')
                     ->placeholder('Seleccione el grado del usuario')
@@ -192,6 +200,10 @@ class ClientResource extends Resource
                     ->toggleable(),
                 TextColumn::make('email')
                     ->label('Correo electrónico')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('typeClient.name')
+                    ->label('Tipo de usuario')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('degree.faculty.name')
@@ -294,7 +306,7 @@ class ClientResource extends Resource
                                     ->send();
                                 return back()->with('success', 'Asistencia agregada correctamente.');
                             }
-                            elseif ($client['active'] == false){
+                            elseif (!$client['active']){
                                 Notification::make()
                                     ->title('Alerta')
                                     ->body('El usuario ' . $client->name . ' ' . $client->surname . ' no tiene una suscripción activa.')
@@ -337,7 +349,7 @@ class ClientResource extends Resource
                                     ->send();
                                 return back()->with('success', 'Asistencia eliminada correctamente.');
                             }
-                            elseif ($client['active'] == false){
+                            elseif (!$client['active']){
                                 Notification::make()
                                     ->title('Alerta')
                                     ->body('El usuario ' . $client->name . ' ' . $client->surname . ' no tiene una suscripción activa.')

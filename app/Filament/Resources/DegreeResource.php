@@ -67,6 +67,9 @@ class DegreeResource extends Resource
                 TextColumn::make('typeDegree.name')
                     ->label('Tipo de grado')
                     ->searchable(),
+                TextColumn::make('faculty.name')
+                    ->label('Facultad')
+                    ->searchable(),
             ])
             ->filters([
                 SelectFilter::make('type_degree_id')->label('Tipo de grado')
