@@ -188,7 +188,7 @@ class ClientResource extends Resource
                     ->label('Fecha de nacimiento')
                     ->searchable()
                     ->date('j/M/Y')
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('degree.name')
                     ->label('Grado')
                     ->searchable()
@@ -197,7 +197,7 @@ class ClientResource extends Resource
                 TextColumn::make('degree.typeDegree.name')
                     ->label('Tipo de grado')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('email')
                     ->label('Correo electrónico')
                     ->searchable()

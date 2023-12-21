@@ -67,7 +67,7 @@ class SuscriptionResource extends Resource
                     ->label('Fecha de fin')
                     ->date('j/M/Y'),
 
-            ])
+            ])->defaultSort('id', 'desc')
             ->filters([
                 Filter::make('start_date')
                     ->label('Filtrar fechas')

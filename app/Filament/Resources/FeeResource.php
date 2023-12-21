@@ -44,8 +44,7 @@ class FeeResource extends Resource
                     ->hint('El nombre debe ser único.'),
                 TextInput::make('fee')->label('Tarifa')
                     ->required()
-                    ->minLength(2)
-                    ->maxLength(255)
+                    ->maxLength(30)
                     ->placeholder('Ingrese la tarifa')
                     ->helperText('Escribe la tarifa.')
                     ->autocomplete(false),

@@ -70,7 +70,7 @@ class DegreeResource extends Resource
                 TextColumn::make('faculty.name')
                     ->label('Facultad')
                     ->searchable(),
-            ])
+            ])->defaultSort('name', 'asc')
             ->filters([
                 SelectFilter::make('type_degree_id')->label('Tipo de grado')
                     ->options(
