@@ -3,26 +3,6 @@
 > [!WARNING]  
 > Si usted es un usuario final del sistema, consulte el [manual de usuario](user.md).
 
-## Tabla de contenidos
-
-- [Introducción](#1-introducción)
-- [Arquitectura](#2-arquitectura)
-- [Tecnologías](#3-tecnologías)
-- [Instalación](#4-instalación)
-- [Configuración](#5-configuración)
-- [Despliegue](#6-despliegue)
-- [Pruebas](#7-pruebas)
-- [Referencias](#8-referencias)
-- [Anexos](#9-anexos)
-- [Glosario](#10-glosario)
-- [Acrónimos](#11-acrónimos)
-- [Versiones](#12-versiones)
-- [Autores](#13-autores)
-- [Licencia](#14-licencia)
-- [Agradecimientos](#15-agradecimientos)
-
-## 1. Introducción
-
 El presente documento describe el diseño, desarrollo e implementación del sistema de información web 
 “UniGym” que permite la gestión del centro de acondicionamiento y preparación física CAPF de la Universidad Nacional de 
 Colombia - sede Manizales.
@@ -31,6 +11,17 @@ El objetivo de este sistema es facilitar la gestión de los servicios que ofrece
 usuarios, pagos, asistencias, test o evaluaciones físicas, entre otros. El manual está dirigido a los desarrolladores, 
 administradores y mantenedores del sistema, y contiene información detallada sobre los requisitos, las tecnologías 
 utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y la documentación del código. 
+
+El manual técnico se estructura en los siguientes capítulos:
+
+## Tabla de contenidos
+- [Capitulo 1: Introducción](#introducción) **(Presenta el propósito, el alcance, los objetivos y la organización)**
+- [Capitulo 2: Arquitectura](#arquitectura) **(Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos)**
+- [Capitulo 3: Tecnologías](#tecnologías) **(Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores)**
+- [Capitulo 4: Instalación](#instalación) **(Indica los pasos para instalar el sistema en un servidor local o en la nube)**
+- [Capitulo 5: Configuración](#configuración) **(Explica los pasos para configurar el sistema, tales como la conexión a la base de datos, el acceso a los recursos y la configuración de los parámetros)**
+- [Capitulo 6: Despliegue](#funcionalidades) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
+- [Capitulo 7: Funcionalidades](#funcionalidades) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
 
 > [!NOTE]
 > El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional 
