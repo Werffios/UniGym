@@ -29,7 +29,7 @@ administradores y mantenedores del sistema, y contiene información detallada so
 utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y la documentación del código. 
 
 > [!WARNING]  
-> Critical content demanding immediate user attention due to potential risks.
+> Si usted es un usuario final del sistema, consulte el [manual de usuario](user.md).
 
 
 El manual de usuario, que explica el uso del sistema desde el punto de vista de los clientes y los empleados del gimnasio, se hará aparte. El sistema de información web se desarrolló siguiendo una metodología ágil, basada en iteraciones e incrementos, y se entregó en cuatro fases, cada una con sus respectivos entregables y validaciones. El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional de Colombia y por la normativa vigente. El sistema se encuentra alojado en un servidor web, y se puede acceder a él desde cualquier dispositivo con conexión a internet y un navegador compatible. El sistema se integra con otros sistemas externos, como el sistema de autenticación de la Universidad, el sistema de pagos en línea y el sistema de correo electrónico. El sistema se actualiza periódicamente para incorporar nuevas funcionalidades, corregir errores y mejorar el rendimiento. El manual técnico se estructura en los siguientes capítulos:
