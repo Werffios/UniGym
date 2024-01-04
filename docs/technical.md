@@ -1,5 +1,8 @@
 # Manual técnico del aplicativo web UniGym
 
+> [!WARNING]  
+> Si usted es un usuario final del sistema, consulte el [manual de usuario](user.md).
+
 ## Tabla de contenidos
 
 - [Introducción](#1-introducción)
@@ -21,18 +24,25 @@
 ## 1. Introducción
 
 El presente documento describe el diseño, desarrollo e implementación del sistema de información web 
-“UniGym” que permite la gestión del centro de acondicionamiento y preparación física CAPF de la Universidad Nacional de Colombia - sede Manizales.
+“UniGym” que permite la gestión del centro de acondicionamiento y preparación física CAPF de la Universidad Nacional de 
+Colombia - sede Manizales.
 
 El objetivo de este sistema es facilitar la gestión de los servicios que ofrece el gimnasio, tales como el control de 
 usuarios, pagos, asistencias, test o evaluaciones físicas, entre otros. El manual está dirigido a los desarrolladores, 
 administradores y mantenedores del sistema, y contiene información detallada sobre los requisitos, las tecnologías 
 utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y la documentación del código. 
 
-> [!WARNING]  
-> Si usted es un usuario final del sistema, consulte el [manual de usuario](user.md).
+> [!NOTE]
+> El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional 
+> de Colombia y por la normativa vigente.
 
+> [!IMPORTANT]
+> El sistema se encuentra alojado en un servidor web, y se puede acceder a él desde cualquier dispositivo con 
+> conexión a internet y un navegador compatible.
 
-El manual de usuario, que explica el uso del sistema desde el punto de vista de los clientes y los empleados del gimnasio, se hará aparte. El sistema de información web se desarrolló siguiendo una metodología ágil, basada en iteraciones e incrementos, y se entregó en cuatro fases, cada una con sus respectivos entregables y validaciones. El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional de Colombia y por la normativa vigente. El sistema se encuentra alojado en un servidor web, y se puede acceder a él desde cualquier dispositivo con conexión a internet y un navegador compatible. El sistema se integra con otros sistemas externos, como el sistema de autenticación de la Universidad, el sistema de pagos en línea y el sistema de correo electrónico. El sistema se actualiza periódicamente para incorporar nuevas funcionalidades, corregir errores y mejorar el rendimiento. El manual técnico se estructura en los siguientes capítulos:
+> [!TIP]
+> El sistema es escalable, y se puede adaptar a las necesidades de otros centros de acondicionamiento y preparación
+> física. Además, se puede integrar con otros sistemas de información de la Universidad Nacional de Colombia.
 
 Capítulo 1: Introducción. Presenta el propósito, el alcance, los objetivos y la organización del manual técnico.
 Capítulo 2: Requisitos. Especifica los requisitos funcionales y no funcionales del sistema, así como los casos de uso y los actores involucrados.
