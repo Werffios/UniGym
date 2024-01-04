@@ -1,18 +1,7 @@
-# Manual técnico del aplicativo web UniGym
+# Manual técnico del sistema de información web UniGym
 
 > [!WARNING]  
 > Si usted es un usuario final del sistema, consulte el [manual de usuario](user.md).
-
-El presente documento describe el diseño, desarrollo e implementación del sistema de información web 
-“UniGym” que permite la gestión del centro de acondicionamiento y preparación física CAPF de la Universidad Nacional de 
-Colombia - sede Manizales.
-
-El objetivo de este sistema es facilitar la gestión de los servicios que ofrece el gimnasio, tales como el control de 
-usuarios, pagos, asistencias, test o evaluaciones físicas, entre otros. El manual está dirigido a los desarrolladores, 
-administradores y mantenedores del sistema, y contiene información detallada sobre los requisitos, las tecnologías 
-utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y la documentación del código. 
-
-El manual técnico se estructura en los siguientes capítulos:
 
 ## Tabla de contenidos
 - [Capitulo 1: Introducción](#introducción) **(Presenta el propósito, el alcance, los objetivos y la organización)**
@@ -35,14 +24,41 @@ El manual técnico se estructura en los siguientes capítulos:
 > El sistema es escalable, y se puede adaptar a las necesidades de otros centros de acondicionamiento y preparación
 > física. Además, se puede integrar con otros sistemas de información de la Universidad Nacional de Colombia.
 
-Capítulo 1: Introducción. Presenta el propósito, el alcance, los objetivos y la organización del manual técnico.
-Capítulo 2: Requisitos. Especifica los requisitos funcionales y no funcionales del sistema, así como los casos de uso y los actores involucrados.
-Capítulo 3: Tecnologías. Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores.
-Capítulo 4: Arquitectura. Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos.
-Capítulo 5: Componentes. Detalla los componentes del sistema, sus responsabilidades, sus interfaces, sus dependencias y sus interacciones.
-Capítulo 6: Funcionalidades. Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones.
-Capítulo 7: Pruebas. Muestra los tipos de pruebas realizadas al sistema, los criterios de aceptación, los escenarios, los resultados y las incidencias.
-Capítulo 8: Documentación. Indica la forma de documentar el código, los estándares de codificación, los comentarios, las etiquetas y la generación automática de documentación.
-Capítulo 9: Conclusiones. Resume los logros, las dificultades, las lecciones aprendidas y las recomendaciones del proyecto.
-Anexos. Incluye información complementaria, como el glosario de términos, las referencias bibliográficas, los manuales de instalación y configuración, y los códigos fuente.
+# Introducción
+
+El presente documento describe el diseño, desarrollo e implementación del sistema de información web
+“UniGym” que permite la gestión del centro de acondicionamiento y preparación física CAPF de la Universidad Nacional de
+Colombia - sede Manizales.
+
+El objetivo de este sistema es facilitar la gestión de los servicios que ofrece el gimnasio, tales como el control de
+usuarios, pagos, asistencias, test o evaluaciones físicas, entre otros. El manual está dirigido a los desarrolladores,
+administradores y mantenedores del sistema, y contiene información detallada sobre los requisitos, las tecnologías
+utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y la documentación del código. 
+
+# Arquitectura
+
+En este capítulo se explica la estructura, el diseño y el funcionamiento del sistema de información web que permite la 
+administración del gimnasio de la Universidad Nacional de Colombia en la sede Manizales. Se describen los patrones de 
+diseño aplicados, los diagramas que representan la arquitectura y la distribución de las capas y los módulos que 
+componen el sistema.
+
+## Tipo de arquitectura
+
+El sistema de información web “UniGym” se basa en una arquitectura de tres capas que utiliza el patrón de diseño 
+modelo-vista-controlador (MVC). Esta arquitectura se compone de una capa de presentación, una capa de negocio y una capa
+de datos.
+
+- La capa de presentación, implementada con HTML, CSS y JavaScript, se encarga de mostrar la interfaz gráfica del 
+sistema y actúa como la “vista” en el patrón MVC. Esta capa se encarga de la presentación de la interfaz de usuario.
+- La capa de negocio, implementada con PHP, se encarga de procesar las peticiones del usuario y de comunicarse con la 
+capa de datos. Esta capa actúa como el “controlador” en el patrón MVC, manejando la comunicación entre el modelo y la 
+vista.
+- La capa de datos, implementada con MySQL, se encarga de almacenar la información del sistema y actúa como el “modelo” 
+en el patrón MVC. Esta capa se encarga de la interacción con la base de datos.
+
+> [!NOTE]
+> Este tipo de arquitectura facilita la modularidad, la reusabilidad y el mantenimiento del código, al separar la lógica de la aplicación en tres componentes principales.
+
+## Patrones de diseño
+
 
