@@ -1,13 +1,47 @@
 # Manual técnico del aplicativo web UniGym
 
+## Tabla de contenidos
 
-<h2>1. Introducción</h2>
+- [Introducción](#1-introducción)
+- [Arquitectura](#2-arquitectura)
+- [Tecnologías](#3-tecnologías)
+- [Instalación](#4-instalación)
+- [Configuración](#5-configuración)
+- [Despliegue](#6-despliegue)
+- [Pruebas](#7-pruebas)
+- [Referencias](#8-referencias)
+- [Anexos](#9-anexos)
+- [Glosario](#10-glosario)
+- [Acrónimos](#11-acrónimos)
+- [Versiones](#12-versiones)
+- [Autores](#13-autores)
+- [Licencia](#14-licencia)
+- [Agradecimientos](#15-agradecimientos)
 
-<p>El presente documento tiene como objetivo describir la estructura y funcionamiento del aplicativo web “UniGym” desarrollado para la Universidad Distrital Francisco José de Caldas, el cual tiene como fin principal la gestión de los proyectos de investigación de la universidad, permitiendo a los investigadores y administradores de la universidad realizar el seguimiento de los proyectos de investigación, así como la gestión de los mismos.</p>
+## 1. Introducción
+
+El presente documento describe el diseño, desarrollo e implementación del sistema de información web 
+“UniGym” que permite la gestión del centro de acondicionamiento y preparación física CAPF de la Universidad Nacional de Colombia - sede Manizales.
+
+El objetivo de este sistema es facilitar la gestión de los servicios que ofrece el gimnasio, tales como el control de 
+usuarios, pagos, asistencias, test o evaluaciones físicas, entre otros. El manual está dirigido a los desarrolladores, 
+administradores y mantenedores del sistema, y contiene información detallada sobre los requisitos, las tecnologías 
+utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y la documentación del código. 
+
+> [!WARNING]  
+> Critical content demanding immediate user attention due to potential risks.
 
 
-<h2>2. Diagrama de clases</h2>
+El manual de usuario, que explica el uso del sistema desde el punto de vista de los clientes y los empleados del gimnasio, se hará aparte. El sistema de información web se desarrolló siguiendo una metodología ágil, basada en iteraciones e incrementos, y se entregó en cuatro fases, cada una con sus respectivos entregables y validaciones. El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional de Colombia y por la normativa vigente. El sistema se encuentra alojado en un servidor web, y se puede acceder a él desde cualquier dispositivo con conexión a internet y un navegador compatible. El sistema se integra con otros sistemas externos, como el sistema de autenticación de la Universidad, el sistema de pagos en línea y el sistema de correo electrónico. El sistema se actualiza periódicamente para incorporar nuevas funcionalidades, corregir errores y mejorar el rendimiento. El manual técnico se estructura en los siguientes capítulos:
 
-<p>El diagrama de clases del aplicativo web “UniGym” se encuentra en la siguiente imagen:</p>
+Capítulo 1: Introducción. Presenta el propósito, el alcance, los objetivos y la organización del manual técnico.
+Capítulo 2: Requisitos. Especifica los requisitos funcionales y no funcionales del sistema, así como los casos de uso y los actores involucrados.
+Capítulo 3: Tecnologías. Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores.
+Capítulo 4: Arquitectura. Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos.
+Capítulo 5: Componentes. Detalla los componentes del sistema, sus responsabilidades, sus interfaces, sus dependencias y sus interacciones.
+Capítulo 6: Funcionalidades. Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones.
+Capítulo 7: Pruebas. Muestra los tipos de pruebas realizadas al sistema, los criterios de aceptación, los escenarios, los resultados y las incidencias.
+Capítulo 8: Documentación. Indica la forma de documentar el código, los estándares de codificación, los comentarios, las etiquetas y la generación automática de documentación.
+Capítulo 9: Conclusiones. Resume los logros, las dificultades, las lecciones aprendidas y las recomendaciones del proyecto.
+Anexos. Incluye información complementaria, como el glosario de términos, las referencias bibliográficas, los manuales de instalación y configuración, y los códigos fuente.
 
-<img src="
