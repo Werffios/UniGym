@@ -4,13 +4,13 @@
 > Si usted es un usuario final del sistema, consulte el [manual de usuario](user.md).
 
 ## Tabla de contenidos
-- [Capitulo 1: Introducción](#introducción) **(Presenta el propósito, el alcance, los objetivos y la organización)**
-- [Capitulo 2: Arquitectura](#arquitectura) **(Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos)**
-- [Capitulo 3: Tecnologías](#tecnologías) **(Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores)**
-- [Capitulo 4: Instalación](#instalación) **(Indica los pasos para instalar el sistema en un servidor local o en la nube)**
-- [Capitulo 5: Configuración](#configuración) **(Explica los pasos para configurar el sistema, tales como la conexión a la base de datos, el acceso a los recursos y la configuración de los parámetros)**
-- [Capitulo 6: Despliegue](#funcionalidades) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
-- [Capitulo 7: Funcionalidades](#funcionalidades) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
+- [Capítulo 1: Introducción](#introducción) **(Presenta el propósito, el alcance, los objetivos y la organización)**
+- [Capítulo 2: Arquitectura](#arquitectura) **(Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos)**
+- [Capítulo 3: Tecnologías](#tecnologías) **(Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores)**
+- [Capítulo 4: Instalación](#instalación) **(Indica los pasos para instalar el sistema en un servidor local o en la nube)**
+- [Capítulo 5: Configuración](#configuración) **(Explica los pasos para configurar el sistema, tales como la conexión a la base de datos, el acceso a los recursos y la configuración de los parámetros)**
+- [Capítulo 6: Despliegue](#funcionalidades) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
+- [Capítulo 7: Funcionalidades](#funcionalidades) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
 
 > [!NOTE]
 > El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional 
@@ -39,8 +39,8 @@ utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y
 
 En este capítulo se explica la estructura, el diseño y el funcionamiento del sistema de información web que permite la 
 administración del gimnasio de la Universidad Nacional de Colombia en la sede Manizales. Se describen los patrones de 
-diseño aplicados, los diagramas que representan la arquitectura y la distribución de las capas y los módulos que 
-componen el sistema.
+diseño aplicados, los diagramas que representan la arquitectura, la distribución de las capas y los módulos que componen
+el sistema, y las tecnologías utilizadas para el desarrollo e implementación del sistema.
 
 ## Tipo de arquitectura
 
@@ -57,8 +57,25 @@ vista.
 en el patrón MVC. Esta capa se encarga de la interacción con la base de datos.
 
 > [!NOTE]
-> Este tipo de arquitectura facilita la modularidad, la reusabilidad y el mantenimiento del código, al separar la lógica de la aplicación en tres componentes principales.
+> Este tipo de arquitectura facilita la modularidad, la reusabilidad y el mantenimiento del código, al separar la lógica
+> de la aplicación en tres componentes principales.
 
 ## Patrones de diseño
+
+El sistema utiliza el framework Laravel, que es un framework de PHP que sigue el patrón MVC y ofrece varias 
+funcionalidades y herramientas para el desarrollo e implementación de aplicaciones web. Además, el sistema utiliza las 
+librerías AlpineJS y el framework Livewire, que permiten añadir comportamiento dinámico y reactivo a la vista. 
+AlpineJS se integra bien con Laravel y Livewire, y ofrece una sintaxis similar a VueJS. Livewire se basa en el concepto
+de "HTML sobre el cable", que significa que envía y recibe HTML en lugar de datos JSON. Livewire facilita la 
+sincronización de datos entre el modelo y la vista, y ofrece varias funcionalidades como validación, paginación, 
+carga de archivos, etc
+
+Asimismo, el sistema utiliza el framework Tailwind CSS, que es un framework de CSS que ofrece clases de utilidad para 
+crear diseños personalizados sin estilos predefinidos. Tailwind CSS se integra con Laravel, AlpineJS y Livewire, y 
+permite crear interfaces de usuario modernas y flexibles. Tailwind CSS se basa en el patrón utility-first, que consiste
+en usar clases atómicas que representan propiedades de CSS, como color, tamaño, margen, posición, etc. De esta forma, 
+se puede crear cualquier diseño directamente en el HTML, sin tener que escribir hojas de estilo separadas
+
+## Diagramas
 
 

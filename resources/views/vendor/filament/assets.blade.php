@@ -21,4 +21,16 @@
     :root {
         @foreach ($cssVariables ?? [] as $cssVariableName => $cssVariableValue) --{{ $cssVariableName }}:{{ $cssVariableValue }}; @endforeach
     }
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgb(148, 180, 59);
+        border-radius: 999px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
 </style>
