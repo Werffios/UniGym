@@ -45,6 +45,12 @@ class AdminPanelProvider extends PanelProvider
                      50 => '163, 215, 171',
                 ],
             ])
+            ->navigationGroups([
+                'Asistencia y Test',
+                'Finanzas',
+                'Mantenimiento',
+                'Roles y Permisos',
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

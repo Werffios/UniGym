@@ -107,12 +107,12 @@ class TestForestryRelationManager extends RelationManager
                                         'stage' => '
 
 Mejoramiento
-Mejoramiento
-Mejoramiento
-Mejoramiento
-Mejoramiento
-Mejoramiento
-Mejoramiento
+
+
+
+
+
+
 Mantenimiento',
                                         'week' => '
 
@@ -161,16 +161,16 @@ Mantenimiento',
                                 $dataForestry =
                                     [
                                         'stage' => 'Inicial
-Inicial
-Inicial
-Inicial
-Inicial
+
+
+
+
 Mejoramiento
-Mejoramiento
-Mejoramiento
-Mejoramiento
-Mejoramiento
-Mejoramiento
+
+
+
+
+
 Mantenimiento',
                                         'week' => ' 1 - 3
  4 - 6

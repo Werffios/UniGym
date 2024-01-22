@@ -19,12 +19,10 @@ use Filament\Support\Enums\Alignment;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-
     protected static ?string $modelLabel = 'Administrador';
     protected static ?string $pluralModelLabel = 'Administradores';
     protected static ?string $navigationIcon = 'heroicon-o-key';
     protected static ?string $navigationGroup = 'Mantenimiento';
-
 
     public static function form(Form $form): Form
     {
@@ -40,23 +38,27 @@ class UserResource extends Resource
                     ->helperText('Escribe el nombre del administrador.')
                     ->autocomplete(false)
                     ->hint('El nombre debe ser único.'),
-                TextInput::make('email')->label('Correo electrónico')
+                TextInput::make('email')
+                    ->label('Correo electrónico')
                     ->required()
-                    ->unique()
+                    ->unique(ignoreRecord: true)
                     ->email()
+                    ->autocomplete(false)
                     ->minLength(2)
                     ->maxLength(255)
                     ->placeholder('Ingrese el correo electrónico del administrador')
                     ->helperText('Escribe el correo electrónico del administrador.')
                     ->hint('El correo electrónico debe ser único.'),
-                Select::make('roles')->label('Rol')
+                Select::make('roles')
+                    ->label('Rol')
                     ->required()
                     ->multiple()
                     ->relationship('roles', 'name')
                     ->placeholder('Seleccione el rol del administrador')
                     ->helperText('Seleccione el rol del administrador.')
                     ->hint('El rol determina los permisos del administrador.'),
-                TextInput::make('password')->label('Contraseña')
+                TextInput::make('password')
+                    ->label('Contraseña')
                     ->password()
                     ->autocomplete('new-password')
                     ->required()
@@ -66,7 +68,8 @@ class UserResource extends Resource
                     ->placeholder('Ingrese la contraseña del administrador')
                     ->helperText('Escribe la contraseña del administrador.')
                     ->hint('La contraseña debe tener al menos 8 caracteres.'),
-                TextInput::make('password_confirmation')->label('Confirmar contraseña')
+                TextInput::make('password_confirmation')
+                    ->label('Confirmar contraseña')
                     ->password()
                     ->autocomplete('new-password')
                     ->required()

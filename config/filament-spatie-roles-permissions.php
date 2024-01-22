@@ -20,7 +20,7 @@ return [
 
     'guard_names' => [
         'web' => 'web',
-        'api' => 'api',
+        // 'api' => 'api',
     ],
 
     'toggleable_guard_names' => [
@@ -32,7 +32,7 @@ return [
         ],
     ],
 
-    'default_guard_name' => null,
+    'default_guard_name' => 'web',
 
     'model_filter_key' => 'return \'%\'.$key;', // Eg: 'return \'%\'.$key.'\%\';'
 
@@ -42,8 +42,8 @@ return [
      * Icons to use for navigation
      */
     'icons' => [
-        'role_navigation' => 'heroicon-o-lock-closed',
-        'permission_navigation' => 'heroicon-o-lock-closed',
+        'role_navigation' => 'heroicon-o-users',
+        'permission_navigation' => 'heroicon-o-shield-exclamation',
     ],
 
     'generator' => [

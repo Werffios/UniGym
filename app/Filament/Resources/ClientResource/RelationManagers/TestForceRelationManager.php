@@ -166,10 +166,12 @@ class TestForceRelationManager extends RelationManager
                             $gender = Client::find($data['client_id'])->gender;
 
                             $dataForce = [
+                                // upper limbs
                                 'benchPressMaxForce' => round($data['benchPress'] * 100 / (102.78 - (2.78 * $data['benchPressReps']))),
                                 'pulleyOpenHighMaxForce' => round($data['pulleyOpenHigh'] * 100 / (102.78 - (2.78 * $data['pulleyOpenHighReps']))),
                                 'barbellBicepsCurlMaxForce' => round($data['barbellBicepsCurl'] * 100 / (102.78 - (2.78 * $data['barbellBicepsCurlReps']))),
 
+                                // lower limbs
                                 'flexionLegsMaxForce' => round($data['legFlexion'] * 100 / (102.78 - (2.78 * $data['legFlexionReps']))),
                                 'legExtensionMaxForce' => round($data['legExtension'] * 100 / (102.78 - (2.78 * $data['legExtensionReps']))),
                                 'flexExtLegsMaxForce' => round($data['legFlexExt'] * 100 / (102.78 - (2.78 * $data['legFlexExtReps']))),
@@ -188,9 +190,9 @@ class TestForceRelationManager extends RelationManager
                             if ($dataForce['benchPressForce/Peso'] >= 1.3 + $controlgenderPressForce) {
                                 $dataForce['benchPressForceClassification'] = 'Optimo';
                             } elseif ($dataForce['benchPressForce/Peso'] >= 1 + $controlgenderPressForce && $dataForce['benchPressForce/Peso'] < 1.3 + $controlgenderPressForce) {
-                                $dataForce['benchPressForceClassification'] = 'Normal';
+                                $dataForce['benchPressForceClassification'] = 'Mejoramiento';
                             } else {
-                                $dataForce['benchPressForceClassification'] = 'Bajo';
+                                $dataForce['benchPressForceClassification'] = 'Bajo rendimiento';
                             }
 
                             $controlgenderPulleyForce = $gender == 'Masculino' ? 0 : -0.35;
@@ -198,9 +200,9 @@ class TestForceRelationManager extends RelationManager
                             if ($dataForce['pulleyOpenHighForce/Peso'] >= 1.1 + $controlgenderPulleyForce) {
                                 $dataForce['pulleyOpenHighForceClassification'] = 'Optimo';
                             } elseif ($dataForce['pulleyOpenHighForce/Peso'] >= 0.95 + $controlgenderPulleyForce && $dataForce['pulleyOpenHighForce/Peso'] < 1.1 + $controlgenderPulleyForce) {
-                                $dataForce['pulleyOpenHighForceClassification'] = 'Normal';
+                                $dataForce['pulleyOpenHighForceClassification'] = 'Mejoramiento';
                             } else {
-                                $dataForce['pulleyOpenHighForceClassification'] = 'Bajo';
+                                $dataForce['pulleyOpenHighForceClassification'] = 'Bajo rendimiento';
                             }
 
                             $controlgenderBicepsForce = $gender == 'Masculino' ? 0 : -0.2;
@@ -208,9 +210,9 @@ class TestForceRelationManager extends RelationManager
                             if ($dataForce['barbellBicepsCurlForce/Peso'] >= 0.6 + $controlgenderBicepsForce) {
                                 $dataForce['barbellBicepsCurlForceClassification'] = 'Optimo';
                             } elseif ($dataForce['barbellBicepsCurlForce/Peso'] >= 0.45 + $controlgenderBicepsForce && $dataForce['barbellBicepsCurlForce/Peso'] < 0.6 + $controlgenderBicepsForce) {
-                                $dataForce['barbellBicepsCurlForceClassification'] = 'Normal';
+                                $dataForce['barbellBicepsCurlForceClassification'] = 'Mejoramiento';
                             } else {
-                                $dataForce['barbellBicepsCurlForceClassification'] = 'Bajo';
+                                $dataForce['barbellBicepsCurlForceClassification'] = 'Bajo rendimiento';
                             }
 
                             $controlgenderLegsForce = $gender == 'Masculino' ? 0 : -0.3;
@@ -218,9 +220,9 @@ class TestForceRelationManager extends RelationManager
                             if ($dataForce['flexionLegsForce/Peso'] >= 2.6 + $controlgenderLegsForce) {
                                 $dataForce['flexionLegsForceClassification'] = 'Optimo';
                             } elseif ($dataForce['flexionLegsForce/Peso'] >= 2 + $controlgenderLegsForce && $dataForce['flexionLegsForce/Peso'] < 2.6 + $controlgenderLegsForce) {
-                                $dataForce['flexionLegsForceClassification'] = 'Normal';
+                                $dataForce['flexionLegsForceClassification'] = 'Mejoramiento';
                             } else {
-                                $dataForce['flexionLegsForceClassification'] = 'Bajo';
+                                $dataForce['flexionLegsForceClassification'] = 'Bajo rendimiento';
                             }
 
                             $controlgenderExtensionForce = $gender == 'Masculino' ? 0 : -0.1;
@@ -228,9 +230,9 @@ class TestForceRelationManager extends RelationManager
                             if ($dataForce['legExtensionForce/Peso'] >= 0.7 + $controlgenderExtensionForce) {
                                 $dataForce['legExtensionForceClassification'] = 'Optimo';
                             } elseif ($dataForce['legExtensionForce/Peso'] >= 0.55 + $controlgenderExtensionForce && $dataForce['legExtensionForce/Peso'] < 0.7 + $controlgenderExtensionForce) {
-                                $dataForce['legExtensionForceClassification'] = 'Normal';
+                                $dataForce['legExtensionForceClassification'] = 'Mejoramiento';
                             } else {
-                                $dataForce['legExtensionForceClassification'] = 'Bajo';
+                                $dataForce['legExtensionForceClassification'] = 'Bajo rendimiento';
                             }
 
                             $controlgenderFlexExtForce = $gender == 'Masculino' ? 0 : -0.1;
@@ -238,9 +240,9 @@ class TestForceRelationManager extends RelationManager
                             if ($dataForce['flexExtLegsForce/Peso'] >= 0.6 + $controlgenderFlexExtForce) {
                                 $dataForce['flexExtLegsForceClassification'] = 'Optimo';
                             } elseif ($dataForce['flexExtLegsForce/Peso'] >= 0.45 + $controlgenderFlexExtForce && $dataForce['flexExtLegsForce/Peso'] < 0.6 + $controlgenderFlexExtForce) {
-                                $dataForce['flexExtLegsForceClassification'] = 'Normal';
+                                $dataForce['flexExtLegsForceClassification'] = 'Mejoramiento';
                             } else {
-                                $dataForce['flexExtLegsForceClassification'] = 'Bajo';
+                                $dataForce['flexExtLegsForceClassification'] = 'Bajo rendimiento';
                             }
 
                             $dataForce['benchPressForce75'] = round($dataForce['benchPressMaxForce'] * 0.75, 2);
@@ -291,7 +293,8 @@ class TestForceRelationManager extends RelationManager
                                 ->label('Fuerza/Peso'),
                             TextInput::make('benchPressForceClassification')
                                 ->label('Clasificación'),
-                        ])->columns(7),
+                        ])
+                            ->columns(7),
 
                         Fieldset::make('Polea alta abierta')
                             ->schema([
@@ -383,7 +386,7 @@ class TestForceRelationManager extends RelationManager
                                 ->label('Clasificación'),
                         ])->columns(7),
 
-                    ])
+                    ])->modalWidth('7xl')
                     ->iconButton()
                     ->icon('heroicon-o-window')
                     ->color('primary')
