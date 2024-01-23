@@ -4,13 +4,13 @@
 > Si usted es un usuario final del sistema, consulte el [manual de usuario](user.md).
 
 ## Tabla de contenidos
-- [Capítulo 1: Introducción](#introducción) **(Presenta el propósito, el alcance, los objetivos y la organización)**
-- [Capítulo 2: Arquitectura](#arquitectura) **(Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos)**
-- [Capítulo 3: Tecnologías](#tecnologías) **(Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores)**
-- [Capítulo 4: Instalación](#instalación) **(Indica los pasos para instalar el sistema en un servidor local o en la nube)**
-- [Capítulo 5: Configuración](#configuración) **(Explica los pasos para configurar el sistema, tales como la conexión a la base de datos, el acceso a los recursos y la configuración de los parámetros)**
-- [Capítulo 6: Despliegue](#funcionalidades) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
-- [Capítulo 7: Funcionalidades](#funcionalidades) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
+- [Capítulo 1: Introducción](#introducción.) **(Presenta el propósito, el alcance, los objetivos y la organización)**
+- [Capítulo 2: Arquitectura](#arquitectura.) **(Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos)**
+- [Capítulo 3: Tecnologías](#tecnologías.) **(Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores)**
+- [Capítulo 4: Instalación](#instalación.) **(Indica los pasos para instalar el sistema en un servidor local o en la nube)**
+- [Capítulo 5: Configuración](#configuración.) **(Explica los pasos para configurar el sistema, tales como la conexión a la base de datos, el acceso a los recursos y la configuración de los parámetros)**
+- [Capítulo 6: Despliegue](#funcionalidades.) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
+- [Capítulo 7: Funcionalidades](#funcionalidades.) **(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)**
 
 > [!NOTE]
 > El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional 
