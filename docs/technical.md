@@ -3,6 +3,14 @@
 > [!WARNING]  
 > Si usted es un usuario final del sistema, consulte el [manual de usuario](user.md).
 
+<div style="color: blue;">
+  Este es un texto en azul.
+</div>
+
+<script>
+  alert("Este es un script de JavaScript incrustado. Pero ten en cuenta que puede que no funcione en todos los procesadores de Markdown.");
+</script>
+
 ## Tabla de contenidos
 - [Capítulo 1: Introducción](#introducción) **(Presenta el propósito, el alcance, los objetivos y la organización)**
 - [Capítulo 2: Arquitectura](#arquitectura) **(Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos)**

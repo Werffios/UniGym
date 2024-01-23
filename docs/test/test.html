@@ -1,7 +1,326 @@
 <!DOCTYPE html SYSTEM "about:legacy-compat">
 <!-- saved from url=(0052)http://localhost:63342/UniGym/preview/technical.html -->
-<html lang="en-US" data-colors-preset="contrast" data-primary-color="#307FFF" class="theme-dark" data-preset="contrast"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="robots" content="noindex">  <meta name="built-on" content="2024-01-22T21:35:20.4790247"><meta name="build-number" content="${buildNumber}">       <title>Manual técnico del sistema de información web UniGym | Instance Name</title><script id="virtual-toc-data" type="application/json">[{"id":"tabla-de-contenidos","level":0,"title":"Tabla de contenidos","anchor":"#tabla-de-contenidos"},{"id":"introducci-n","level":0,"title":"Introducción","anchor":"#introducci-n"},{"id":"arquitectura","level":0,"title":"Arquitectura","anchor":"#arquitectura"},{"id":"tipo-de-arquitectura","level":0,"title":"Tipo de arquitectura","anchor":"#tipo-de-arquitectura"},{"id":"patrones-de-dise-o","level":0,"title":"Patrones de diseño","anchor":"#patrones-de-dise-o"},{"id":"diagramas","level":0,"title":"Diagramas","anchor":"#diagramas"}]</script><script id="topic-shortcuts" type="application/json"></script><link href="./test_files/app.css" rel="stylesheet">   <link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><link rel="manifest" href="https://jetbrains.com/site.webmanifest"><link rel="mask-icon" href="https://jetbrains.com/safari-pinned-tab.svg" color="#000000"><meta name="msapplication-TileColor" content="#000000"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png">  <meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Manual técnico del sistema de información web UniGym | Instance Name"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Instance Name Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="technical.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Manual técnico del sistema de información web UniGym | Instance Name"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json"> { "@context": "http://schema.org", "@type": "WebPage", "@id": "technical.html#webpage", "url": "technical.html", "name": "Manual t&eacute;cnico del sistema de informaci&oacute;n web UniGym | Instance Name", "description": "", "image": "", "inLanguage":"en-US" }</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json"> { "@type": "WebSite", "@id": "/#website", "url": "/", "name": "Instance Name Help" }</script><!-- End Schema.org --><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><style type="text/css" data-react-helmet="true">
-      :root {
+<html lang="en-US" data-colors-preset="contrast" data-primary-color="#307FFF" class="theme-dark" data-preset="contrast">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="built-on" content="2024-01-22T21:35:20.4790247">
+    <meta name="build-number" content="${buildNumber}">
+    <title>Manual técnico del sistema de información web UniGym | Instance Name</title>
+    <script id="virtual-toc-data" type="application/json">[{"id":"tabla-de-contenidos","level":0,"title":"Tabla de contenidos","anchor":"#tabla-de-contenidos"},{"id":"introducci-n","level":0,"title":"Introducción","anchor":"#introducci-n"},{"id":"arquitectura","level":0,"title":"Arquitectura","anchor":"#arquitectura"},{"id":"tipo-de-arquitectura","level":0,"title":"Tipo de arquitectura","anchor":"#tipo-de-arquitectura"},{"id":"patrones-de-dise-o","level":0,"title":"Patrones de diseño","anchor":"#patrones-de-dise-o"},{"id":"diagramas","level":0,"title":"Diagramas","anchor":"#diagramas"}]</script><script id="topic-shortcuts" type="application/json"></script>
+    <link href="./test_files/app.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png">
+    <link rel="manifest" href="https://jetbrains.com/site.webmanifest">
+    <link rel="mask-icon" href="https://jetbrains.com/safari-pinned-tab.svg" color="#000000">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png">
+    <meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png">
+    <meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png">
+    <meta name="image" content="">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Manual técnico del sistema de información web UniGym | Instance Name">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="og:site_name" content="Instance Name Help">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="technical.html">
+    <!-- End Open Graph --><!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="Manual técnico del sistema de información web UniGym | Instance Name">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:image:src" content="">
+    <!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json"> { "@context": "http://schema.org", "@type": "WebPage", "@id": "technical.html#webpage", "url": "technical.html", "name": "Manual t&eacute;cnico del sistema de informaci&oacute;n web UniGym | Instance Name", "description": "", "image": "", "inLanguage":"en-US" }</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json"> { "@type": "WebSite", "@id": "/#website", "url": "/", "name": "Instance Name Help" }</script><!-- End Schema.org -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <style type="text/css" data-react-helmet="true">
+        :root {
         --wt-color-primary-dark-theme: #307FFF;--wt-color-primary-dark-theme-80: rgba(48, 127, 255, 0.8);--wt-color-primary-dark-theme-20: rgba(48, 127, 255, 0.2);--rs-color-primary-dark-theme: #307FFF;--rs-color-primary-dim-dark-theme: #2B6BD2;--rs-color-primary-fog-dark-theme: #203860;--rs-color-primary-t-dim-dark-theme: rgba(48,127,255,0.8);--rs-color-primary-t-fog-dark-theme: rgba(48,127,255,0.3);--wt-color-primary-light-theme: #307FFF;--wt-color-primary-light-theme-80: rgba(48, 127, 255, 0.8);--wt-color-primary-light-theme-20: rgba(48, 127, 255, 0.2);--rs-color-primary-light-theme: #307FFF;--rs-color-primary-dim-light-theme: #5999FF;--rs-color-primary-fog-light-theme: #D6E5FF;--rs-color-primary-t-dim-light-theme: rgba(48,127,255,0.8);--rs-color-primary-t-fog-light-theme: rgba(48,127,255,0.2)
-      }
-    </style></head>      <body data-id="technical" data-main-title="Manual técnico del sistema de información web UniGym" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="" data-initial="/UniGym/preview/technical.html" class="app-is-rendered">     <script src="./test_files/app.js.download"></script><div id="webhelp-root"><div class="layout layout--page layout--rows app" data-test="app"><header class="app__header"><div class="layout layout--container layout--unlimited" data-test="layout"><div class="wh-header" data-test="header"><div class="wh-header__product-name" data-test="header-product">Instance Name</div>&nbsp;<div class="wh-header__divider"></div><div class="wh-header__switchers"><button data-test="theme-switcher" title="Switch theme" type="button" class="_main_joawza_17 _modeClear_joawza_434 _sizeS_joawza_92 _alignIconLeft_joawza_77 _dark_joawza_62 _withIcon_joawza_119 _withoutText_joawza_113"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M0 9a9 9 0 1018 0A9 9 0 000 9zm16 0a7 7 0 01-7 7V2a7 7 0 017 7z" transform="translate(3, 3)"></path></svg></button></div><button data-test="search-button" title="Search" type="button" class="_main_joawza_17 _modeClear_joawza_434 _sizeM_joawza_99 _alignIconLeft_joawza_77 _dark_joawza_62 _withIcon_joawza_119 _withoutText_joawza_113 wh-header__search-button"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m _icon_joawza_525"><path d="M2.293 10a6.99 6.99 0 0 0 11.187 5.6l6.106 6.107L21 20.293l-6.106-6.106A6.997 6.997 0 1 0 2.293 10zm2 0a5 5 0 1 1 5 5 5 5 0 0 1-5-5z"></path></svg></button></div></div></header><div class="layout layout--columns layout--overflow-guard layout--grow" data-test="layout"><nav class="layout app__sidebar" data-test="app__sidebar"><div class="layout layout--scroll-container app__nav" data-test="scroller"><div class="layout layout--scroll-element" data-test="layout"><ul class="toc toc--theme-dark app__toc" data-test="toc"><li data-toc-scroll="user"><a data-test="internal-link toc-item" rel="" class="toc-item toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/user.html" style="padding-left: 16px;"> Manual de usuario del sistema de información web UniGym</a></li><li data-toc-scroll="technical"><a data-test="internal-link toc-item--selected" rel="" class="toc-item toc-item--selected toc-item--highlighted toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html" style="padding-left: 16px;"> Manual técnico del sistema de información web UniGym</a></li></ul></div></div></nav><div class="layout layout--rows layout--scroll-container layout--grow" data-test="scroller"><div class="layout layout--container-content layout--columns layout--scroll-element layout--grow" data-test="layout"><article class="layout layout--grow app__article" data-test="app__article"><div class="article text2 " data-test="article"><h1 data-toc="technical" id="technical.md" class="article__h1"><span class="title"><span class="title__content">Manual técnico del sistema de información web UniGym</span>﻿</span></h1><span class="sub-title sub-title--related-h1"><span class="sub-title__edit-info"><span> Last modified: 23 January 2024</span></span></span>  <blockquote class="prompt h1-related" data-test-id="iIBA4bnRj_S31giShcnB4"><h3 class="a11y-title">tip</h3><div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon"><circle cx="12.042" cy="4" r="2"></circle><path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path></svg><div class="prompt__content"><p id="6afccc27_1135" class="article__p child">[!WARNING] <br> Si usted es un usuario final del sistema, consulte el <a data-test="internal-link link-with-popover" rel="" class="link link--dark" id="6afccc27_1137" href="http://localhost:63342/UniGym/preview/user.html">manual de usuario</a>.</p></div></div></blockquote><section class="chapter h1-related"><h2 id="tabla-de-contenidos" data-toc="tabla-de-contenidos" class="article__h2"><span class="title"><span class="title__content">Tabla de contenidos</span>﻿<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#tabla-de-contenidos"><span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#tabla-de-contenidos"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s"><path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path><path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path></svg></span></a></span></h2><ul class="article__list list _ul h2-related" id="6afccc27_1138"><li class="list__item" id="6afccc27_1139"><p class="article__p child"><span id="6afccc27_1140">Capítulo 1: Introducción</span> <span class="control" id="6afccc27_1141">(Presenta el propósito, el alcance, los objetivos y la organización)</span></p></li><li class="list__item" id="6afccc27_1142"><p class="article__p child"><span id="6afccc27_1143">Capítulo 2: Arquitectura</span> <span class="control" id="6afccc27_1144">(Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos)</span></p></li><li class="list__item" id="6afccc27_1145"><p class="article__p child"><span id="6afccc27_1146">Capítulo 3: Tecnologías</span> <span class="control" id="6afccc27_1147">(Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores)</span></p></li><li class="list__item" id="6afccc27_1148"><p class="article__p child"><span id="6afccc27_1149">Capítulo 4: Instalación</span> <span class="control" id="6afccc27_1150">(Indica los pasos para instalar el sistema en un servidor local o en la nube)</span></p></li><li class="list__item" id="6afccc27_1151"><p class="article__p child"><span id="6afccc27_1152">Capítulo 5: Configuración</span> <span class="control" id="6afccc27_1153">(Explica los pasos para configurar el sistema, tales como la conexión a la base de datos, el acceso a los recursos y la configuración de los parámetros)</span></p></li><li class="list__item" id="6afccc27_1154"><p class="article__p child"><span id="6afccc27_1155">Capítulo 6: Despliegue</span> <span class="control" id="6afccc27_1156">(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)</span></p></li><li class="list__item" id="6afccc27_1157"><p class="article__p child"><span id="6afccc27_1158">Capítulo 7: Funcionalidades</span> <span class="control" id="6afccc27_1159">(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)</span></p></li></ul><blockquote class="prompt h2-related" data-test-id="-lR5_9vM0lcEr0gUwRagX"><h3 class="a11y-title">tip</h3><div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon"><circle cx="12.042" cy="4" r="2"></circle><path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path></svg><div class="prompt__content"><p id="6afccc27_1161" class="article__p child">[!NOTE] El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional de Colombia y por la normativa vigente.</p></div></div></blockquote><blockquote class="prompt h2-related" data-test-id="QjAv_FOxI5oM2Pfw9uO17"><h3 class="a11y-title">tip</h3><div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon"><circle cx="12.042" cy="4" r="2"></circle><path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path></svg><div class="prompt__content"><p id="6afccc27_1163" class="article__p child">[!IMPORTANT] El sistema se encuentra alojado en un servidor web, y se puede acceder a él desde cualquier dispositivo con conexión a internet y un navegador compatible.</p></div></div></blockquote><blockquote class="prompt h2-related" data-test-id="80SqHfigQhucUPKD5AN4S"><h3 class="a11y-title">tip</h3><div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon"><circle cx="12.042" cy="4" r="2"></circle><path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path></svg><div class="prompt__content"><p id="6afccc27_1165" class="article__p child">[!TIP] El sistema es escalable, y se puede adaptar a las necesidades de otros centros de acondicionamiento y preparación física. Además, se puede integrar con otros sistemas de información de la Universidad Nacional de Colombia.</p></div></div></blockquote><p id="6afccc27_1166" class="article__p h2-related">{ coll</p></section><section class="chapter h1-related"><h2 id="introducci-n" data-toc="introducci-n" class="article__h2"><span class="title"><span class="title__content">Introducción</span>﻿<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#introducci-n"><span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#introducci-n"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s"><path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path><path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path></svg></span></a></span></h2><p id="6afccc27_1167" class="article__p h2-related">El presente documento describe el diseño, desarrollo e implementación del sistema de información web “UniGym” que permite la gestión del centro de acondicionamiento y preparación física CAPF de la Universidad Nacional de Colombia - sede Manizales.</p><p id="6afccc27_1168" class="article__p h2-related">El objetivo de este sistema es facilitar la gestión de los servicios que ofrece el gimnasio, tales como el control de usuarios, pagos, asistencias, test o evaluaciones físicas, entre otros. El manual está dirigido a los desarrolladores, administradores y mantenedores del sistema, y contiene información detallada sobre los requisitos, las tecnologías utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y la documentación del código.</p></section><section class="chapter h1-related"><h2 id="arquitectura" data-toc="arquitectura" class="article__h2"><span class="title"><span class="title__content">Arquitectura</span>﻿<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#arquitectura"><span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#arquitectura"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s"><path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path><path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path></svg></span></a></span></h2><p id="6afccc27_1169" class="article__p h2-related">En este capítulo se explica la estructura, el diseño y el funcionamiento del sistema de información web que permite la administración del gimnasio de la Universidad Nacional de Colombia en la sede Manizales. Se describen los patrones de diseño aplicados, los diagramas que representan la arquitectura, la distribución de las capas y los módulos que componen el sistema, y las tecnologías utilizadas para el desarrollo e implementación del sistema.</p></section><section class="chapter h1-related"><h2 id="tipo-de-arquitectura" data-toc="tipo-de-arquitectura" class="article__h2"><span class="title"><span class="title__content">Tipo de arquitectura</span>﻿<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#tipo-de-arquitectura"><span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#tipo-de-arquitectura"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s"><path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path><path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path></svg></span></a></span></h2><p id="6afccc27_1170" class="article__p h2-related">El sistema de información web “UniGym” se basa en una arquitectura de tres capas que utiliza el patrón de diseño modelo-vista-controlador (MVC). Esta arquitectura se compone de una capa de presentación, una capa de negocio y una capa de datos.</p><ul class="article__list list _ul h2-related" id="6afccc27_1171"><li class="list__item" id="6afccc27_1172"><p class="article__p child">La capa de presentación, implementada con HTML, CSS y JavaScript, se encarga de mostrar la interfaz gráfica del sistema y actúa como la “vista” en el patrón MVC. Esta capa se encarga de la presentación de la interfaz de usuario.</p></li><li class="list__item" id="6afccc27_1173"><p class="article__p child">La capa de negocio, implementada con PHP, se encarga de procesar las peticiones del usuario y de comunicarse con la capa de datos. Esta capa actúa como el “controlador” en el patrón MVC, manejando la comunicación entre el modelo y la vista.</p></li><li class="list__item" id="6afccc27_1174"><p class="article__p child">La capa de datos, implementada con MySQL, se encarga de almacenar la información del sistema y actúa como el “modelo” en el patrón MVC. Esta capa se encarga de la interacción con la base de datos.</p></li></ul><blockquote class="prompt h2-related" data-test-id="GzitCgAy8_7-JUJCiCG6C"><h3 class="a11y-title">tip</h3><div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon"><circle cx="12.042" cy="4" r="2"></circle><path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path></svg><div class="prompt__content"><p id="6afccc27_1176" class="article__p child">[!NOTE] Este tipo de arquitectura facilita la modularidad, la reusabilidad y el mantenimiento del código, al separar la lógica de la aplicación en tres componentes principales.</p></div></div></blockquote></section><section class="chapter h1-related"><h2 id="patrones-de-dise-o" data-toc="patrones-de-dise-o" class="article__h2"><span class="title"><span class="title__content">Patrones de diseño</span>﻿<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#patrones-de-dise-o"><span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#patrones-de-dise-o"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s"><path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path><path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path></svg></span></a></span></h2><p id="6afccc27_1177" class="article__p h2-related">El sistema utiliza el framework Laravel, que es un framework de PHP que sigue el patrón MVC y ofrece varias funcionalidades y herramientas para el desarrollo e implementación de aplicaciones web. Además, el sistema utiliza las librerías AlpineJS y el framework Livewire, que permiten añadir comportamiento dinámico y reactivo a la vista. AlpineJS se integra bien con Laravel y Livewire, y ofrece una sintaxis similar a VueJS. Livewire se basa en el concepto de "HTML sobre el cable", que significa que envía y recibe HTML en lugar de datos JSON. Livewire facilita la sincronización de datos entre el modelo y la vista, y ofrece varias funcionalidades como validación, paginación, carga de archivos, etc</p><p id="6afccc27_1178" class="article__p h2-related">Asimismo, el sistema utiliza el framework Tailwind CSS, que es un framework de CSS que ofrece clases de utilidad para crear diseños personalizados sin estilos predefinidos. Tailwind CSS se integra con Laravel, AlpineJS y Livewire, y permite crear interfaces de usuario modernas y flexibles. Tailwind CSS se basa en el patrón utility-first, que consiste en usar clases atómicas que representan propiedades de CSS, como color, tamaño, margen, posición, etc. De esta forma, se puede crear cualquier diseño directamente en el HTML, sin tener que escribir hojas de estilo separadas</p></section><section class="chapter h1-related"><h2 id="diagramas" data-toc="diagramas" class="article__h2"><span class="title"><span class="title__content">Diagramas</span>﻿<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#diagramas"><span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#diagramas"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s"><path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path><path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path></svg></span></a></span></h2></section><div data-feedback-placeholder="true" class="h1-related"></div></div></article><aside class="layout" data-test="layout"><div class="stretch__wrapper app__virtual-toc-sidebar"><div class="stretch" data-test="virtual-toc-sidebar" style="height: 316px;"><div class="layout layout--scroll-container app__virtual-toc-scroll-disabler" data-test="scroller"><div class="layout layout--scroll-element" data-test="layout"><ul class="toc app__virtual-toc" data-test="virtual-toc"><li data-toc-scroll="technical" class="toc-node toc-node--selected" data-test="toc-node--selected"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html" style="padding-left: 0px;"> Manual técnico del sistema de información web UniGym</a></li><li data-toc-scroll="tabla-de-contenidos" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#tabla-de-contenidos" style="padding-left: 0px;"> Tabla de contenidos</a></li><li data-toc-scroll="introducci-n" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#introducci-n" style="padding-left: 0px;"> Introducción</a></li><li data-toc-scroll="arquitectura" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#arquitectura" style="padding-left: 0px;"> Arquitectura</a></li><li data-toc-scroll="tipo-de-arquitectura" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#tipo-de-arquitectura" style="padding-left: 0px;"> Tipo de arquitectura</a></li><li data-toc-scroll="patrones-de-dise-o" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#patrones-de-dise-o" style="padding-left: 0px;"> Patrones de diseño</a></li><li data-toc-scroll="diagramas" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#diagramas" style="padding-left: 0px;"> Diagramas</a></li></ul></div></div></div></div></aside></div><div class="layout layout--container-content layout--scroll-element" data-test="layout"><nav class="navigation-links"><a data-test="internal-link prev-page" class="navigation-links__prev" href="http://localhost:63342/UniGym/preview/user.html"><svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m navigation-links__prev-icon"><path d="M2 11.857L10 5v5.857h11v2H10v5.857l-8-6.857z"></path></svg>Manual de usuario del sistema de información web UniGym</a></nav></div><div class="app__footer app__footer--preset-contrast"><footer class="layout layout--container-content" data-test="layout"><div class="footer" data-test="footer"><div class="footer__wrapper"></div><p class="footer__powered rs-text-3 rs-text-3_theme_dark" data-test="powered-block">Powered by&nbsp;<a href="https://lp.jetbrains.com/writerside/" data-test="external-link powered-link" rel="" class="link link--dark"><span class="notranslate">JetBrains Writerside</span></a></p></div></footer></div></div></div></div></div></body></html>
+        }
+    </style>
+</head>
+<body data-id="technical" data-main-title="Manual técnico del sistema de información web UniGym" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="" data-initial="/UniGym/preview/technical.html" class="app-is-rendered">
+<script src="./test_files/app.js.download"></script>
+<div id="webhelp-root">
+    <div class="layout layout--page layout--rows app" data-test="app">
+        <header class="app__header">
+            <div class="layout layout--container layout--unlimited" data-test="layout">
+                <div class="wh-header" data-test="header">
+                    <div class="wh-header__product-name" data-test="header-product">Instance Name</div>
+                    &nbsp;
+                    <div class="wh-header__divider"></div>
+                    <div class="wh-header__switchers">
+                        <button data-test="theme-switcher" title="Switch theme" type="button" class="_main_joawza_17 _modeClear_joawza_434 _sizeS_joawza_92 _alignIconLeft_joawza_77 _dark_joawza_62 _withIcon_joawza_119 _withoutText_joawza_113">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                                <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M0 9a9 9 0 1018 0A9 9 0 000 9zm16 0a7 7 0 01-7 7V2a7 7 0 017 7z" transform="translate(3, 3)"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <button data-test="search-button" title="Search" type="button" class="_main_joawza_17 _modeClear_joawza_434 _sizeM_joawza_99 _alignIconLeft_joawza_77 _dark_joawza_62 _withIcon_joawza_119 _withoutText_joawza_113 wh-header__search-button">
+                        <svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m _icon_joawza_525">
+                            <path d="M2.293 10a6.99 6.99 0 0 0 11.187 5.6l6.106 6.107L21 20.293l-6.106-6.106A6.997 6.997 0 1 0 2.293 10zm2 0a5 5 0 1 1 5 5 5 5 0 0 1-5-5z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <div class="layout layout--columns layout--overflow-guard layout--grow" data-test="layout">
+            <nav class="layout app__sidebar" data-test="app__sidebar">
+                <div class="layout layout--scroll-container app__nav" data-test="scroller">
+                    <div class="layout layout--scroll-element" data-test="layout">
+                        <ul class="toc toc--theme-dark app__toc" data-test="toc">
+                            <li data-toc-scroll="user"><a data-test="internal-link toc-item" rel="" class="toc-item toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/user.html" style="padding-left: 16px;"> Manual de usuario del sistema de información web UniGym</a></li>
+                            <li data-toc-scroll="technical"><a data-test="internal-link toc-item--selected" rel="" class="toc-item toc-item--selected toc-item--highlighted toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html" style="padding-left: 16px;"> Manual técnico del sistema de información web UniGym</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="layout layout--rows layout--scroll-container layout--grow" data-test="scroller">
+                <div class="layout layout--container-content layout--columns layout--scroll-element layout--grow" data-test="layout">
+                    <article class="layout layout--grow app__article" data-test="app__article">
+                        <div class="article text2 " data-test="article">
+                            <h1 data-toc="technical" id="technical.md" class="article__h1"><span class="title"><span class="title__content">Manual técnico del sistema de información web UniGym</span>﻿</span></h1>
+                            <span class="sub-title sub-title--related-h1"><span class="sub-title__edit-info"><span> Last modified: 23 January 2024</span></span></span>
+                            <blockquote class="prompt h1-related" data-test-id="iIBA4bnRj_S31giShcnB4">
+                                <h3 class="a11y-title">tip</h3>
+                                <div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt">
+                                    <svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon">
+                                        <circle cx="12.042" cy="4" r="2"></circle>
+                                        <path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path>
+                                    </svg>
+                                    <div class="prompt__content">
+                                        <p id="6afccc27_1135" class="article__p child">[!WARNING] <br> Si usted es un usuario final del sistema, consulte el <a data-test="internal-link link-with-popover" rel="" class="link link--dark" id="6afccc27_1137" href="http://localhost:63342/UniGym/preview/user.html">manual de usuario</a>.</p>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <section class="chapter h1-related">
+                                <h2 id="tabla-de-contenidos" data-toc="tabla-de-contenidos" class="article__h2">
+											<span class="title">
+												<span class="title__content">Tabla de contenidos</span>﻿
+												<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#tabla-de-contenidos">
+													<span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#tabla-de-contenidos">
+														<svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s">
+															<path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path>
+															<path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path>
+														</svg>
+													</span>
+												</a>
+											</span>
+                                </h2>
+                                <ul class="article__list list _ul h2-related" id="6afccc27_1138">
+                                    <li class="list__item" id="6afccc27_1139">
+                                        <p class="article__p child"><span id="6afccc27_1140">Capítulo 1: Introducción</span> <span class="control" id="6afccc27_1141">(Presenta el propósito, el alcance, los objetivos y la organización)</span></p>
+                                    </li>
+                                    <li class="list__item" id="6afccc27_1142">
+                                        <p class="article__p child"><span id="6afccc27_1143">Capítulo 2: Arquitectura</span> <span class="control" id="6afccc27_1144">(Explica la arquitectura del sistema, los patrones de diseño aplicados, los diagramas de clases, de secuencia, de componentes y de despliegue, y la distribución de las capas y los módulos)</span></p>
+                                    </li>
+                                    <li class="list__item" id="6afccc27_1145">
+                                        <p class="article__p child"><span id="6afccc27_1146">Capítulo 3: Tecnologías</span> <span class="control" id="6afccc27_1147">(Describe las tecnologías utilizadas para el desarrollo e implementación del sistema, tales como los lenguajes de programación, los frameworks, las librerías, las herramientas, las bases de datos y los servidores)</span></p>
+                                    </li>
+                                    <li class="list__item" id="6afccc27_1148">
+                                        <p class="article__p child"><span id="6afccc27_1149">Capítulo 4: Instalación</span> <span class="control" id="6afccc27_1150">(Indica los pasos para instalar el sistema en un servidor local o en la nube)</span></p>
+                                    </li>
+                                    <li class="list__item" id="6afccc27_1151">
+                                        <p class="article__p child"><span id="6afccc27_1152">Capítulo 5: Configuración</span> <span class="control" id="6afccc27_1153">(Explica los pasos para configurar el sistema, tales como la conexión a la base de datos, el acceso a los recursos y la configuración de los parámetros)</span></p>
+                                    </li>
+                                    <li class="list__item" id="6afccc27_1154">
+                                        <p class="article__p child"><span id="6afccc27_1155">Capítulo 6: Despliegue</span> <span class="control" id="6afccc27_1156">(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)</span></p>
+                                    </li>
+                                    <li class="list__item" id="6afccc27_1157">
+                                        <p class="article__p child"><span id="6afccc27_1158">Capítulo 7: Funcionalidades</span> <span class="control" id="6afccc27_1159">(Describe las funcionalidades del sistema, los flujos de ejecución, las pantallas, los formularios, los reportes y las validaciones)</span></p>
+                                    </li>
+                                </ul>
+                                <blockquote class="prompt h2-related" data-test-id="-lR5_9vM0lcEr0gUwRagX">
+                                    <h3 class="a11y-title">tip</h3>
+                                    <div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt">
+                                        <svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon">
+                                            <circle cx="12.042" cy="4" r="2"></circle>
+                                            <path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path>
+                                        </svg>
+                                        <div class="prompt__content">
+                                            <p id="6afccc27_1161" class="article__p child">[!NOTE] El sistema cumple con los estándares de calidad, seguridad y accesibilidad establecidos por la Universidad Nacional de Colombia y por la normativa vigente.</p>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="prompt h2-related" data-test-id="QjAv_FOxI5oM2Pfw9uO17">
+                                    <h3 class="a11y-title">tip</h3>
+                                    <div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt">
+                                        <svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon">
+                                            <circle cx="12.042" cy="4" r="2"></circle>
+                                            <path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path>
+                                        </svg>
+                                        <div class="prompt__content">
+                                            <p id="6afccc27_1163" class="article__p child">[!IMPORTANT] El sistema se encuentra alojado en un servidor web, y se puede acceder a él desde cualquier dispositivo con conexión a internet y un navegador compatible.</p>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <blockquote class="prompt h2-related" data-test-id="80SqHfigQhucUPKD5AN4S">
+                                    <h3 class="a11y-title">tip</h3>
+                                    <div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt">
+                                        <svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon">
+                                            <circle cx="12.042" cy="4" r="2"></circle>
+                                            <path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path>
+                                        </svg>
+                                        <div class="prompt__content">
+                                            <p id="6afccc27_1165" class="article__p child">[!TIP] El sistema es escalable, y se puede adaptar a las necesidades de otros centros de acondicionamiento y preparación física. Además, se puede integrar con otros sistemas de información de la Universidad Nacional de Colombia.</p>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <p id="6afccc27_1166" class="article__p h2-related">{ coll</p>
+                            </section>
+                            <section class="chapter h1-related">
+                                <h2 id="introducci-n" data-toc="introducci-n" class="article__h2">
+											<span class="title">
+												<span class="title__content">Introducción</span>﻿
+												<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#introducci-n">
+													<span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#introducci-n">
+														<svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s">
+															<path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path>
+															<path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path>
+														</svg>
+													</span>
+												</a>
+											</span>
+                                </h2>
+                                <p id="6afccc27_1167" class="article__p h2-related">El presente documento describe el diseño, desarrollo e implementación del sistema de información web “UniGym” que permite la gestión del centro de acondicionamiento y preparación física CAPF de la Universidad Nacional de Colombia - sede Manizales.</p>
+                                <p id="6afccc27_1168" class="article__p h2-related">El objetivo de este sistema es facilitar la gestión de los servicios que ofrece el gimnasio, tales como el control de usuarios, pagos, asistencias, test o evaluaciones físicas, entre otros. El manual está dirigido a los desarrolladores, administradores y mantenedores del sistema, y contiene información detallada sobre los requisitos, las tecnologías utilizadas, la arquitectura, los componentes, las funcionalidades, las pruebas y la documentación del código.</p>
+                            </section>
+                            <section class="chapter h1-related">
+                                <h2 id="arquitectura" data-toc="arquitectura" class="article__h2">
+											<span class="title">
+												<span class="title__content">Arquitectura</span>﻿
+												<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#arquitectura">
+													<span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#arquitectura">
+														<svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s">
+															<path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path>
+															<path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path>
+														</svg>
+													</span>
+												</a>
+											</span>
+                                </h2>
+                                <p id="6afccc27_1169" class="article__p h2-related">En este capítulo se explica la estructura, el diseño y el funcionamiento del sistema de información web que permite la administración del gimnasio de la Universidad Nacional de Colombia en la sede Manizales. Se describen los patrones de diseño aplicados, los diagramas que representan la arquitectura, la distribución de las capas y los módulos que componen el sistema, y las tecnologías utilizadas para el desarrollo e implementación del sistema.</p>
+                            </section>
+                            <section class="chapter h1-related">
+                                <h2 id="tipo-de-arquitectura" data-toc="tipo-de-arquitectura" class="article__h2">
+											<span class="title">
+												<span class="title__content">Tipo de arquitectura</span>﻿
+												<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#tipo-de-arquitectura">
+													<span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#tipo-de-arquitectura">
+														<svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s">
+															<path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path>
+															<path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path>
+														</svg>
+													</span>
+												</a>
+											</span>
+                                </h2>
+                                <p id="6afccc27_1170" class="article__p h2-related">El sistema de información web “UniGym” se basa en una arquitectura de tres capas que utiliza el patrón de diseño modelo-vista-controlador (MVC). Esta arquitectura se compone de una capa de presentación, una capa de negocio y una capa de datos.</p>
+                                <ul class="article__list list _ul h2-related" id="6afccc27_1171">
+                                    <li class="list__item" id="6afccc27_1172">
+                                        <p class="article__p child">La capa de presentación, implementada con HTML, CSS y JavaScript, se encarga de mostrar la interfaz gráfica del sistema y actúa como la “vista” en el patrón MVC. Esta capa se encarga de la presentación de la interfaz de usuario.</p>
+                                    </li>
+                                    <li class="list__item" id="6afccc27_1173">
+                                        <p class="article__p child">La capa de negocio, implementada con PHP, se encarga de procesar las peticiones del usuario y de comunicarse con la capa de datos. Esta capa actúa como el “controlador” en el patrón MVC, manejando la comunicación entre el modelo y la vista.</p>
+                                    </li>
+                                    <li class="list__item" id="6afccc27_1174">
+                                        <p class="article__p child">La capa de datos, implementada con MySQL, se encarga de almacenar la información del sistema y actúa como el “modelo” en el patrón MVC. Esta capa se encarga de la interacción con la base de datos.</p>
+                                    </li>
+                                </ul>
+                                <blockquote class="prompt h2-related" data-test-id="GzitCgAy8_7-JUJCiCG6C">
+                                    <h3 class="a11y-title">tip</h3>
+                                    <div class="prompt__wrapper prompt__wrapper--type-tip" data-test="prompt">
+                                        <svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m prompt__icon">
+                                            <circle cx="12.042" cy="4" r="2"></circle>
+                                            <path d="M18.339 7a6.982 6.982 0 0 0-6.3 4 6.982 6.982 0 0 0-6.3-4H3v10h2.739a6.983 6.983 0 0 1 6.3 4 6.582 6.582 0 0 1 6-4.033h2.994L21 7z"></path>
+                                        </svg>
+                                        <div class="prompt__content">
+                                            <p id="6afccc27_1176" class="article__p child">[!NOTE] Este tipo de arquitectura facilita la modularidad, la reusabilidad y el mantenimiento del código, al separar la lógica de la aplicación en tres componentes principales.</p>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            </section>
+                            <section class="chapter h1-related">
+                                <h2 id="patrones-de-dise-o" data-toc="patrones-de-dise-o" class="article__h2">
+											<span class="title">
+												<span class="title__content">Patrones de diseño</span>﻿
+												<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#patrones-de-dise-o">
+													<span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#patrones-de-dise-o">
+														<svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s">
+															<path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path>
+															<path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path>
+														</svg>
+													</span>
+												</a>
+											</span>
+                                </h2>
+                                <p id="6afccc27_1177" class="article__p h2-related">El sistema utiliza el framework Laravel, que es un framework de PHP que sigue el patrón MVC y ofrece varias funcionalidades y herramientas para el desarrollo e implementación de aplicaciones web. Además, el sistema utiliza las librerías AlpineJS y el framework Livewire, que permiten añadir comportamiento dinámico y reactivo a la vista. AlpineJS se integra bien con Laravel y Livewire, y ofrece una sintaxis similar a VueJS. Livewire se basa en el concepto de "HTML sobre el cable", que significa que envía y recibe HTML en lugar de datos JSON. Livewire facilita la sincronización de datos entre el modelo y la vista, y ofrece varias funcionalidades como validación, paginación, carga de archivos, etc</p>
+                                <p id="6afccc27_1178" class="article__p h2-related">Asimismo, el sistema utiliza el framework Tailwind CSS, que es un framework de CSS que ofrece clases de utilidad para crear diseños personalizados sin estilos predefinidos. Tailwind CSS se integra con Laravel, AlpineJS y Livewire, y permite crear interfaces de usuario modernas y flexibles. Tailwind CSS se basa en el patrón utility-first, que consiste en usar clases atómicas que representan propiedades de CSS, como color, tamaño, margen, posición, etc. De esta forma, se puede crear cualquier diseño directamente en el HTML, sin tener que escribir hojas de estilo separadas</p>
+                            </section>
+                            <section class="chapter h1-related">
+                                <h2 id="diagramas" data-toc="diagramas" class="article__h2">
+											<span class="title">
+												<span class="title__content">Diagramas</span>﻿
+												<a data-test="internal-link permalink" rel="" class="link-nude permalink" href="http://localhost:63342/UniGym/preview/technical.html#diagramas">
+													<span data-clipboard-text="http://localhost:63342/UniGym/preview/technical.html#diagramas">
+														<svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_s permalink__icon permalink__icon--size-s">
+															<path d="M21.207 4.793a4.536 4.536 0 0 0-6.414 0l-4.5 4.5 1.414 1.414 4.5-4.5a2.536 2.536 0 0 1 3.586 3.586l-4.5 4.5 1.414 1.414 4.5-4.5a4.536 4.536 0 0 0 0-6.414z"></path>
+															<path d="M8.328 16.258a2.536 2.536 0 1 1-3.586-3.586l4.5-4.5-1.414-1.414-4.5 4.5a4.535 4.535 0 0 0 6.414 6.414l4.5-4.5-1.414-1.414z"></path>
+														</svg>
+													</span>
+												</a>
+											</span>
+                                </h2>
+                            </section>
+                            <div data-feedback-placeholder="true" class="h1-related"></div>
+                        </div>
+                    </article>
+                    <aside class="layout" data-test="layout">
+                        <div class="stretch__wrapper app__virtual-toc-sidebar">
+                            <div class="stretch" data-test="virtual-toc-sidebar" style="height: 316px;">
+                                <div class="layout layout--scroll-container app__virtual-toc-scroll-disabler" data-test="scroller">
+                                    <div class="layout layout--scroll-element" data-test="layout">
+                                        <ul class="toc app__virtual-toc" data-test="virtual-toc">
+                                            <li data-toc-scroll="technical" class="toc-node toc-node--selected" data-test="toc-node--selected"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html" style="padding-left: 0px;"> Manual técnico del sistema de información web UniGym</a></li>
+                                            <li data-toc-scroll="tabla-de-contenidos" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#tabla-de-contenidos" style="padding-left: 0px;"> Tabla de contenidos</a></li>
+                                            <li data-toc-scroll="introducci-n" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#introducci-n" style="padding-left: 0px;"> Introducción</a></li>
+                                            <li data-toc-scroll="arquitectura" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#arquitectura" style="padding-left: 0px;"> Arquitectura</a></li>
+                                            <li data-toc-scroll="tipo-de-arquitectura" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#tipo-de-arquitectura" style="padding-left: 0px;"> Tipo de arquitectura</a></li>
+                                            <li data-toc-scroll="patrones-de-dise-o" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#patrones-de-dise-o" style="padding-left: 0px;"> Patrones de diseño</a></li>
+                                            <li data-toc-scroll="diagramas" class="toc-node" data-test="toc-node"><a data-test="internal-link toc-item" class="toc-item toc-item--anchor toc-item--theme-dark" href="http://localhost:63342/UniGym/preview/technical.html#diagramas" style="padding-left: 0px;"> Diagramas</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+                <div class="layout layout--container-content layout--scroll-element" data-test="layout">
+                    <nav class="navigation-links">
+                        <a data-test="internal-link prev-page" class="navigation-links__prev" href="http://localhost:63342/UniGym/preview/user.html">
+                            <svg viewBox="0 0 24 24" class="wt-icon wt-icon_size_m navigation-links__prev-icon">
+                                <path d="M2 11.857L10 5v5.857h11v2H10v5.857l-8-6.857z"></path>
+                            </svg>
+                            Manual de usuario del sistema de información web UniGym
+                        </a>
+                    </nav>
+                </div>
+                <div class="app__footer app__footer--preset-contrast">
+                    <footer class="layout layout--container-content" data-test="layout">
+                        <div class="footer" data-test="footer">
+                            <div class="footer__wrapper"></div>
+                            <p class="footer__powered rs-text-3 rs-text-3_theme_dark" data-test="powered-block">Powered by&nbsp;<a href="https://lp.jetbrains.com/writerside/" data-test="external-link powered-link" rel="" class="link link--dark"><span class="notranslate">JetBrains Writerside</span></a></p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
