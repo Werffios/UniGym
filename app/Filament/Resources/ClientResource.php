@@ -523,7 +523,7 @@ class ClientResource extends Resource
 
             ])
             ->filtersFormColumns(3)
-            ->poll('20s')
+            ->poll('5s')
             ->paginated([10, 50, 100, 200])
             ->defaultPaginationPageOption(10);
     }
