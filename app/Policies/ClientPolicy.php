@@ -13,7 +13,7 @@ class ClientPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Client.ViewAny');
     }
 
     /**

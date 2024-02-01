@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PermissionResource\RelationManager;
 
+use App\Models\Role;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -14,10 +15,7 @@ class RoleRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static function getModelLabel(): string
-    {
-        return __('filament-spatie-roles-permissions::filament-spatie.section.role');
-    }
+    protected static ?string $model = Role::class;
 
     protected static function getPluralModelLabel(): string
     {

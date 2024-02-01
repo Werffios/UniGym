@@ -8,7 +8,6 @@ use App\Filament\Resources\ClientResource\RelationManagers;
 
 use App\Models\Client;
 use App\Models\Faculty;
-use App\Models\Pay;
 use App\Models\type_client;
 use App\Models\type_document;
 use App\Models\degree;

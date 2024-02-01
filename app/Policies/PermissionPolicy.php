@@ -13,7 +13,7 @@ class PermissionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Permission.ViewAny');
     }
 
     /**
@@ -21,14 +21,14 @@ class PermissionPolicy
      */
     public function view(User $user, Permission $permission): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Permission.View');
     }
     /**
      * Determine whether the user can create models.
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Permission.Create');
     }
 
     /**
@@ -36,7 +36,7 @@ class PermissionPolicy
      */
     public function update(User $user, Permission $permission): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Permission.Update');
     }
 
     /**
@@ -44,7 +44,7 @@ class PermissionPolicy
      */
     public function delete(User $user, Permission $permission): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Permission.Delete');
     }
 
     /**
@@ -52,7 +52,7 @@ class PermissionPolicy
      */
     public function restore(User $user, Permission $permission): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Permission.Restore');
     }
 
     /**
@@ -60,6 +60,6 @@ class PermissionPolicy
      */
     public function forceDelete(User $user, Permission $permission): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Permission.ForceDelete');
     }
 }

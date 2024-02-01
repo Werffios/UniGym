@@ -10,6 +10,7 @@ use Filament\Tables\Actions\DetachAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class UserRelationManager extends RelationManager
 {
@@ -28,10 +29,7 @@ class UserRelationManager extends RelationManager
             ->headline();
     }
 
-    protected static function getModelLabel(): string
-    {
-        return __('filament-spatie-roles-permissions::filament-spatie.section.users');
-    }
+    protected static ?string $model = User::class;
 
     protected static function getPluralModelLabel(): string
     {

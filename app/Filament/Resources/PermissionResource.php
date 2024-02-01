@@ -24,8 +24,8 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Permission;
+use App\Models\Role;
 
 class PermissionResource extends Resource
 {
@@ -41,10 +41,7 @@ class PermissionResource extends Resource
         return config('filament-spatie-roles-permissions.should_register_on_navigation.permissions', true);
     }
 
-    public static function getModel(): string
-    {
-        return config('permission.models.permission', Permission::class);
-    }
+    protected static ?string $model = Permission::class;
 
     public static function getLabel(): string
     {

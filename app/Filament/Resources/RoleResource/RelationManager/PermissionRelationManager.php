@@ -12,6 +12,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\PermissionRegistrar;
+use Spatie\Permission\Models\Permission;
 
 class PermissionRelationManager extends RelationManager
 {
@@ -30,10 +31,7 @@ class PermissionRelationManager extends RelationManager
             ->headline();
     }
 
-    protected static function getModelLabel(): string
-    {
-        return __('filament-spatie-roles-permissions::filament-spatie.section.permission');
-    }
+    protected static ?string $model = Permission::class;
 
     protected static function getPluralModelLabel(): string
     {

@@ -37,13 +37,13 @@ class UserSeeder extends Seeder
 
         // Accrued, Client, Degree, Faculty, Fee, Permission, Role, Subscription, User
 
-        Permission::create(['name' => 'Accrued.ViewAny']);
-        Permission::create(['name' => 'Accrued.View']);
-        Permission::create(['name' => 'Accrued.Create']);
-        Permission::create(['name' => 'Accrued.Update']);
-        Permission::create(['name' => 'Accrued.Delete']);
-        Permission::create(['name' => 'Accrued.Restore']);
-        Permission::create(['name' => 'Accrued.ForceDelete']);
+        Permission::create(['name' => 'Pay.ViewAny']);
+        Permission::create(['name' => 'Pay.View']);
+        Permission::create(['name' => 'Pay.Create']);
+        Permission::create(['name' => 'Pay.Update']);
+        Permission::create(['name' => 'Pay.Delete']);
+        Permission::create(['name' => 'Pay.Restore']);
+        Permission::create(['name' => 'Pay.ForceDelete']);
 
         Permission::create(['name' => 'Client.ViewAny']);
         Permission::create(['name' => 'Client.View']);
@@ -101,23 +101,23 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'Subscription.Restore']);
         Permission::create(['name' => 'Subscription.ForceDelete']);
 
-        Permission::create(['name' => 'User.ViewAny']);
-        Permission::create(['name' => 'User.View']);
-        Permission::create(['name' => 'User.Create']);
-        Permission::create(['name' => 'User.Update']);
-        Permission::create(['name' => 'User.Delete']);
-        Permission::create(['name' => 'User.Restore']);
-        Permission::create(['name' => 'User.ForceDelete']);
+        Permission::create(['name' => 'Admins.ViewAny']);
+        Permission::create(['name' => 'Admins.View']);
+        Permission::create(['name' => 'Admins.Create']);
+        Permission::create(['name' => 'Admins.Update']);
+        Permission::create(['name' => 'Admins.Delete']);
+        Permission::create(['name' => 'Admins.Restore']);
+        Permission::create(['name' => 'Admins.ForceDelete']);
 
         Role::create(['name' => 'SuperAdmin'])
             ->givePermissionTo([
-                'Accrued.ViewAny',
-                'Accrued.View',
-                'Accrued.Create',
-                'Accrued.Update',
-                'Accrued.Delete',
-                'Accrued.Restore',
-                'Accrued.ForceDelete',
+                'Pay.ViewAny',
+                'Pay.View',
+                'Pay.Create',
+                'Pay.Update',
+                'Pay.Delete',
+                'Pay.Restore',
+                'Pay.ForceDelete',
                 'Client.ViewAny',
                 'Client.View',
                 'Client.Create',
@@ -167,23 +167,23 @@ class UserSeeder extends Seeder
                 'Subscription.Delete',
                 'Subscription.Restore',
                 'Subscription.ForceDelete',
-                'User.ViewAny',
-                'User.View',
-                'User.Create',
-                'User.Update',
-                'User.Delete',
-                'User.Restore',
-                'User.ForceDelete',
+                'Admins.ViewAny',
+                'Admins.View',
+                'Admins.Create',
+                'Admins.Update',
+                'Admins.Delete',
+                'Admins.Restore',
+                'Admins.ForceDelete',
             ]);
         Role::create(['name' => 'Administrador'])
             ->givePermissionTo([
-                'Accrued.ViewAny',
-                'Accrued.View',
-                'Accrued.Create',
-                'Accrued.Update',
-                'Accrued.Delete',
-                'Accrued.Restore',
-                'Accrued.ForceDelete',
+                'Pay.ViewAny',
+                'Pay.View',
+                'Pay.Create',
+                'Pay.Update',
+                'Pay.Delete',
+                'Pay.Restore',
+                'Pay.ForceDelete',
                 'Client.ViewAny',
                 'Client.View',
                 'Client.Create',
@@ -219,18 +219,18 @@ class UserSeeder extends Seeder
                 'Subscription.Delete',
                 'Subscription.Restore',
                 'Subscription.ForceDelete',
-                'User.ViewAny',
-                'User.View',
-                'User.Create',
-                'User.Update',
-                'User.Delete',
-                'User.Restore',
-                'User.ForceDelete',
+                'Admins.ViewAny',
+                'Admins.View',
+                'Admins.Create',
+                'Admins.Update',
+                'Admins.Delete',
+                'Admins.Restore',
+                'Admins.ForceDelete',
             ]);
         Role::create(['name' => 'Asistente'])
             ->givePermissionTo([
-                'Accrued.ViewAny',
-                'Accrued.View',
+                'Pay.ViewAny',
+                'Pay.View',
                 'Client.ViewAny',
                 'Client.View',
                 'Client.Create',

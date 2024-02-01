@@ -18,9 +18,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Role;
 
 class RoleResource extends Resource
 {
@@ -34,10 +34,7 @@ class RoleResource extends Resource
         return config('filament-spatie-roles-permissions.should_register_on_navigation.roles', true);
     }
 
-    public static function getModel(): string
-    {
-        return config('permission.models.role', Role::class);
-    }
+    protected static ?string $model = Role::class;
 
     public static function getLabel(): string
     {
