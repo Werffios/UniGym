@@ -8,6 +8,8 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Pages\Page;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,6 +25,11 @@ class UserResource extends Resource
     protected static ?string $pluralModelLabel = 'Administradores';
     protected static ?string $navigationIcon = 'heroicon-o-key';
     protected static ?string $navigationGroup = 'Mantenimiento';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('id', '!=', 1);
+    }
 
     public static function form(Form $form): Form
     {
@@ -61,7 +68,7 @@ class UserResource extends Resource
                     ->label('Contraseña')
                     ->password()
                     ->autocomplete('new-password')
-                    ->required()
+                    ->required( fn(Page $livewire) => ($livewire instanceof CreateRecord))
                     ->confirmed()
                     ->minLength(8)
                     ->maxLength(255)
@@ -72,7 +79,7 @@ class UserResource extends Resource
                     ->label('Confirmar contraseña')
                     ->password()
                     ->autocomplete('new-password')
-                    ->required()
+                    ->required( fn(Page $livewire) => ($livewire instanceof CreateRecord))
                     ->minLength(8)
                     ->maxLength(255)
                     ->placeholder('Ingrese la contraseña del administrador')

@@ -9,4 +9,8 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSuscription extends CreateRecord
 {
     protected static string $resource = SuscriptionResource::class;
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

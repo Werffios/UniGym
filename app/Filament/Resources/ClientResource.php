@@ -54,7 +54,7 @@ class ClientResource extends Resource
     protected static ?string $pluralModelLabel = 'usuarios';
     protected static ?string $navigationGroup = 'Asistencia y Test';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?string $navigationLabel = 'Usuario';
+    protected static ?string $navigationLabel = 'Usuarios';
 
     public static function form(Form $form): Form
     {
@@ -390,7 +390,6 @@ class ClientResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
                     ExportBulkAction::make()
                         ->label('Exportar a Excel')
                         ->icon('heroicon-o-arrow-down-tray')
