@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ClientResource\RelationManagers;
 
 use App\Models\Client;
-use Filament\Actions\Action;
 use Filament\Forms\Components\Fieldset;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,7 +15,6 @@ use Filament\Forms\Form;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
-use Filament\Notifications\Actions\Action as ActionNotification;
 class TestForceRelationManager extends RelationManager
 {
     protected static string $relationship = 'testForce';
@@ -108,6 +106,9 @@ class TestForceRelationManager extends RelationManager
             ->columns(1);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function table(Table $table): Table
     {
         return $table
@@ -164,8 +165,12 @@ class TestForceRelationManager extends RelationManager
                     ->mutateRecordDataUsing(
                         function (array $data) {
 
-                            $weight = Client::find($data['client_id'])->weight;
-                            $gender = Client::find($data['client_id'])->gender;
+                            $client = Client::find($data['client_id']);
+                            if ($client == null) {
+                                throw new \Exception('Cliente no encontrado');
+                            }
+                            $weight = $client->weight;
+                            $gender = $client->gender;
 
                             if ($weight == null) {
                                 Notification::make()
@@ -285,8 +290,6 @@ class TestForceRelationManager extends RelationManager
 
                                 return $dataForce;
                             }
-
-
                         }
                     )
                     ->form([

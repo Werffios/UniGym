@@ -125,10 +125,10 @@ class TestAnthropometryRelationManager extends RelationManager
                 }),
             ])
             ->headerActions([
-                // if weight is defined, show the create button
-                $weight ? Tables\Actions\CreateAction::make()
+
+                    Tables\Actions\CreateAction::make()
                     ->createAnother(false)
-                    ->label('Nuevo test de antropometría') : null,
+                    ->label('Nuevo test de antropometría')
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make()
