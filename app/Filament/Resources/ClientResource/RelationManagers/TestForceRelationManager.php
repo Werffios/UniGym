@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\ClientResource\RelationManagers;
 
 use App\Models\Client;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Fieldset;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -14,7 +16,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
-
+use Filament\Notifications\Actions\Action as ActionNotification;
 class TestForceRelationManager extends RelationManager
 {
     protected static string $relationship = 'testForce';
@@ -165,115 +167,126 @@ class TestForceRelationManager extends RelationManager
                             $weight = Client::find($data['client_id'])->weight;
                             $gender = Client::find($data['client_id'])->gender;
 
-                            $dataForce = [
-                                // upper limbs
-                                'benchPressMaxForce' => round($data['benchPress'] * 100 / (102.78 - (2.78 * $data['benchPressReps']))),
-                                'pulleyOpenHighMaxForce' => round($data['pulleyOpenHigh'] * 100 / (102.78 - (2.78 * $data['pulleyOpenHighReps']))),
-                                'barbellBicepsCurlMaxForce' => round($data['barbellBicepsCurl'] * 100 / (102.78 - (2.78 * $data['barbellBicepsCurlReps']))),
+                            if ($weight == null) {
+                                Notification::make()
+                                    ->title('Peso no definido')
+                                    ->body('El peso del cliente no está definido, por favor, defínalo.')
+                                    ->danger()
+                                    ->send();
+                                return $data;
+                            }else{
+                                $dataForce = [
+                                    // upper limbs
+                                    'benchPressMaxForce' => round($data['benchPress'] * 100 / (102.78 - (2.78 * $data['benchPressReps']))),
+                                    'pulleyOpenHighMaxForce' => round($data['pulleyOpenHigh'] * 100 / (102.78 - (2.78 * $data['pulleyOpenHighReps']))),
+                                    'barbellBicepsCurlMaxForce' => round($data['barbellBicepsCurl'] * 100 / (102.78 - (2.78 * $data['barbellBicepsCurlReps']))),
 
-                                // lower limbs
-                                'flexionLegsMaxForce' => round($data['legFlexion'] * 100 / (102.78 - (2.78 * $data['legFlexionReps']))),
-                                'legExtensionMaxForce' => round($data['legExtension'] * 100 / (102.78 - (2.78 * $data['legExtensionReps']))),
-                                'flexExtLegsMaxForce' => round($data['legFlexExt'] * 100 / (102.78 - (2.78 * $data['legFlexExtReps']))),
-                            ];
+                                    // lower limbs
+                                    'flexionLegsMaxForce' => round($data['legFlexion'] * 100 / (102.78 - (2.78 * $data['legFlexionReps']))),
+                                    'legExtensionMaxForce' => round($data['legExtension'] * 100 / (102.78 - (2.78 * $data['legExtensionReps']))),
+                                    'flexExtLegsMaxForce' => round($data['legFlexExt'] * 100 / (102.78 - (2.78 * $data['legFlexExtReps']))),
+                                ];
 
-                            $dataForce['benchPressForce/Peso'] = round($dataForce['benchPressMaxForce'] / $weight, 2);
-                            $dataForce['pulleyOpenHighForce/Peso'] = round($dataForce['pulleyOpenHighMaxForce'] / $weight, 2);
-                            $dataForce['barbellBicepsCurlForce/Peso'] = round($dataForce['barbellBicepsCurlMaxForce'] / $weight, 2);
-                            $dataForce['flexionLegsForce/Peso'] = round($dataForce['flexionLegsMaxForce'] / $weight, 2);
-                            $dataForce['legExtensionForce/Peso'] = round($dataForce['legExtensionMaxForce'] / $weight, 2);
-                            $dataForce['flexExtLegsForce/Peso'] = round($dataForce['flexExtLegsMaxForce'] / $weight, 2);
+                                $dataForce['benchPressForce/Peso'] = round($dataForce['benchPressMaxForce'] / $weight, 2);
+                                $dataForce['pulleyOpenHighForce/Peso'] = round($dataForce['pulleyOpenHighMaxForce'] / $weight, 2);
+                                $dataForce['barbellBicepsCurlForce/Peso'] = round($dataForce['barbellBicepsCurlMaxForce'] / $weight, 2);
+                                $dataForce['flexionLegsForce/Peso'] = round($dataForce['flexionLegsMaxForce'] / $weight, 2);
+                                $dataForce['legExtensionForce/Peso'] = round($dataForce['legExtensionMaxForce'] / $weight, 2);
+                                $dataForce['flexExtLegsForce/Peso'] = round($dataForce['flexExtLegsMaxForce'] / $weight, 2);
 
 
-                            $controlgenderPressForce = $gender == 'Masculino' ? 0 : -0.5;
+                                $controlgenderPressForce = $gender == 'Masculino' ? 0 : -0.5;
 
-                            if ($dataForce['benchPressForce/Peso'] >= 1.3 + $controlgenderPressForce) {
-                                $dataForce['benchPressForceClassification'] = 'Optimo';
-                            } elseif ($dataForce['benchPressForce/Peso'] >= 1 + $controlgenderPressForce && $dataForce['benchPressForce/Peso'] < 1.3 + $controlgenderPressForce) {
-                                $dataForce['benchPressForceClassification'] = 'Mejoramiento';
-                            } else {
-                                $dataForce['benchPressForceClassification'] = 'Bajo rendimiento';
+                                if ($dataForce['benchPressForce/Peso'] >= 1.3 + $controlgenderPressForce) {
+                                    $dataForce['benchPressForceClassification'] = 'Optimo';
+                                } elseif ($dataForce['benchPressForce/Peso'] >= 1 + $controlgenderPressForce && $dataForce['benchPressForce/Peso'] < 1.3 + $controlgenderPressForce) {
+                                    $dataForce['benchPressForceClassification'] = 'Mejoramiento';
+                                } else {
+                                    $dataForce['benchPressForceClassification'] = 'Bajo rendimiento';
+                                }
+
+                                $controlgenderPulleyForce = $gender == 'Masculino' ? 0 : -0.35;
+
+                                if ($dataForce['pulleyOpenHighForce/Peso'] >= 1.1 + $controlgenderPulleyForce) {
+                                    $dataForce['pulleyOpenHighForceClassification'] = 'Optimo';
+                                } elseif ($dataForce['pulleyOpenHighForce/Peso'] >= 0.95 + $controlgenderPulleyForce && $dataForce['pulleyOpenHighForce/Peso'] < 1.1 + $controlgenderPulleyForce) {
+                                    $dataForce['pulleyOpenHighForceClassification'] = 'Mejoramiento';
+                                } else {
+                                    $dataForce['pulleyOpenHighForceClassification'] = 'Bajo rendimiento';
+                                }
+
+                                $controlgenderBicepsForce = $gender == 'Masculino' ? 0 : -0.2;
+
+                                if ($dataForce['barbellBicepsCurlForce/Peso'] >= 0.6 + $controlgenderBicepsForce) {
+                                    $dataForce['barbellBicepsCurlForceClassification'] = 'Optimo';
+                                } elseif ($dataForce['barbellBicepsCurlForce/Peso'] >= 0.45 + $controlgenderBicepsForce && $dataForce['barbellBicepsCurlForce/Peso'] < 0.6 + $controlgenderBicepsForce) {
+                                    $dataForce['barbellBicepsCurlForceClassification'] = 'Mejoramiento';
+                                } else {
+                                    $dataForce['barbellBicepsCurlForceClassification'] = 'Bajo rendimiento';
+                                }
+
+                                $controlgenderLegsForce = $gender == 'Masculino' ? 0 : -0.3;
+
+                                if ($dataForce['flexionLegsForce/Peso'] >= 2.6 + $controlgenderLegsForce) {
+                                    $dataForce['flexionLegsForceClassification'] = 'Optimo';
+                                } elseif ($dataForce['flexionLegsForce/Peso'] >= 2 + $controlgenderLegsForce && $dataForce['flexionLegsForce/Peso'] < 2.6 + $controlgenderLegsForce) {
+                                    $dataForce['flexionLegsForceClassification'] = 'Mejoramiento';
+                                } else {
+                                    $dataForce['flexionLegsForceClassification'] = 'Bajo rendimiento';
+                                }
+
+                                $controlgenderExtensionForce = $gender == 'Masculino' ? 0 : -0.1;
+
+                                if ($dataForce['legExtensionForce/Peso'] >= 0.7 + $controlgenderExtensionForce) {
+                                    $dataForce['legExtensionForceClassification'] = 'Optimo';
+                                } elseif ($dataForce['legExtensionForce/Peso'] >= 0.55 + $controlgenderExtensionForce && $dataForce['legExtensionForce/Peso'] < 0.7 + $controlgenderExtensionForce) {
+                                    $dataForce['legExtensionForceClassification'] = 'Mejoramiento';
+                                } else {
+                                    $dataForce['legExtensionForceClassification'] = 'Bajo rendimiento';
+                                }
+
+                                $controlgenderFlexExtForce = $gender == 'Masculino' ? 0 : -0.1;
+
+                                if ($dataForce['flexExtLegsForce/Peso'] >= 0.6 + $controlgenderFlexExtForce) {
+                                    $dataForce['flexExtLegsForceClassification'] = 'Optimo';
+                                } elseif ($dataForce['flexExtLegsForce/Peso'] >= 0.45 + $controlgenderFlexExtForce && $dataForce['flexExtLegsForce/Peso'] < 0.6 + $controlgenderFlexExtForce) {
+                                    $dataForce['flexExtLegsForceClassification'] = 'Mejoramiento';
+                                } else {
+                                    $dataForce['flexExtLegsForceClassification'] = 'Bajo rendimiento';
+                                }
+
+                                $dataForce['benchPressForce75'] = round($dataForce['benchPressMaxForce'] * 0.75, 2);
+                                $dataForce['pulleyOpenHighForce75'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.75, 2);
+                                $dataForce['barbellBicepsCurlForce75'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.75, 2);
+                                $dataForce['flexionLegsForce75'] = round($dataForce['flexionLegsMaxForce'] * 0.75, 2);
+                                $dataForce['legExtensionForce75'] = round($dataForce['legExtensionMaxForce'] * 0.75, 2);
+                                $dataForce['flexExtLegsForce75'] = round($dataForce['flexExtLegsMaxForce'] * 0.75, 2);
+
+                                $dataForce['benchPressForce70'] = round($dataForce['benchPressMaxForce'] * 0.70, 2);
+                                $dataForce['pulleyOpenHighForce70'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.70, 2);
+                                $dataForce['barbellBicepsCurlForce70'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.70, 2);
+                                $dataForce['flexionLegsForce70'] = round($dataForce['flexionLegsMaxForce'] * 0.70, 2);
+                                $dataForce['legExtensionForce70'] = round($dataForce['legExtensionMaxForce'] * 0.70, 2);
+                                $dataForce['flexExtLegsForce70'] = round($dataForce['flexExtLegsMaxForce'] * 0.70, 2);
+
+                                $dataForce['benchPressForce65'] = round($dataForce['benchPressMaxForce'] * 0.65, 2);
+                                $dataForce['pulleyOpenHighForce65'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.65, 2);
+                                $dataForce['barbellBicepsCurlForce65'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.65, 2);
+                                $dataForce['flexionLegsForce65'] = round($dataForce['flexionLegsMaxForce'] * 0.65, 2);
+                                $dataForce['legExtensionForce65'] = round($dataForce['legExtensionMaxForce'] * 0.65, 2);
+                                $dataForce['flexExtLegsForce65'] = round($dataForce['flexExtLegsMaxForce'] * 0.65, 2);
+
+                                $dataForce['benchPressForce60'] = round($dataForce['benchPressMaxForce'] * 0.60, 2);
+                                $dataForce['pulleyOpenHighForce60'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.60, 2);
+                                $dataForce['barbellBicepsCurlForce60'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.60, 2);
+                                $dataForce['flexionLegsForce60'] = round($dataForce['flexionLegsMaxForce'] * 0.60, 2);
+                                $dataForce['legExtensionForce60'] = round($dataForce['legExtensionMaxForce'] * 0.60, 2);
+                                $dataForce['flexExtLegsForce60'] = round($dataForce['flexExtLegsMaxForce'] * 0.60, 2);
+
+                                return $dataForce;
                             }
 
-                            $controlgenderPulleyForce = $gender == 'Masculino' ? 0 : -0.35;
 
-                            if ($dataForce['pulleyOpenHighForce/Peso'] >= 1.1 + $controlgenderPulleyForce) {
-                                $dataForce['pulleyOpenHighForceClassification'] = 'Optimo';
-                            } elseif ($dataForce['pulleyOpenHighForce/Peso'] >= 0.95 + $controlgenderPulleyForce && $dataForce['pulleyOpenHighForce/Peso'] < 1.1 + $controlgenderPulleyForce) {
-                                $dataForce['pulleyOpenHighForceClassification'] = 'Mejoramiento';
-                            } else {
-                                $dataForce['pulleyOpenHighForceClassification'] = 'Bajo rendimiento';
-                            }
-
-                            $controlgenderBicepsForce = $gender == 'Masculino' ? 0 : -0.2;
-
-                            if ($dataForce['barbellBicepsCurlForce/Peso'] >= 0.6 + $controlgenderBicepsForce) {
-                                $dataForce['barbellBicepsCurlForceClassification'] = 'Optimo';
-                            } elseif ($dataForce['barbellBicepsCurlForce/Peso'] >= 0.45 + $controlgenderBicepsForce && $dataForce['barbellBicepsCurlForce/Peso'] < 0.6 + $controlgenderBicepsForce) {
-                                $dataForce['barbellBicepsCurlForceClassification'] = 'Mejoramiento';
-                            } else {
-                                $dataForce['barbellBicepsCurlForceClassification'] = 'Bajo rendimiento';
-                            }
-
-                            $controlgenderLegsForce = $gender == 'Masculino' ? 0 : -0.3;
-
-                            if ($dataForce['flexionLegsForce/Peso'] >= 2.6 + $controlgenderLegsForce) {
-                                $dataForce['flexionLegsForceClassification'] = 'Optimo';
-                            } elseif ($dataForce['flexionLegsForce/Peso'] >= 2 + $controlgenderLegsForce && $dataForce['flexionLegsForce/Peso'] < 2.6 + $controlgenderLegsForce) {
-                                $dataForce['flexionLegsForceClassification'] = 'Mejoramiento';
-                            } else {
-                                $dataForce['flexionLegsForceClassification'] = 'Bajo rendimiento';
-                            }
-
-                            $controlgenderExtensionForce = $gender == 'Masculino' ? 0 : -0.1;
-
-                            if ($dataForce['legExtensionForce/Peso'] >= 0.7 + $controlgenderExtensionForce) {
-                                $dataForce['legExtensionForceClassification'] = 'Optimo';
-                            } elseif ($dataForce['legExtensionForce/Peso'] >= 0.55 + $controlgenderExtensionForce && $dataForce['legExtensionForce/Peso'] < 0.7 + $controlgenderExtensionForce) {
-                                $dataForce['legExtensionForceClassification'] = 'Mejoramiento';
-                            } else {
-                                $dataForce['legExtensionForceClassification'] = 'Bajo rendimiento';
-                            }
-
-                            $controlgenderFlexExtForce = $gender == 'Masculino' ? 0 : -0.1;
-
-                            if ($dataForce['flexExtLegsForce/Peso'] >= 0.6 + $controlgenderFlexExtForce) {
-                                $dataForce['flexExtLegsForceClassification'] = 'Optimo';
-                            } elseif ($dataForce['flexExtLegsForce/Peso'] >= 0.45 + $controlgenderFlexExtForce && $dataForce['flexExtLegsForce/Peso'] < 0.6 + $controlgenderFlexExtForce) {
-                                $dataForce['flexExtLegsForceClassification'] = 'Mejoramiento';
-                            } else {
-                                $dataForce['flexExtLegsForceClassification'] = 'Bajo rendimiento';
-                            }
-
-                            $dataForce['benchPressForce75'] = round($dataForce['benchPressMaxForce'] * 0.75, 2);
-                            $dataForce['pulleyOpenHighForce75'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.75, 2);
-                            $dataForce['barbellBicepsCurlForce75'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.75, 2);
-                            $dataForce['flexionLegsForce75'] = round($dataForce['flexionLegsMaxForce'] * 0.75, 2);
-                            $dataForce['legExtensionForce75'] = round($dataForce['legExtensionMaxForce'] * 0.75, 2);
-                            $dataForce['flexExtLegsForce75'] = round($dataForce['flexExtLegsMaxForce'] * 0.75, 2);
-
-                            $dataForce['benchPressForce70'] = round($dataForce['benchPressMaxForce'] * 0.70, 2);
-                            $dataForce['pulleyOpenHighForce70'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.70, 2);
-                            $dataForce['barbellBicepsCurlForce70'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.70, 2);
-                            $dataForce['flexionLegsForce70'] = round($dataForce['flexionLegsMaxForce'] * 0.70, 2);
-                            $dataForce['legExtensionForce70'] = round($dataForce['legExtensionMaxForce'] * 0.70, 2);
-                            $dataForce['flexExtLegsForce70'] = round($dataForce['flexExtLegsMaxForce'] * 0.70, 2);
-
-                            $dataForce['benchPressForce65'] = round($dataForce['benchPressMaxForce'] * 0.65, 2);
-                            $dataForce['pulleyOpenHighForce65'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.65, 2);
-                            $dataForce['barbellBicepsCurlForce65'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.65, 2);
-                            $dataForce['flexionLegsForce65'] = round($dataForce['flexionLegsMaxForce'] * 0.65, 2);
-                            $dataForce['legExtensionForce65'] = round($dataForce['legExtensionMaxForce'] * 0.65, 2);
-                            $dataForce['flexExtLegsForce65'] = round($dataForce['flexExtLegsMaxForce'] * 0.65, 2);
-
-                            $dataForce['benchPressForce60'] = round($dataForce['benchPressMaxForce'] * 0.60, 2);
-                            $dataForce['pulleyOpenHighForce60'] = round($dataForce['pulleyOpenHighMaxForce'] * 0.60, 2);
-                            $dataForce['barbellBicepsCurlForce60'] = round($dataForce['barbellBicepsCurlMaxForce'] * 0.60, 2);
-                            $dataForce['flexionLegsForce60'] = round($dataForce['flexionLegsMaxForce'] * 0.60, 2);
-                            $dataForce['legExtensionForce60'] = round($dataForce['legExtensionMaxForce'] * 0.60, 2);
-                            $dataForce['flexExtLegsForce60'] = round($dataForce['flexExtLegsMaxForce'] * 0.60, 2);
-
-                            return $dataForce;
                         }
                     )
                     ->form([
@@ -386,7 +399,8 @@ class TestForceRelationManager extends RelationManager
                                 ->label('Clasificación'),
                         ])->columns(7),
 
-                    ])->modalWidth('7xl')
+                    ])
+                    ->modalWidth('7xl')
                     ->iconButton()
                     ->icon('heroicon-o-window')
                     ->color('primary')

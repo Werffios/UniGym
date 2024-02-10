@@ -31,12 +31,12 @@ class TestAnthropometryRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                TextInput::make('clients.height')->label('Estatura del usuario')
-                    ->numeric()
-                    ->minLength(2)
-                    ->maxLength(3)
-                    ->placeholder('Ingrese la altura del usuario en CM')
-                    ->helperText('Ejemplo: 170'),
+//                TextInput::make('clients.height')->label('Estatura del usuario')
+//                    ->numeric()
+//                    ->minLength(2)
+//                    ->maxLength(3)
+//                    ->placeholder('Ingrese la altura del usuario en CM')
+//                    ->helperText('Ejemplo: 170')
 //                    ->hidden(empty($this->record->height)),
 
                 TextInput::make('bicepFold')
@@ -125,10 +125,10 @@ class TestAnthropometryRelationManager extends RelationManager
                 }),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                // if weight is defined, show the create button
+                $weight ? Tables\Actions\CreateAction::make()
                     ->createAnother(false)
-                    ->label('Nuevo test de antropometría')
-
+                    ->label('Nuevo test de antropometría') : null,
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make()
