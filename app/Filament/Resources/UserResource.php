@@ -62,9 +62,7 @@ class UserResource extends Resource
                     ->multiple()
                     ->options(
                         \App\Models\Role::where('id', '>', 2)
-                            ->get()
                             ->pluck('name', 'id')
-                            ->toArray()
                     )
                     ->placeholder('Seleccione el rol del administrador')
                     ->helperText('Seleccione el rol del administrador.')
