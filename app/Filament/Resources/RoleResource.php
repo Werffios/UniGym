@@ -29,6 +29,11 @@ class RoleResource extends Resource
         return  config('filament-spatie-roles-permissions.icons.role_navigation');
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('id', '!=', 1);
+    }
+
     public static function shouldRegisterNavigation(): bool
     {
         return config('filament-spatie-roles-permissions.should_register_on_navigation.roles', true);

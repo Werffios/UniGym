@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ClientResource\RelationManagers;
 
 use App\Models\Client;
-use Filament\Forms\Components\Fieldset;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -13,8 +12,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Form;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
+
 class TestForceRelationManager extends RelationManager
 {
     protected static string $relationship = 'testForce';
@@ -127,7 +128,8 @@ class TestForceRelationManager extends RelationManager
                 TextColumn::make('relationUpperLowerLimbs')
                     ->label('Relación miembros superiores e inferiores')
                     ->suffix(' %'),
-            ])->defaultSort('id', 'desc')
+            ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 Filter::make('date')
                     ->label('Filtrar fechas')
@@ -178,6 +180,7 @@ class TestForceRelationManager extends RelationManager
                                     ->body('El peso del cliente no está definido, por favor, defínalo.')
                                     ->danger()
                                     ->send();
+
                                 return $data;
                             }else{
                                 $dataForce = [
@@ -404,6 +407,7 @@ class TestForceRelationManager extends RelationManager
 
                     ])
                     ->modalWidth('7xl')
+                    //->modalHidden()
                     ->iconButton()
                     ->icon('heroicon-o-window')
                     ->color('primary')
