@@ -6,14 +6,14 @@ use App\Models\User;
 use App\Models\degree;
 use Illuminate\Auth\Access\Response;
 
-class DegreePolicy
+class degreePolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['Super Admin', 'Administrador']);
+        return $user->hasPermissionTo('Degree.viewAny');
     }
 
     /**
@@ -21,7 +21,7 @@ class DegreePolicy
      */
     public function view(User $user, degree $degree): bool
     {
-        return $user->hasRole(['Super Admin', 'Administrador']);
+        return $user->hasPermissionTo('Degree.view');
     }
 
     /**
@@ -29,7 +29,7 @@ class DegreePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(['Super Admin', 'Administrador']);
+        return $user->hasPermissionTo('Degree.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class DegreePolicy
      */
     public function update(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.Update');
+        return $user->hasPermissionTo('Degree.update');
     }
 
     /**
@@ -45,7 +45,7 @@ class DegreePolicy
      */
     public function delete(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.Delete');
+        return $user->hasPermissionTo('Degree.delete');
     }
 
     /**
@@ -53,7 +53,7 @@ class DegreePolicy
      */
     public function restore(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.Restore');
+        return $user->hasPermissionTo('Degree.restore');
     }
 
     /**
@@ -61,6 +61,6 @@ class DegreePolicy
      */
     public function forceDelete(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.ForceDelete');
+        return $user->hasPermissionTo('Degree.forceDelete');
     }
 }
