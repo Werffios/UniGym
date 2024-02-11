@@ -21,7 +21,7 @@ class DegreePolicy
      */
     public function view(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.View');
+        return $user->hasRole(['Super Admin', 'Administrador']);
     }
 
     /**
@@ -29,7 +29,7 @@ class DegreePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('Degree.Create');
+        return $user->hasRole(['Super Admin', 'Administrador']);
     }
 
     /**
