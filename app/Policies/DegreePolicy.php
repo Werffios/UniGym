@@ -13,7 +13,7 @@ class DegreePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('Degree.ViewAny');
+        return $user->hasRole(['Super Admin', 'Administrador']);
     }
 
     /**
