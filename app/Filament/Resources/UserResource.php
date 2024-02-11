@@ -60,10 +60,9 @@ class UserResource extends Resource
                     ->label('Rol')
                     ->required()
                     ->multiple()
-                    ->options(
-                        \App\Models\Role::where('id', '>', 2)
-                            ->pluck('name', 'id')
-                    )
+                    ->relationship('roles', 'name', function ($query) {
+                        return $query->where('name', 'Asistente')->orWhere('name', 'Administrador');
+                    })
                     ->placeholder('Seleccione el rol del administrador')
                     ->helperText('Seleccione el rol del administrador.')
                     ->hint('El rol determina los permisos del administrador.'),
