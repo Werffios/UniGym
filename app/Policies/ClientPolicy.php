@@ -21,7 +21,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Client.View');
     }
 
     /**
@@ -29,7 +29,7 @@ class ClientPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Client.Create');
     }
 
     /**
@@ -37,7 +37,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador', 'Asistente'], );
+        return $user->hasPermissionTo('Client.Update');
     }
 
     /**
@@ -45,7 +45,7 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client): bool
     {
-        return $user->hasRole(['SuperAdmin', 'Administrador'], );
+        return $user->hasPermissionTo('Client.Delete');
     }
 
     /**
@@ -53,7 +53,7 @@ class ClientPolicy
      */
     public function restore(User $user, Client $client): bool
     {
-        return $user->hasRole('SuperAdmin');
+        return $user->hasPermissionTo('Client.Restore');
     }
 
     /**
@@ -61,7 +61,6 @@ class ClientPolicy
      */
     public function forceDelete(User $user, Client $client): bool
     {
-        return $user->hasRole('SuperAdmin');
-
+        return $user->hasPermissionTo('Client.ForceDelete');
     }
 }

@@ -53,7 +53,7 @@ class type_clientPolicy
      */
     public function restore(User $user, type_client $typeClient): bool
     {
-        //
+        return $user->hasPermissionTo('Fee.Restore');
     }
 
     /**
@@ -61,6 +61,6 @@ class type_clientPolicy
      */
     public function forceDelete(User $user, type_client $typeClient): bool
     {
-        //
+        return $user->hasPermissionTo('Fee.ForceDelete');
     }
 }

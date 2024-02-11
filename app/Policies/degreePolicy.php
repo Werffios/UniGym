@@ -13,7 +13,7 @@ class degreePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('Degree.viewAny');
+        return $user->hasPermissionTo('Degree.ViewAny');
     }
 
     /**
@@ -21,7 +21,7 @@ class degreePolicy
      */
     public function view(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.view');
+        return $user->hasPermissionTo('Degree.View');
     }
 
     /**
@@ -29,7 +29,7 @@ class degreePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('Degree.create');
+        return $user->hasPermissionTo('Degree.Create');
     }
 
     /**
@@ -37,7 +37,7 @@ class degreePolicy
      */
     public function update(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.update');
+        return $user->hasPermissionTo('Degree.Update');
     }
 
     /**
@@ -45,7 +45,7 @@ class degreePolicy
      */
     public function delete(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.delete');
+        return $user->hasPermissionTo('Degree.Delete');
     }
 
     /**
@@ -53,7 +53,7 @@ class degreePolicy
      */
     public function restore(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.restore');
+        return $user->hasPermissionTo('Degree.Restore');
     }
 
     /**
@@ -61,6 +61,6 @@ class degreePolicy
      */
     public function forceDelete(User $user, degree $degree): bool
     {
-        return $user->hasPermissionTo('Degree.forceDelete');
+        return $user->hasPermissionTo('Degree.ForceDelete');
     }
 }
