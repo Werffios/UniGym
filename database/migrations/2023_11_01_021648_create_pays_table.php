@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('pays', function (Blueprint $table) {
             $table->id();
             $table->date('start_date');
-            $table->date('end_date')->nullable();
             $table->float('amount')->nullable();
 
             // Añade las columnas de llave foránea
@@ -33,13 +32,11 @@ return new class extends Migration
             BEFORE INSERT ON pays
             FOR EACH ROW
                 BEGIN
-            DECLARE monthsToAdd INT;
                 DECLARE feeToAdd FLOAT;
 
-                SELECT months, fee INTO monthsToAdd, feeToAdd FROM type_clients WHERE id = NEW.client_id;
+                SELECT fee INTO feeToAdd FROM type_clients WHERE id = NEW.client_id;
 
                 SET NEW.start_date = NOW();
-                SET NEW.end_date = IF(monthsToAdd = 2, DATE_SUB(DATE_ADD(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY), INTERVAL MOD(MONTH(CURDATE()), 2) MONTH), INTERVAL 1 DAY), DATE_ADD(NEW.start_date, INTERVAL monthsToAdd MONTH));
                 SET NEW.amount = feeToAdd;
             END;
 
@@ -58,7 +55,6 @@ return new class extends Migration
                     UPDATE clients
                     SET active = 0
                     WHERE id = OLD.client_id;
-
 
             END;
 
