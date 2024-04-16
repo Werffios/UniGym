@@ -3,3 +3,5 @@
 
 > [!WARNING]
 > Si usted es un encargado del mantenimiento del sistema, consulte el [manual técnico](docs/technical.md).
+
+>Verificar que puedo hacer cambios 
