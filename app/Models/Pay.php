@@ -12,7 +12,7 @@ class Pay extends Model
     protected $fillable = [
         'client_id',
         'start_date',
-        // 'end_date', //revisar
+        'end_date', //revisar
         'amount',
     ];
 
