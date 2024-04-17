@@ -14,6 +14,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+
+
 class TestForestryRelationManager extends RelationManager
 {
     protected static string $relationship = 'testForestry';
@@ -101,15 +103,12 @@ class TestForestryRelationManager extends RelationManager
                         function (array $data) {
                             $FCReposo = $data['FCReposo'];
                             $FCReserva = $data['FCReserva'];
-                            if ($data['VO2maxEvaluation'] == 'Excelente' or $data['VO2maxEvaluation'] == 'Muy bien') {
+                            if ($data['VO2maxEvaluation'] == 'Excelente' or $data['VO2maxEvaluation'] == 'Superior' or $data['VO2maxEvaluation'] == 'Muy bien') {
                                 $dataForestry =
                                     [
                                         'stage' => '
 
 Mejoramiento
-
-
-
 
 
 
@@ -119,41 +118,40 @@ Mantenimiento',
  1 - 3
  4 - 6
  7 - 9
+
 10 - 12
 13 - 15
 16 - 18
-19 - 21
->21',
+19 - 21',
                                         'VO2Range' => '
 
-60 - 70
-70 - 80
-70 - 80
-70 - 80
-70 - 80
-70 - 80
-70 - 80
-70 - 85',
+55 - 60
+60 - 65
+65 - 70
+
+70 - 75
+75 - 80
+80 - 85
+85 - 90',
 
                                         'minutes' => '
 
 15 - 20
 15 - 20
 20 - 25
+
 25 - 30
-30 - 35
-30 - 35
-30 - 35
-30  - 35',
+20 - 25
+15 - 20
+15 - 20',
                                         // Convierto un valor a string para que no se muestre el guión como rango
                                         'FCMin - FCMax' => "\n\n" .strval((0.6 * $FCReserva) + $FCReposo) . ' -  '  . strval((0.7 * $FCReserva) + $FCReposo) . "\n" .
                                         strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" ."\n" .
                                         strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
                                         strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
                                         strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.85 * $FCReserva) + $FCReposo),
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo),
 
 
                                     ];
@@ -163,63 +161,44 @@ Mantenimiento',
                                         'stage' => 'Inicial
 
 
-
-
 Mejoramiento
-
-
-
 
 
 Mantenimiento',
                                         'week' => ' 1 - 3
  4 - 6
+
  7 - 9
 10 - 12
+
 13 - 15
 16 - 18
-19 - 21
-22 - 24
-25 - 27
-28 - 30
-31 - 33
->33',
+19 - 21',
                                         'VO2Range' => '40 - 50
-50
-60
-60 - 70
-70 - 80
-70 - 80
-70 - 80
-70 - 80
-70 - 80
-70 - 80
-70 - 80
-70 - 85',
+50 - 55
+
+55 - 60
+65 - 70
+
+70 - 75
+75 - 80
+80 - 85',
                                         'minutes' => '15 - 20
 15 - 20
+
 20 - 25
 25 - 30
-30 - 35
-30 - 35
-30 - 35
-30 - 35
-30 - 35
-30 - 35
-30 - 35
-30 - 35',
+
+15 - 20
+15 - 20
+15 - 20',
                                         'FCMin - FCMax' => strval((0.4 * $FCReserva) + $FCReposo) . ' -  '  . strval((0.5 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.5 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.5 * $FCReserva) + $FCReposo) . "\n" ."\n" .
                                         strval((0.6 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.6 * $FCReserva) + $FCReposo) . ' - ' . strval((0.7 * $FCReserva) + $FCReposo) . "\n" ."\n" .
                                         strval((0.6 * $FCReserva) + $FCReposo) . ' - ' . strval((0.7 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.6 * $FCReserva) + $FCReposo) . ' - ' . strval((0.7 * $FCReserva) + $FCReposo) . "\n" .
                                         strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.85 * $FCReserva) + $FCReposo) ,
+                                        strval((0.7 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n",
 
                                     ];
                             }
