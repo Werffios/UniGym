@@ -11,6 +11,8 @@ class TestAnthropometry extends Model
     use HasFactory;
 
     protected $fillable = [
+        'height',
+        'weight',
         'bicepFold',
         'tricepFold',
         'subscapular',

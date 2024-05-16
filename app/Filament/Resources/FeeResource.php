@@ -72,20 +72,24 @@ class FeeResource extends Resource
                 TextColumn::make('months')
                     ->label('Meses'),
             ])->headerActions([
-                Tables\Actions\Action::make('restoreStatus')
-                    ->label('Reiniciar suscripciones')
+                Tables\Actions\Action::make('restoreStatusAll')
+                    ->label('Reiniciar TODAS las suscripciones')
                     ->icon('heroicon-o-arrow-path')
-                    ->color('primary')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->modalHeading('Eleminar suscripciones')
+                    ->modalDescription('¿Estás seguro que deseas eliminar las suscripciones? Esto no se puede deshacer.')
+                    ->modalSubmitActionLabel('Si, elimiar suscripciones')
                     ->action(function () {
                         if (Client::where('active', true)->count() == 0) {
                             Notification::make()
                                 ->title('No hay clientes activos.')
-                                ->body('En este momento no hay clientes activos.')
+                                ->body('En este momento no hay usuarios activos.')
                                 ->danger()
                                 ->send();
-                            return back()->with('error', 'No hay clientes activos.');
+                            return back()->with('error', 'No hay usuarios activos.');
                         } else {
-                            $clientsNotParticular = Client::where('type_client_id', '!=', 5)->get();
+                            $clientsNotParticular = Client::where('type_client_id', '>', 0)->get();
                             foreach ($clientsNotParticular as $client) {
                                 Client::where('id', $client->id)->update(['active' => false]);
                                 Pay::where('client_id', $client->id)->where('start_date', '>=', Carbon::today())->update(['start_date' => Carbon::yesterday()]);
@@ -93,7 +97,7 @@ class FeeResource extends Resource
                             }
                             Notification::make()
                                 ->title('Suscripciones reiniciadas.')
-                                ->body('Se han reiniciado las suscripciones de los clientes.')
+                                ->body('Se han reiniciado las suscripciones de los usuarios.')
                                 ->success()
                                 ->send();
                             return back()->with('success', 'Suscripciones reiniciadas correctamente.');
@@ -102,7 +106,77 @@ class FeeResource extends Resource
 
                     }),
 
-            ])
+            ])->headerActions([
+              Tables\Actions\Action::make('restoreStatusStdAll')
+                  ->label('Reiniciar SOLO estudiantes')
+                  ->icon('heroicon-o-arrow-uturn-left')
+                  ->color('info')
+                  ->requiresConfirmation()
+                  ->modalHeading('Eleminar suscripciones de estudiantes')
+                  ->modalDescription('¿Estás seguro que deseas eliminar las suscripciones? Esto no se puede deshacer.')
+                  ->modalSubmitActionLabel('Si, elimiar suscripciones')
+                  ->action(function () {
+                      if (Client::where('active', true)->count() == 0) {
+                          Notification::make()
+                              ->title('No hay clientes activos.')
+                              ->body('En este momento no hay usuarios activos.')
+                              ->danger()
+                              ->send();
+                          return back()->with('error', 'No hay usuarios activos.');
+                      } else {
+                          $clientsStudents = Client::where('type_client_id', '=', 1)->get();
+                          foreach ($clientsStudents as $client) {
+                              Client::where('id', $client->id)->update(['active' => false]);
+                              Pay::where('client_id', $client->id)->where('start_date', '>=', Carbon::today())->update(['start_date' => Carbon::yesterday()]);
+                              Pay::where('client_id', $client->id)->where('end_date', '>=', Carbon::today())->update(['end_date' => Carbon::yesterday()]);
+                          }
+                          Notification::make()
+                              ->title('Suscripciones reiniciadas.')
+                              ->body('Se han reiniciado las suscripciones de los estudiantes.')
+                              ->success()
+                              ->send();
+                          return back()->with('success', 'Suscripciones reiniciadas correctamente.');
+
+                      }
+
+                  }),
+
+          ])->headerActions([
+            Tables\Actions\Action::make('restoreStatusNotStd')
+                ->label('Reiniciar todas excepto estudiantes')
+                ->icon('heroicon-o-arrows-right-left')
+                ->color('success')
+                ->requiresConfirmation()
+                ->modalHeading('Eleminar suscripciones diferentes a los estudiantes')
+                ->modalDescription('¿Estás seguro que deseas eliminar las suscripciones? Esto no se puede deshacer.')
+                ->modalSubmitActionLabel('Si, elimiar suscripciones')
+                ->action(function () {
+                    if (Client::where('active', true)->count() == 0) {
+                        Notification::make()
+                            ->title('No hay clientes activos.')
+                            ->body('En este momento no hay usuarios activos.')
+                            ->danger()
+                            ->send();
+                        return back()->with('error', 'No hay usuarios activos.');
+                    } else {
+                        $clientsNotStudents = Client::where('type_client_id', '!=', 1)->get();
+                        foreach ($clientsNotStudents as $client) {
+                            Client::where('id', $client->id)->update(['active' => false]);
+                            Pay::where('client_id', $client->id)->where('start_date', '>=', Carbon::today())->update(['start_date' => Carbon::yesterday()]);
+                            Pay::where('client_id', $client->id)->where('end_date', '>=', Carbon::today())->update(['end_date' => Carbon::yesterday()]);
+                        }
+                        Notification::make()
+                            ->title('Suscripciones reiniciadas.')
+                            ->body('Se han reiniciado las suscripciones diferentes a los estudiantes.')
+                            ->success()
+                            ->send();
+                        return back()->with('success', 'Suscripciones reiniciadas correctamente.');
+
+                    }
+
+                }),
+
+        ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

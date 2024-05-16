@@ -31,13 +31,22 @@ class TestAnthropometryRelationManager extends RelationManager
     {
         return $form
             ->schema([
-//                TextInput::make('clients.height')->label('Estatura del usuario')
-//                    ->numeric()
-//                    ->minLength(2)
-//                    ->maxLength(3)
-//                    ->placeholder('Ingrese la altura del usuario en CM')
-//                    ->helperText('Ejemplo: 170')
-//                    ->hidden(empty($this->record->height)),
+
+              TextInput::make('height')
+                  ->label('Altura')
+                  ->required()
+                  ->hint('Medida en cm')
+                  ->placeholder('Ingrese la medida del pliegue en CM')
+                  ->numeric()
+                  ->inputMode('decimal'),
+
+              TextInput::make('weight')
+                  ->label('Peso')
+                  ->required()
+                  ->hint('Medida en Kg')
+                  ->placeholder('Ingrese la medida del pliegue en Kg')
+                  ->numeric()
+                  ->inputMode('decimal'),
 
                 TextInput::make('bicepFold')
                     ->label('Biceps')
@@ -95,6 +104,13 @@ class TestAnthropometryRelationManager extends RelationManager
 
                 TextColumn::make('IMCEvaluation')
                     ->label('Evaluación IMC'),
+
+                TextColumn::make('weight')
+                    ->label('Peso Kg'),
+
+                    TextColumn::make('height')
+                        ->label('Altura CM'),
+                    
 
             ])->defaultSort('id', 'desc')
             ->filters([

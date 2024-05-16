@@ -30,6 +30,9 @@ class PaysbyMonthChart extends ChartWidget
                 [
                     'label' => 'Suscripciones',
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
+                    'backgroundColor' => 'rgb(99, 57, 116)',
+                    'borderColor' => 'rgb(155, 89, 182)',
+                    'borderWidth' => 2,
                 ],
             ],
 
