@@ -59,15 +59,13 @@ class ClientResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('document')->label('Documento del usuario')
+                TextInput::make('document')->label('Documento')
                     ->numeric()
                     ->required()
                     ->minLength(3)
                     ->maxLength(20)
                     ->unique(ignoreRecord: true)
-                    ->placeholder('Ingrese el documento del usuario')
-                    ->helperText('Escribe el documento del usuario.')
-                    ->hint('El documento debe ser único.'),
+                    ->placeholder('Ingrese el número'),
 
                 Select::make('type_document_id')->label('Tipo de documento')
                     ->placeholder('Seleccione el tipo de documento')
@@ -75,64 +73,61 @@ class ClientResource extends Resource
                         type_document::all()->pluck('name', 'id')
                     )
                     ->required()
-                    ->searchable()
                     ->default(1)
                     ->helperText('Seleccione el tipo de documento.'),
 
-                TextInput::make('name')->label('Nombre del usuario')
+                TextInput::make('name')->label('Nombres')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
-                    ->placeholder('Ingrese el nombre del usuario')
-                    ->helperText('Escribe el nombre del usuario.'),
+                    ->placeholder('Ingrese el nombre'),
 
-                TextInput::make('surname')->label('Apellido del usuario')
+                TextInput::make('surname')->label('Apellidos')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
-                    ->placeholder('Ingrese el apellido del usuario')
-                    ->helperText('Escribe el apellido del usuario.'),
+                    ->placeholder('Ingrese el apellido del usuario'),
 
-                TextInput::make('email')->label('Correo electrónico del usuario')
+                TextInput::make('email')->label('Correo electrónico')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
                     ->unique(ignoreRecord: true)
-                    ->placeholder('Ingrese el correo electrónico del usuario')
-                    ->helperText('Escribe el correo electrónico del usuario.'),
+                    ->placeholder('Ingrese el correo electrónico del usuario'),
 
-                DatePicker::make('birth_date')->label('Fecha de nacimiento del usuario')
+                DatePicker::make('birth_date')->label('Fecha de nacimiento')
                     ->required()
-                    ->native(false)
+                    // ->native(false)
                     ->closeOnDateSelection()
-                    ->maxDate(Carbon::now()->subYears(10))
+                    ->displayFormat('d/m/Y')
+                    // ->maxDate(Carbon::now()->subYears(10))
                     ->default(Carbon::now()->subYears(18))
-                    ->placeholder('Ingrese la fecha de nacimiento del usuario')
-                    ->helperText('Escribe la fecha de nacimiento del usuario.'),
+                    ->placeholder('Ingrese la fecha de nacimiento del usuario'),
 
                 //
 
-                TextInput::make('height')->label('Estatura del usuario')
-                    ->numeric()
-                    ->minLength(2)
-                    ->maxLength(3)
-                    ->placeholder('Ingrese la altura del usuario en CM')
-                    ->helperText('Ejemplo: 170'),
+                // TextInput::make('height')->label('Estatura del usuario')
+                //     ->numeric()
+                //     // ->minLength(2)
+                //     // ->maxLength(3)
+                //     ->inputMode('decimal')
+                //     ->placeholder('Ingrese la altura del usuario en CM')
+                //     ->helperText('Ejemplo: 170'),
 
-                TextInput::make('weight')->label('Peso del usuario')
-                    ->numeric()
-                    ->minLength(2)
-                    ->maxLength(4)
-                    ->placeholder('Ingrese el peso del usuario en KG')
-                    ->helperText('Ejemplo: 70'),
+                // TextInput::make('weight')->label('Peso del usuario')
+                //     ->numeric()
+                //     // ->minLength(2)
+                //     // ->maxLength(4)
+                //     ->inputMode('decimal')
+                //     ->placeholder('Ingrese el peso del usuario en KG')
+                //     ->helperText('Ejemplo: 70'),
 
-                Radio::make('gender')->label('Género del usuario')
+                Radio::make('gender')->label('Género')
                     ->options([
                         'Masculino' => 'Masculino',
                         'Femenino' => 'Femenino',
                     ])
-                    ->required()
-                    ->helperText('Seleccione el género del usuario.'),
+                    ->required(),
 
                 //
 
@@ -143,9 +138,8 @@ class ClientResource extends Resource
                     )
                     ->required()
                     ->searchable()
-                    ->hint('El tipo de usuario determina el costo de la suscripción.')
-                    ->default(1)
-                    ->helperText('Seleccione el tipo de usuario.'),
+                    ->hint('Este determina el costo de la suscripción.')
+                    ->default(1),
 
                 Select::make('degree_id')->label('Grado del usuario')
                     ->placeholder('Seleccione el grado del usuario')
@@ -153,8 +147,7 @@ class ClientResource extends Resource
                         degree::all()->pluck('name', 'id')
                     )
                     ->required()
-                    ->searchable()
-                    ->helperText('Seleccione el grado del usuario.'),
+                    ->searchable(),
             ]);
     }
 
@@ -540,10 +533,6 @@ class ClientResource extends Resource
                     ->copyMessageDuration(1500)
                     ->icon('heroicon-o-identification'),
 
-                    IconEntry::make('active')
-                        ->label('Estado')
-                        ->boolean(),
-
                     TextEntry::make('name')
                         ->label('Nombre')
                         ->icon('heroicon-o-user'),
@@ -551,6 +540,10 @@ class ClientResource extends Resource
                     TextEntry::make('surname')
                         ->label('Apellido')
                         ->icon('heroicon-o-user'),
+                    
+                    IconEntry::make('active')
+                    ->label('Estado')
+                    ->boolean(),
 
                     TextEntry::make('degree.name')
                         ->label('Grado')
@@ -590,28 +583,15 @@ class ClientResource extends Resource
                             }
                             return 'No se ha ingresado un peso.';
                         }),
-
-                    TextEntry::make('typeClient.name')
-                        ->label('Tipo de usuario')
-                        ->icon('heroicon-o-user-group'),
-
-                    TextEntry::make('typeDocument.name')
-                        ->label('Tipo de documento')
-                        ->icon('heroicon-o-identification'),
-
-
-                    TextEntry::make('email')
-                        ->label('Correo electrónico')
-                        ->icon('heroicon-o-at-symbol'),
                     ])
                     ->heading('Información del usuario')
                 ->description('En esta sección se muestra la información detallada del usuario.')
                 ->columns([
-                    'sm' => 2,
-                    'md' => 3,
-                    'xl' => 4,
-                    '2xl' => 5,
+                    'sm' => 1,
+                    'md' => 2,
+                    'lg' => 3,
                 ])
+                ->columnSpan(1)
                 ->icon('heroicon-o-user')
                     ->collapsible()
                     ->collapsed(),
@@ -659,21 +639,51 @@ class ClientResource extends Resource
                                 }),
                         ])
                         ->columns([
-                            'sm' => 3,
-                            'md' => 3,
-                            'xl' => 3,
-                        ]),
+                            'sm' => 1,
+                            'md' => 1,
+                            'xl' => 1,
+                        ])
                 ])
                     ->heading('Resumen de los últimos test')
                     ->description('En esta sección se muestra el resumen de los test realizados al usuario.')
-                    ->columns([
-                        'sm' => 3,
-                    ])
+                    
                     ->icon('heroicon-o-clipboard-document-list')
                     ->collapsible()
                     ->collapsed()
+                    ->columnSpan(1),
 
-                ,
+                    Section::make([
+                      Fieldset::make('Calculadora')
+                          // ->schema([
+                          //     TextInput::make('number1')
+                          //         ->label('Primer número')
+                          //         ->required(),
+                  
+                          //     TextInput::make('number2')
+                          //         ->label('Segundo número')
+                          //         ->required(),
+                  
+                          //     TextInput::make('result')
+                          //         ->label('Resultado')
+                          //         ->reactive() // Use reactive instead of stateful
+                          //         ->readonly(),
+                          // ])
+                          ->columns([
+                              'sm' => 1,
+                              'md' => 1,
+                              'xl' => 1,
+                              '2xl' => 1,
+                          ])
+                  ])
+                  ->heading('Calculadora')
+                  ->description('En esta sección se muestra una calculadora simple para sumar dos números.')
+                  ->icon('heroicon-o-calculator')
+                  ->collapsible()
+                  ->collapsed()
+                  ->columnSpan(1),
+                  
+               
+                
 
             ]);
 
