@@ -27,7 +27,7 @@ class SuscriptionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-wallet';
     protected static ?string $navigationLabel = 'Suscripciones';
     protected static ?string $navigationGroup = 'Asistencia y Test';
-
+    protected static ?int $navigationSort = 2;
 
     public static function canCreate(): bool
     {
