@@ -8,7 +8,7 @@ use Filament\Widgets\ChartWidget;
 class ClientsbyGenderChart extends ChartWidget
 {
     protected static ?string $heading = 'Usuarios por género';
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 2;
 
     protected function getData(): array
     {

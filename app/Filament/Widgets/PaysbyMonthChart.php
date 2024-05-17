@@ -13,6 +13,7 @@ class PaysbyMonthChart extends ChartWidget
 {
     protected static ?string $heading = 'Suscritos por mes en el año';
     protected static string $color = 'primary';
+    protected static ?int $sort = 4;
 
     protected function getData(): array
     {

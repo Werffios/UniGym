@@ -10,6 +10,8 @@ use Carbon\Carbon;
 
 class StatsAttendance extends BaseWidget
 {
+    // protected static ?int $navigationSort = 2;
+
     protected function getStats(): array
       {
         // Total Day

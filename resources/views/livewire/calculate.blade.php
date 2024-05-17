@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center min-h-screen bg-gray-100 dark:bg-gray-900 rounded-lg py-8">
+<div class="flex flex-col items-center bg-gray-100 dark:bg-gray-900 rounded-lg py-8 border dark:border-gray-700">
     <h2 class="text-2xl p-3 flex justify-center text-gray-900 dark:text-gray-100 font-bold">Calculadora de Fuerza Máxima</h2>
 
     <form wire:submit.prevent="calcular" class="w-full max-w-lg bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
@@ -35,7 +35,7 @@
     </form>
 
     @if (!empty($resultados))
-    <h2 class="text-xl mt-6 mb-4 text-center text-gray-900 font-blold">Resultados</h2>
+    <h2 class="text-xl mt-6 mb-4 text-center text-gray-900 font-bold">Resultados</h2>
     <div class="flex flex-wrap justify-center gap-4">
         <div class="p-4 bg-white dark:bg-gray-800 rounded-md shadow-md text-center">
             <h3 class="text-lg font-semibold text-slate-700">Fuerza Máxima</h3>

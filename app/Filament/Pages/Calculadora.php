@@ -12,5 +12,5 @@ class Calculadora extends Page
 
     protected static ?string $navigationGroup = 'Asistencia y Test';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 }
