@@ -14,8 +14,15 @@ class Attendance extends Model
         'client_id'
     ];
 
-    public function clients() : BelongsTo
+
+    // public function clients() : BelongsTo
+    // {
+    //     return $this->belongsTo(Client::class);
+    // }
+
+    public function client() : BelongsTo
     {
         return $this->belongsTo(Client::class);
     }
+
 }

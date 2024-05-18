@@ -43,13 +43,15 @@ class AttendancesRelationManager extends RelationManager
                     ->label('Fecha de asistencia')
                     ->dateTime('d/M/Y')
                     ->sortable(),
-                TextColumn::make('client.name')
+                TextColumn::make('clients.name')
                     ->label('')
                     ->summarize(
                         Count::make()
                             ->label('Total de asistencias')
-                    )
-                    ->searchable(),
+                    ),
+                TextColumn::make('client.name')
+                ->label('Nombre')                    
+                ->searchable(),
             ])->defaultSort('id', 'desc')
             ->filters([
                 Filter::make('date_attendance')

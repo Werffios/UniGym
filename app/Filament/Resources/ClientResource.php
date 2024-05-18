@@ -564,6 +564,10 @@ class ClientResource extends Resource
                         ->label('Género')
                         ->icon('heroicon-o-users'),
 
+                    TextEntry::make('typeClient.name')
+                    ->label('Tipo de grado')
+                    ->icon('heroicon-o-user-circle'),
+
                     TextEntry::make('height')
                         ->label('Altura')
                         ->icon('heroicon-o-arrows-up-down')

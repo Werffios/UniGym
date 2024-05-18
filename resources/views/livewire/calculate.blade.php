@@ -29,7 +29,15 @@
             @enderror
         </div>
 
-        <button type="submit" class="w-full px-4 py-2 rounded-md font-bold" style="background-color: #94B431; color: white; border: none; hover:bg-blue-600; focus:outline-none; focus:ring-2; focus:ring-blue-500;">Calcular</button>
+        <div class="flex justify-center">
+            <button type="submit" class="w-80 flex px-4 py-2 rounded-md font-bold" style="background-color: #94B431; color: white; border: none; hover:bg-blue-600; focus:outline-none; focus:ring-2; focus:ring-blue-500;">
+            Calcular<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </button>
+            
+        </div>
+        
 
 
     </form>
