@@ -77,7 +77,7 @@ class FeeResource extends Resource
                     ->icon('heroicon-o-arrow-path')
                     ->color('warning')
                     ->requiresConfirmation()
-                    ->modalHeading('Eleminar suscripciones')
+                    ->modalHeading('Eliminar suscripciones')
                     ->modalDescription('¿Estás seguro que deseas eliminar las suscripciones? Esto no se puede deshacer.')
                     ->modalSubmitActionLabel('Si, elimiar suscripciones')
                     ->action(function () {
@@ -112,7 +112,7 @@ class FeeResource extends Resource
                   ->icon('heroicon-o-arrow-uturn-left')
                   ->color('info')
                   ->requiresConfirmation()
-                  ->modalHeading('Eleminar suscripciones de estudiantes')
+                  ->modalHeading('Eliminar suscripciones de estudiantes')
                   ->modalDescription('¿Estás seguro que deseas eliminar las suscripciones? Esto no se puede deshacer.')
                   ->modalSubmitActionLabel('Si, elimiar suscripciones')
                   ->action(function () {
@@ -147,7 +147,7 @@ class FeeResource extends Resource
                 ->icon('heroicon-o-arrows-right-left')
                 ->color('success')
                 ->requiresConfirmation()
-                ->modalHeading('Eleminar suscripciones diferentes a los estudiantes')
+                ->modalHeading('Eliminar suscripciones diferentes a los estudiantes')
                 ->modalDescription('¿Estás seguro que deseas eliminar las suscripciones? Esto no se puede deshacer.')
                 ->modalSubmitActionLabel('Si, elimiar suscripciones')
                 ->action(function () {

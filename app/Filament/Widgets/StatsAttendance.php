@@ -49,7 +49,7 @@ class StatsAttendance extends BaseWidget
                 ->color('warning')
                 ->chart([7, 2, 30, 3, 5, 54, 17]),
 
-            Stat::make('Total de asistencias este mes', $attendanceCount)
+            Stat::make('Asistencias este mes', $attendanceCount)
                 ->description('Asistencias del mes anterior: '." $attendanceMonthLast")
                 ->descriptionIcon('heroicon-o-calendar-days', IconPosition::Before)
                 ->color('info')
