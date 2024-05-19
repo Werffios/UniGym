@@ -46,7 +46,8 @@ class AdminPanelProvider extends PanelProvider
                     100 => '159, 205, 143',
                      50 => '163, 215, 171',
                 ],
-            ])
+             ]) ->font('Ubuntu Sans') //FONT OFICIAL MAS PARECIDA A ARCIZAN FONT DE LA UNIVERSIDAD
+            
             ->navigationGroups([
                 'Asistencia y Test',
                 'Finanzas',

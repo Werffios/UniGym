@@ -40,11 +40,11 @@ use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Actions\{ActionGroup, Action as TableAction};
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 
 use Filament\Notifications\Notification;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
-
 
 class ClientResource extends Resource
 {
@@ -54,6 +54,22 @@ class ClientResource extends Resource
     protected static ?string $navigationGroup = 'Asistencia y Test';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationLabel = 'Usuarios';
+    protected static ?string $recordTitleAttribute = 'record_title';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['document', 'name', 'surname'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Documento' => $record->document,
+            'Nombres' => $record->name,
+            'Apellidos' => $record->surname,
+        ];
+    }
+    
 
     public static function form(Form $form): Form
     {
@@ -534,11 +550,11 @@ class ClientResource extends Resource
                     ->icon('heroicon-o-identification'),
 
                     TextEntry::make('name')
-                        ->label('Nombre')
+                        ->label('Nombres')
                         ->icon('heroicon-o-user'),
 
                     TextEntry::make('surname')
-                        ->label('Apellido')
+                        ->label('Apellidos')
                         ->icon('heroicon-o-user'),
                     
                     IconEntry::make('active')

@@ -30,8 +30,10 @@ class AttendanceExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             'FECHA',
+            'DOCUMENTO',
             'NOMBRES',
             'APELLIDOS',
+            'GÉNERO',
             'GRADO',
             'TIPO_DE_GRADO',
         ];
@@ -41,8 +43,10 @@ class AttendanceExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             $attendance->date_attendance,
+            $attendance->client->document,
             $attendance->client->name,
             $attendance->client->surname,
+            $attendance->client->gender,
             $attendance->client->degree->name,
             $attendance->client->typeClient->name,
         ];

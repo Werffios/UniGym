@@ -79,6 +79,13 @@ class Client extends Model
     {
         return testForceModel::all();
     }
+    
+    protected $appends = ['record_title'];
+
+    public function getRecordTitleAttribute(): string
+    {
+        return "{$this->name} {$this->surname}";
+    }
 
 }
 
