@@ -186,10 +186,10 @@ class ClientResource extends Resource
                     ->boolean()
                     ->label('Estado'),
                 TextColumn::make('name')
-                    ->label('Nombre')
+                    ->label('Nombres')
                     ->searchable(),
                 TextColumn::make('surname')
-                    ->label('Apellido')
+                    ->label('Apellidos')
                     ->searchable()
                     ->toggleable(),
                 TextColumn::make('birth_date')

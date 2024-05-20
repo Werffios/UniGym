@@ -49,9 +49,14 @@ class AttendancesRelationManager extends RelationManager
                         Count::make()
                             ->label('Total de asistencias')
                     ),
+                TextColumn::make('client.document')
+                ->label('Documento'),
                 TextColumn::make('client.name')
-                ->label('Nombre')                    
-                ->searchable(),
+                ->label('Nombres'),
+                TextColumn::make('client.surname')
+                ->label('Apellidos'),                   
+                TextColumn::make('client.typeClient.name')
+                ->label('Tipo de grado'),
             ])->defaultSort('id', 'desc')
             ->filters([
                 Filter::make('date_attendance')
