@@ -651,42 +651,7 @@ class ClientResource extends Resource
                     ->collapsible()
                     ->collapsed()
                     ->columnSpan(1),
-
-                    Section::make([
-                      Fieldset::make('Calculadora')
-                          // ->schema([
-                          //     TextInput::make('number1')
-                          //         ->label('Primer número')
-                          //         ->required(),
-                  
-                          //     TextInput::make('number2')
-                          //         ->label('Segundo número')
-                          //         ->required(),
-                  
-                          //     TextInput::make('result')
-                          //         ->label('Resultado')
-                          //         ->reactive() // Use reactive instead of stateful
-                          //         ->readonly(),
-                          // ])
-                          ->columns([
-                              'sm' => 1,
-                              'md' => 1,
-                              'xl' => 1,
-                              '2xl' => 1,
-                          ])
-                  ])
-                  ->heading('Calculadora')
-                  ->description('En esta sección se muestra una calculadora simple para sumar dos números.')
-                  ->icon('heroicon-o-calculator')
-                  ->collapsible()
-                  ->collapsed()
-                  ->columnSpan(1),
-                  
-               
-                
-
             ]);
-
     }
 
     public static function getRelations(): array
