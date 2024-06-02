@@ -13,6 +13,7 @@ class AttendanceFilter extends Component
     public $startDate;
     public $endDate;
     public $totalAttendances = 0;
+    public $message = '';
 
     public function mount()
     {
@@ -28,12 +29,26 @@ class AttendanceFilter extends Component
 
     public function filter()
     {
+        $customMessages = [
+            'startDate.required' => 'La fecha de inicio es obligatoria.',
+            'startDate.date' => 'La fecha de inicio debe ser una fecha válida.',
+            'endDate.required' => 'La fecha de fin es obligatoria.',
+            'endDate.date' => 'La fecha de fin debe ser una fecha válida.',
+            'endDate.after_or_equal' => 'La fecha de fin debe ser igual o posterior a la fecha de inicio.',
+        ];
+
         $this->validate([
             'startDate' => 'required|date',
             'endDate' => 'required|date|after_or_equal:startDate',
-        ]);
+        ], $customMessages);
 
         $this->totalAttendances = Attendance::whereBetween('date_attendance', [$this->startDate, $this->endDate])->count();
+
+        if ($this->totalAttendances === 0) {
+            $this->message = 'No se encontraron asistencias registradas en esta fecha.';
+        } else {
+            $this->message = '';
+        }
     }
 
     public function export()

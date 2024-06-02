@@ -34,20 +34,27 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => [
-                    900 => '77, 87, 32',
-                    800 => '94, 104, 40',
-                    700 => '110, 121, 47',
-                    600 => '126, 138, 55',
-                    500 => '148, 180, 59',
-                    400 => '144, 155, 63',
-                    300 => '151, 190, 87',
-                    200 => '190, 206, 82',
-                    100 => '159, 205, 143',
-                     50 => '163, 215, 171',
-                ],
+              'gray'=>"#323A29",
+              'danger' => Color::Rose,
+              'info' => Color::Blue,
+              'primary' => '#4B8A08',
+              'success' => Color::Emerald,
+              'warning' => Color::Orange, 
              ]) ->font('Ubuntu Sans') //FONT OFICIAL MAS PARECIDA A ARCIZAN FONT DE LA UNIVERSIDAD
-            
+          //    ->colors([
+          //     'primary' => [
+          //         900 => '77, 87, 32',
+          //         800 => '94, 104, 40',
+          //         700 => '110, 121, 47',
+          //         600 => '126, 138, 55',
+          //         500 => '148, 180, 59',
+          //         400 => '144, 155, 63',
+          //         300 => '151, 190, 87',
+          //         200 => '190, 206, 82',
+          //         100 => '159, 205, 143',
+          //          50 => '163, 215, 171',
+          //     ],
+          //  ])             
             ->navigationGroups([
                 'Asistencia y Test',
                 'Finanzas',

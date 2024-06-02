@@ -46,4 +46,9 @@ class AttendanceFilterPage extends Page
         return $attendanceCount > 99 ? 'success' : 'warning';
     }
 
+    // public static function getNavigationBadgeToolTip(): ?string
+    // {
+    //     return 'Asistencias';                                   // <== TOOLTIP PLACEHOLDER no funcona!!!!
+    // } 
+
 }

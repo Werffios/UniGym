@@ -4,13 +4,13 @@
         <div class="flex flex-col">
             <label for="startDate" class="block text-sm font-medium text-slate-700">Fecha de inicio</label>
             <input type="date" wire:model="startDate" id="startDate" class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm dark:bg-gray-800 dark:text-gray-100" />
-            @error('startDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            @error('startDate') <span class="text-sm" style="color: #CD6155">*{{ $message }}</span> @enderror
         </div>
 
         <div class="flex flex-col  mt-2">
             <label for="endDate" class="block text-sm font-medium text-slate-700">Fecha de fin</label>
             <input type="date" wire:model="endDate" id="endDate" class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm dark:bg-gray-800 dark:text-gray-100" />
-            @error('endDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            @error('endDate') <span class="text-sm" style="color: #CD6155">*{{ $message }}</span> @enderror
         </div>
 
 
@@ -24,13 +24,20 @@
        
     </form>
 
+    @if ($message)
+    <!-- Mensaje cuando no se encuentran asistencias registradas -->
+    <div style="margin-top: 1.5rem; padding: 1.5rem; background-color: #fee2e2; border-radius: 0.75rem; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); text-align: center; color: #b91c1c;">
+        {{ $message }}
+    </div>
+    @endif
+
+
     @if($totalAttendances)
         <!-- Tarjeta con la cantidad total de asistencias -->
         <div class="w-1/2 mt-6 p-10 bg-white dark:bg-gray-800 dark:border-gray-700 rounded-xl shadow-md text-center justify-between">
             <p class="pt-6 mt-4 text-sm font-medium text-slate-500">Total de Asistencias:</p>
             <h3 class="text-3xl font-bold my-4 text-center">{{ $totalAttendances }}</h3>
             <p class="my-4 text-sm text-slate-700 dark:text-slate-300"><strong>Rango de fechas:</strong> {{ $startDate }} y {{ $endDate }}</p>
-            <!-- <p class="my-4 text-sm text-slate-700 dark:text-slate-300"><strong>Creado:</strong> {{ now()->format('Y-m-d') }}</p> -->
           
           <!-- Botón de exportación a Excel -->
           <div class="flex justify-center mb-4">            

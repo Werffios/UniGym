@@ -238,11 +238,11 @@ class ClientResource extends Resource
                     ->label('Asistencias')
                     ->sortable()
                     ->counts('attendances')
-                    ->summarize([
-                        Sum::make()
-                            ->label('Total')
+                    // ->summarize([
+                    //     Sum::make()
+                    //         ->label('Total')
 
-                    ]),
+                    // ]),
 
             ])->defaultSort('id', 'desc')
 
