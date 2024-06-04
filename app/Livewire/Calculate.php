@@ -29,7 +29,9 @@ class Calculate extends Component
   {
       $this->validate();
 
-      $fuerzaMaxima = $this->peso_levantado * (1 + $this->repeticiones / 30);
+      $fuerzaMaxima = (100 * $this->peso_levantado) / (102.3 - (2.67123 * $this->repeticiones));
+
+      // $fuerzaMaxima = $this->peso_levantado * (1 + $this->repeticiones / 30);
 
       $this->resultados = [
           'fuerza_maxima' => round($fuerzaMaxima, 2) . ' Kg',
