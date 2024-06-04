@@ -24,6 +24,7 @@ class TestForce extends Model
         'legFlexExt',
         'legFlexExtReps',
         'client_id',
+        'weight',
     ];
 
     // Relación uno a muchos con la tabla clients
