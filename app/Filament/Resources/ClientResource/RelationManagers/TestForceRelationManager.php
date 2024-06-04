@@ -36,6 +36,14 @@ class TestForceRelationManager extends RelationManager
                     Wizard\Step::make('TrenSuperior')
                         ->description('Ejercicios de tren superior')
                         ->schema([
+
+                          TextInput::make('weight')
+                              ->label('Peso')
+                              ->required()
+                              ->hint('Medida en Kg')
+                              ->placeholder('Ingrese la medida del pliegue en Kg')
+                              ->numeric()
+                              ->inputMode('decimal'),
                             TextInput::make('benchPress')
                                 ->numeric()
                                 ->required()
@@ -128,6 +136,10 @@ class TestForceRelationManager extends RelationManager
                 TextColumn::make('relationUpperLowerLimbs')
                     ->label('Relación miembros superiores e inferiores')
                     ->suffix(' %'),
+            
+                TextColumn::make('weight')
+                ->label('Peso Kg'),
+
             ])
             ->defaultSort('id', 'desc')
             ->filters([
