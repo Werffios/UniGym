@@ -65,7 +65,7 @@ class ClientResource extends Resource
                     ->minLength(3)
                     ->maxLength(20)
                     ->unique(ignoreRecord: true)
-                    ->placeholder('Ingrese el número'),
+                    ->placeholder('Ingrese el número')->columnSpan(2),
 
                 Select::make('type_document_id')->label('Tipo de documento')
                     ->placeholder('Seleccione el tipo de documento')
@@ -73,27 +73,34 @@ class ClientResource extends Resource
                         type_document::all()->pluck('name', 'id')
                     )
                     ->required()
-                    ->default(1)
-                    ->helperText('Seleccione el tipo de documento.'),
+                    ->default(1),
+
+                Radio::make('gender')->label('Género')
+                ->options([
+                    'Masculino' => 'Masculino',
+                    'Femenino' => 'Femenino',
+                ])
+                ->required(),
+
 
                 TextInput::make('name')->label('Nombres')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
-                    ->placeholder('Ingrese el nombre'),
+                    ->placeholder('Ingrese nombres')->columnSpan(2),
 
                 TextInput::make('surname')->label('Apellidos')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
-                    ->placeholder('Ingrese el apellido del usuario'),
+                    ->placeholder('Ingrese apellidos')->columnSpan(2),
 
                 TextInput::make('email')->label('Correo electrónico')
                     ->required()
                     ->minLength(3)
                     ->maxLength(50)
                     ->unique(ignoreRecord: true)
-                    ->placeholder('Ingrese el correo electrónico del usuario'),
+                    ->placeholder('Ingrese e-mail'),
 
                 DatePicker::make('birth_date')->label('Fecha de nacimiento')
                     ->required()
@@ -106,40 +113,19 @@ class ClientResource extends Resource
 
                 //
 
-                // TextInput::make('height')->label('Estatura del usuario')
-                //     ->numeric()
-                //     // ->minLength(2)
-                //     // ->maxLength(3)
-                //     ->inputMode('decimal')
-                //     ->placeholder('Ingrese la altura del usuario en CM')
-                //     ->helperText('Ejemplo: 170'),
+                TextInput::make('height')->label('Estatura del usuario')
+                    ->numeric()
+                    // ->minLength(2)
+                    // ->maxLength(3)
+                    ->inputMode('decimal')
+                    ->placeholder('Ingrese altura (cm)'),
 
-                // TextInput::make('weight')->label('Peso del usuario')
-                //     ->numeric()
-                //     // ->minLength(2)
-                //     // ->maxLength(4)
-                //     ->inputMode('decimal')
-                //     ->placeholder('Ingrese el peso del usuario en KG')
-                //     ->helperText('Ejemplo: 70'),
-
-                Radio::make('gender')->label('Género')
-                    ->options([
-                        'Masculino' => 'Masculino',
-                        'Femenino' => 'Femenino',
-                    ])
-                    ->required(),
-
-                //
-
-                Select::make('type_client_id')->label('Tipo de usuario')
-                    ->placeholder('Seleccione el tipo de usuario')
-                    ->options(
-                        type_client::all()->pluck('name', 'id')
-                    )
-                    ->required()
-                    ->searchable()
-                    ->hint('Este determina el costo de la suscripción.')
-                    ->default(1),
+                TextInput::make('weight')->label('Peso del usuario')
+                    ->numeric()
+                    // ->minLength(2)
+                    // ->maxLength(4)
+                    ->inputMode('decimal')
+                    ->placeholder('Ingrese peso (kg)'),
 
                 Select::make('degree_id')->label('Grado del usuario')
                     ->placeholder('Seleccione el grado del usuario')
@@ -147,8 +133,18 @@ class ClientResource extends Resource
                         degree::all()->pluck('name', 'id')
                     )
                     ->required()
-                    ->searchable(),
-            ]);
+                    ->searchable()->columnSpan(2),
+
+                Select::make('type_client_id')->label('Tipo de usuario')
+                ->placeholder('Seleccione el tipo de usuario')
+                ->options(
+                    type_client::all()->pluck('name', 'id')
+                )
+                ->required()
+                ->searchable()
+                ->hint('Este determina el costo de la suscripción.')
+                ->default(1)->columnSpan(2),
+        ]) ->columns(4);
     }
 
     /**

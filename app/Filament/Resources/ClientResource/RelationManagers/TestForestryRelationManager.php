@@ -31,6 +31,14 @@ class TestForestryRelationManager extends RelationManager
     {
         return $form
             ->schema([
+
+              TextInput::make('weight')
+                  ->label('Peso')
+                  ->required()
+                  ->hint('Medida en Kg')
+                  ->placeholder('Ingrese la medida del pliegue en Kg')
+                  ->numeric()
+                  ->inputMode('decimal'),
                 TextInput::make('restingPulse')
                     ->numeric()
                     ->required()
@@ -88,6 +96,9 @@ class TestForestryRelationManager extends RelationManager
                 TextColumn::make('FCReserva')
                     ->label('FCReserva')
                     ->suffix(' ppm'),
+                
+                // TextColumn::make('weight')
+                // ->label('Peso Kg'),
 
             ])->defaultSort('id', 'desc')
             ->filters([
