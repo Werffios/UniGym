@@ -15,6 +15,7 @@ class TestForestry extends Model
         'effortPulse',
         'recoveryPulse',
         'client_id',
+        'weight',
     ];
 
     // Relación uno a muchos con la tabla clients

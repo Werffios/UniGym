@@ -40,13 +40,13 @@ class TestAnthropometryRelationManager extends RelationManager
                   ->numeric()
                   ->inputMode('decimal'),
 
-              TextInput::make('weight')
-                  ->label('Peso')
-                  ->required()
-                  ->hint('Medida en Kg')
-                  ->placeholder('Ingrese la medida del pliegue en Kg')
-                  ->numeric()
-                  ->inputMode('decimal'),
+              // TextInput::make('weight')
+              //     ->label('Peso')
+              //     ->required()
+              //     ->hint('Medida en Kg')
+              //     ->placeholder('Ingrese la medida del pliegue en Kg')
+              //     ->numeric()
+              //     ->inputMode('decimal'),
 
                 TextInput::make('bicepFold')
                     ->label('Biceps')
@@ -105,11 +105,11 @@ class TestAnthropometryRelationManager extends RelationManager
                 TextColumn::make('IMCEvaluation')
                     ->label('Evaluación IMC'),
 
-                TextColumn::make('weight')
-                    ->label('Peso Kg'),
+                // TextColumn::make('weight')
+                //     ->label('Peso Kg'),
 
-                    TextColumn::make('height')
-                        ->label('Altura CM'),
+                // TextColumn::make('height')
+                //         ->label('Altura CM'),
                     
 
             ])->defaultSort('id', 'desc')
