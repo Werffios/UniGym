@@ -34,13 +34,13 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-              'gray'=>"#323A29",
+              // 'gray'=>"#323A29",
               'danger' => Color::Rose,
               'info' => Color::Blue,
               'primary' => '#4B8A08',
               'success' => Color::Emerald,
-              'warning' => Color::Orange, 
-             ]) ->font('Ubuntu Sans') //FONT OFICIAL MAS PARECIDA A ARCIZAN FONT DE LA UNIVERSIDAD
+              // 'warning' => Color::Orange, 
+             ]) //->font('Ubuntu Sans') FONT MAS PARECIDA A ARCIZAN FONT DE LA UNIVERSIDAD
           //    ->colors([
           //     'primary' => [
           //         900 => '77, 87, 32',
