@@ -14,6 +14,7 @@ use Filament\Forms\Components\Toggle;
 
 class AttendancebyMonthChart extends ChartWidget
 {
+    protected static ?int $sort = 3;
     protected static ?string $heading = 'Asistencias por día del mes';
     // protected int | string | array $columnSpan = 2;
     protected function getData(): array

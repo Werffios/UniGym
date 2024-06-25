@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class StatsAttendance extends BaseWidget
 {
-    // protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 1;
 
     protected function getStats(): array
       {
