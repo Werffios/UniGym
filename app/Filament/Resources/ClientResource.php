@@ -668,7 +668,6 @@ class ClientResource extends Resource
                     ->collapsed()
                     ->columnSpan(1),
             ]);
-
     }
 
     public static function getRelations(): array

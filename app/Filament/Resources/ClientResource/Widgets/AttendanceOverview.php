@@ -12,14 +12,17 @@ class AttendanceOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('', Client::count())
+            Stat::make('Total de usuarios', Client::count())
             ->description('Usuarios registrados')
-            ->descriptionIcon('heroicon-s-user-group')
-            ->color('info'),
-            Stat::make('', Client::where('active', true)->count())
+            ->descriptionIcon('heroicon-s-user-group', IconPosition::Before)
+            ->color('info')
+            ->chart([200, 120, 80, 30, 10, 5]),
+            Stat::make('Usuarios activos', Client::where('active', true)->count())
             ->description('N° de usuarios activos')
-            ->descriptionIcon('heroicon-s-user-plus')
+            ->descriptionIcon('heroicon-s-user-plus', IconPosition::Before)
             ->color('success'),
+
+
         ];
     }
     /**

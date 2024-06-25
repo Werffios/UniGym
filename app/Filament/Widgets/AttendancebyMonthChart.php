@@ -15,9 +15,7 @@ use Filament\Forms\Components\Toggle;
 class AttendancebyMonthChart extends ChartWidget
 {
     protected static ?string $heading = 'Asistencias por día del mes';
-
-    protected static ?int $sort = 2;
-    protected int | string | array $columnSpan = 2;
+    // protected int | string | array $columnSpan = 2;
     protected function getData(): array
     {
         $data = Trend::model(Attendance::class)
@@ -47,5 +45,17 @@ class AttendancebyMonthChart extends ChartWidget
     protected function getType(): string
     {
         return 'line';
+    }
+
+    
+    public function filterForm(Form $form): Form
+    {
+      return $form->schema([
+        
+        TextInput::make('name'),
+        DatePicker::make('start_date'),
+        DatePicker::make('end_date'),
+        //Toggle::make('active'),
+      ]);
     }
 }

@@ -40,20 +40,17 @@ class StatsAttendance extends BaseWidget
             Stat::make('Asistencias hoy', $attendanceCountDay)
                 ->description('Asistencias hoy, '. $hoy->isoFormat('dddd DD \d\e MMMM'))
                 ->descriptionIcon('heroicon-o-user-plus', IconPosition::Before)
-                ->color('success')
-                ->chart([7, 2, 10, 3, 15, 17, 3]),
+                ->color('success'),
             
             Stat::make('Asistencias esta semana', $attendanceCountWeek)
                 ->description('Asistencias de esta semana de '. $hoy->isoFormat('MMMM'))
                 ->descriptionIcon('heroicon-o-calendar', IconPosition::Before)
-                ->color('warning')
-                ->chart([7, 2, 30, 3, 5, 54, 17]),
+                ->color('warning'),
 
             Stat::make('Asistencias este mes', $attendanceCount)
                 ->description('Asistencias del mes anterior: '." $attendanceMonthLast")
                 ->descriptionIcon('heroicon-o-calendar-days', IconPosition::Before)
                 ->color('info')
-                ->chart([5, 10, 30, 20, 15, 10, 25])
                 ->extraAttributes([
                   'label' => $attendanceMonthLast,
               ]),
