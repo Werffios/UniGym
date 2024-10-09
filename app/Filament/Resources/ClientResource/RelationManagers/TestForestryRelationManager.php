@@ -157,12 +157,12 @@ Mantenimiento',
 15 - 20',
                                         // Convierto un valor a string para que no se muestre el guión como rango
                                         'FCMin - FCMax' => "\n\n" .strval((0.6 * $FCReserva) + $FCReposo) . ' -  '  . strval((0.7 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.8 * $FCReserva) + $FCReposo) . ' - ' . strval((0.9 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((0.9 * $FCReserva) + $FCReposo) . ' - ' . strval((1 * $FCReserva) + $FCReposo) . "\n" ."\n" .
-                                        strval((1 * $FCReserva) + $FCReposo) . ' - ' . strval((1.1 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((1.1 * $FCReserva) + $FCReposo) . ' - ' . strval((1.2 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((1.2 * $FCReserva) + $FCReposo) . ' - ' . strval((1.3 * $FCReserva) + $FCReposo) . "\n" .
-                                        strval((1.3 * $FCReserva) + $FCReposo) . ' - ' . strval((1.4 * $FCReserva) + $FCReposo),
+                                        strval((0.71 * $FCReserva) + $FCReposo) . ' - ' . strval((0.8 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.73 * $FCReserva) + $FCReposo) . ' - ' . strval((0.82 * $FCReserva) + $FCReposo) . "\n" ."\n" .
+                                        strval((0.75 * $FCReserva) + $FCReposo) . ' - ' . strval((0.84 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.77 * $FCReserva) + $FCReposo) . ' - ' . strval((0.86 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.79 * $FCReserva) + $FCReposo) . ' - ' . strval((0.88 * $FCReserva) + $FCReposo) . "\n" .
+                                        strval((0.8 * $FCReserva) + $FCReposo) . ' - ' . strval((0.9 * $FCReserva) + $FCReposo),
 
 
                                     ];
